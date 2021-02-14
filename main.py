@@ -32,20 +32,6 @@ def menu(textscr, current_row):
     textscr.refresh()
 
 
-#def ascii_scan():
-#    f = open("art.txt", "r")
-#    print(f.read())
-#
-#    # Reading external files STILL BROKEN ARGHHHH
-#
-#    with open("art.txt", "r", encoding ="utf8") as f:
-#        lines = f.readlines()
-#
-#    for a in lines:
-#        artscr.addstr(20, 5, a.rstrip())
-#        artscr.refresh()
-
-
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
 def panes(stdscr):
     
@@ -78,6 +64,37 @@ def panes(stdscr):
     textscr.box()
     textscr.refresh()
     
+def travel(artscr):
+    artscr.addstr(3, 3, "KLATHIA")
+
+
+def explore(artscr):
+    pass
+
+
+def interact(artscr):
+    pass
+
+def character(artscr):
+    pass
+
+def journal(artscr):
+    pass
+
+#def ascii_scan():
+#    f = open("art.txt", "r")
+#    print(f.read())
+#
+#    # Reading external files STILL BROKEN ARGHHHH
+#
+#    with open("art.txt", "r", encoding ="utf8") as f:
+#        lines = f.readlines()
+#
+#    for a in lines:
+#        artscr.addstr(20, 5, a.rstrip())
+#        artscr.refresh()
+#
+#
 #    # Color Testing
 #    curses.start_color()
 #    curses.use_default_colors()
@@ -88,12 +105,12 @@ def panes(stdscr):
 #           textscr.addstr(str(i), curses.color_pair(i))
 #    except curses.ERR:
 #        pass
-
-
-    # Print our different windows
-
-
-   
+#
+#
+#    # Print our different windows
+#
+#
+#   
 #    # Setup the test window
 #    testscr = curses.newwin(10, 10, 10, 10)
 #    
@@ -103,6 +120,9 @@ def panes(stdscr):
 #    testscr.box()
 #    testscr.refresh()
    
+
+def curses_main():
+    panes(stdscr)
 
     # Setup the menu and call menu function
 
@@ -150,28 +170,10 @@ def panes(stdscr):
         artscr.refresh()
 
 
-def travel(artscr):
-    artscr.addstr(3, 3, "KLATHIA")
-
-
-def explore(artscr):
-    pass
-
-
-def interact(artscr):
-    pass
-
-def character(artscr):
-    pass
-
-def journal(artscr):
-    pass
-
-
 
 # Setting up the wrapper so that we play nice with the terminal
 def main():
-   curses.wrapper(panes)
+   curses.wrapper(curses_main)
 
 # Call the main function
 main()
