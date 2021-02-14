@@ -4,48 +4,6 @@ import os
 import sys
 
 
-# Determining menu placement, formatting menu
-# menu_y, menu_x placement
-# enumeration for format
-
-def menu(textscr, current_row):
-    
-    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
-
-    text_height, text_width = textscr.getmaxyx()
-
-    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
-
-    for idx, element in enumerate(menu):
-        menu_y = (text_height // 2) + idx  
-        menu_x = (text_width // 2) - (len(element) // 2) 
-
-        if idx == current_row:
-            textscr.attron(curses.color_pair(1))
-            textscr.addstr(menu_y, menu_x, element)
-            textscr.attroff(curses.color_pair(1))
-
-        else:
-            textscr.addstr(menu_y, menu_x, element)
-
-    textscr.refresh()
-
-
-#def ascii_scan():
-#    f = open("art.txt", "r")
-#    print(f.read())
-#
-#    # Reading external files STILL BROKEN ARGHHHH
-#
-#    with open("art.txt", "r", encoding ="utf8") as f:
-#        lines = f.readlines()
-#
-#    for a in lines:
-#        artscr.addstr(20, 5, a.rstrip())
-#        artscr.refresh()
-
-
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
 def panes(stdscr):
     
@@ -78,6 +36,52 @@ def panes(stdscr):
     textscr.box()
     textscr.refresh()
     
+
+# Determining menu placement, formatting menu
+# menu_y, menu_x placement
+# enumeration for format
+
+def menu(textscr, current_row):
+    
+    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
+
+
+    text_height, text_width = textscr.getmaxyx()
+
+    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
+
+    for idx, element in enumerate(menu):
+        menu_y = (text_height // 2) + idx  
+        menu_x = (text_width // 2) - (len(element) // 2) 
+
+        if idx == current_row:
+            textscr.attron(curses.color_pair(1))
+            textscr.addstr(menu_y, menu_x, element)
+            textscr.attroff(curses.color_pair(1))
+
+        else:
+            textscr.addstr(menu_y, menu_x, element)
+
+    textscr.refresh()
+
+def travel(artscr):
+    artscr.addstr(3, 3, "KLATHIA")
+
+
+def explore(artscr):
+    pass
+
+
+def interact(artscr):
+    pass
+
+def character(artscr):
+    pass
+
+def journal(artscr):
+    pass
+
+
 #    # Color Testing
 #    curses.start_color()
 #    curses.use_default_colors()
@@ -88,12 +92,8 @@ def panes(stdscr):
 #           textscr.addstr(str(i), curses.color_pair(i))
 #    except curses.ERR:
 #        pass
-
-
-    # Print our different windows
-
-
-   
+#
+#   
 #    # Setup the test window
 #    testscr = curses.newwin(10, 10, 10, 10)
 #    
@@ -102,9 +102,27 @@ def panes(stdscr):
 #    testscr.addstr(1, 1, "Mobile Test Window! 1, 2, 3, A, B, C")
 #    testscr.box()
 #    testscr.refresh()
-   
+#   
+#
+#    # Setup the menu and call menu function
+#
+#def ascii_scan():
+#    f = open("art.txt", "r")
+#    print(f.read())
+#
+#    # Reading external files STILL BROKEN ARGHHHH
+#
+#    with open("art.txt", "r", encoding ="utf8") as f:
+#        lines = f.readlines()
+#
+#    for a in lines:
+#        artscr.addstr(20, 5, a.rstrip())
+#        artscr.refresh()
 
-    # Setup the menu and call menu function
+
+# Logical main function
+def curses_main(stdscr):
+    panes(stdscr)
 
     current_row = 0   
 
@@ -150,28 +168,11 @@ def panes(stdscr):
         artscr.refresh()
 
 
-def travel(artscr):
-    artscr.addstr(3, 3, "KLATHIA")
-
-
-def explore(artscr):
-    pass
-
-
-def interact(artscr):
-    pass
-
-def character(artscr):
-    pass
-
-def journal(artscr):
-    pass
-
 
 
 # Setting up the wrapper so that we play nice with the terminal
 def main():
-   curses.wrapper(panes)
+   curses.wrapper(curses_main)
 
 # Call the main function
 main()

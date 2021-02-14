@@ -1,6 +1,6 @@
 # Curse Quest
 
-Curse Quest is a fantasy RPG in Python's wrapper of Curses. Hopefully a side project I can work on to expand my knowledge of Python.
+Curse Quest is a fantasy RPG in Python's wrapper of Curses. The goal is story driven choose your own adventure tale with some stats and roguelike map movement / combat complimented by ASCII art.
 
 ## Story
 
