@@ -54,16 +54,15 @@ def panes(stdscr):
                
         elif key == curses.KEY_ENTER:
            artscr.addstr(17, 5, "YOU HAVE BEGUN YOUR JOURNEY")
-   
+
         elif key == ord("t"):
-            artscr.addstr(20, 5, "YE OLD MAP")
             travel(artscr)
 
         elif key == ord("e"):
             explore(artscr)
 
         elif key == ord("i"):
-            interact(artscr)
+            interact(textscr)
 
         elif key == ord("c"):
             character(artscr)
@@ -75,7 +74,7 @@ def panes(stdscr):
             break
         
         menu(textscr, current_row)
-   
+
         textscr.refresh()
         artscr.refresh()
 
@@ -109,21 +108,33 @@ def menu(textscr, current_row):
     textscr.refresh()
 
 def travel(artscr):
-    artscr.addstr(3, 3, "KLATHIA")
+    art_height, art_width = artscr.getmaxyx()
+
+    artscr.addstr(art_height // 2, art_width // 2, "YE OLDE MAP OF KLATHIA")
 
 
 def explore(artscr):
-    pass
+    artscr.addstr(4, 3, "EXPLORATION ART")
 
-
-def interact(artscr):
-    pass
+def interact(textscr):
+    textscr.addstr("INTERACTION OPTIONS MENU")
 
 def character(artscr):
-    pass
+    art_height, art_width = artscr.getmaxyx()
+
+    artscr.addstr((art_height // 2) + 1, (art_width // 2), "------------\n")
+    artscr.addstr((art_height // 2) + 2, (art_width // 2), " __________ \n")
+    artscr.addstr((art_height // 2) + 3, (art_width // 2), "/          \ \n")
+    artscr.addstr((art_height // 2) + 4, (art_width // 2), "|  o    o  | \n")
+    artscr.addstr((art_height // 2) + 5, (art_width // 2), "|     >    | \n")
+    artscr.addstr((art_height // 2) + 6, (art_width // 2), "|    ___   | \n")
+    artscr.addstr((art_height // 2) + 7, (art_width // 2), "|          | \n")
+    artscr.addstr((art_height // 2) + 8, (art_width // 2), " \ ______ /  \n")
+    artscr.addstr((art_height // 2) + 9, (art_width // 2), "-------------\n")
+    artscr.addstr((art_height // 2) + 10, (art_width // 2), "    KRYLL    \n")
 
 def journal(artscr):
-    pass
+    artscr.addstr(5, 3, "JOURNAL ENTRY SKETCH")    
 
 
 #    # Color Testing
