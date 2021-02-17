@@ -52,8 +52,8 @@ def panes(stdscr):
             current_row += 1
             artscr.addstr(18, 5, "DOWN KEY PRESSES")
                
-        elif key == curses.KEY_ENTER:
-           artscr.addstr(17, 5, "YOU HAVE BEGUN YOUR JOURNEY")
+        elif key == curses.KEY_ENTER: #Not working, ref doc says unreliable?
+           artscr.addstr(17, 5, "ENTER KEY PRESSED")
 
         elif key == ord("t"):
             travel(artscr)
@@ -107,6 +107,9 @@ def menu(textscr, current_row):
 
     textscr.refresh()
 
+class TravelScreen():
+    pass
+
 def travel(artscr):
     art_height, art_width = artscr.getmaxyx()
 
@@ -122,7 +125,7 @@ def interact(textscr):
 def character(artscr):
     art_height, art_width = artscr.getmaxyx()
 
-    artscr.addstr((art_height // 2) + 1, (art_width // 2), "------------\n")
+    artscr.addstr((art_height // 2) + 1, (art_width // 2), "-------------")
     artscr.addstr((art_height // 2) + 2, (art_width // 2), " __________ \n")
     artscr.addstr((art_height // 2) + 3, (art_width // 2), "/          \ \n")
     artscr.addstr((art_height // 2) + 4, (art_width // 2), "|  o    o  | \n")
