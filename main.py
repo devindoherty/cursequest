@@ -35,13 +35,6 @@ def menu(textscr, current_row):
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
 def panes(stdscr):
     
-    # Blank the canvas
-    stdscr = curses.initscr()
-    stdscr.clear()
-    stdscr.refresh() 
-    # Border for entire terminal
-    #stdscr.box()
-    
     # Finding Terminal size. Height = y, width = x
     height, width = stdscr.getmaxyx()
     
@@ -63,6 +56,8 @@ def panes(stdscr):
     textscr.keypad(True)
     textscr.box()
     textscr.refresh()
+
+    return textscr, artscr
     
 def travel(artscr):
     artscr.addstr(3, 3, "KLATHIA")
@@ -121,9 +116,17 @@ def journal(artscr):
 #    testscr.refresh()
    
 
-def curses_main():
+def curses_main(stdscr):
+     # Blank the canvas
+    stdscr = curses.initscr()
+    stdscr.clear()
+    stdscr.refresh() 
+    # Border for entire terminal
+    #stdscr.box()
+            
     panes(stdscr)
-
+    textscr = panes(stdscr)
+    artscr = panes(stdscr)
     # Setup the menu and call menu function
 
     current_row = 0   
