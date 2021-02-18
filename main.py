@@ -4,40 +4,11 @@ import os
 import sys
 
 
-# Determining menu placement, formatting menu
-# menu_y, menu_x placement
-# enumeration for format
-
-def menu(textscr, current_row):
-    
-    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
-
-    text_height, text_width = textscr.getmaxyx()
-
-    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
-
-    for idx, element in enumerate(menu):
-        menu_y = (text_height // 2) + idx  
-        menu_x = (text_width // 2) - (len(element) // 2) 
-
-        if idx == current_row:
-            textscr.attron(curses.color_pair(1))
-            textscr.addstr(menu_y, menu_x, element)
-            textscr.attroff(curses.color_pair(1))
-
-        else:
-            textscr.addstr(menu_y, menu_x, element)
-
-    textscr.refresh()
-
-
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
 def panes(stdscr):
     
-    # Finding Terminal size. Height = y, width = x
     height, width = stdscr.getmaxyx()
-    
+   
     # Finding starting y,x for art and text panes
     art_x = 0
     art_y = 0
@@ -75,6 +46,34 @@ def character(artscr):
 
 def journal(artscr):
     pass
+
+
+# Determining menu placement, formatting menu
+# menu_y, menu_x placement
+# enumeration for format
+
+def menu(textscr, current_row):
+    
+    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    
+    text_height, text_width = textscr.getmaxyx()
+
+    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
+
+    for idx, element in enumerate(menu):
+        menu_y = (text_height // 2) + idx  
+        menu_x = (text_width // 2) - (len(element) // 2) 
+
+        if idx == current_row:
+            textscr.attron(curses.color_pair(1))
+            textscr.addstr(menu_y, menu_x, element)
+            textscr.attroff(curses.color_pair(1))
+
+        else:
+            textscr.addstr(menu_y, menu_x, element)
+
+    textscr.refresh()
+
 
 #def ascii_scan():
 #    f = open("art.txt", "r")
@@ -121,12 +120,18 @@ def curses_main(stdscr):
     stdscr = curses.initscr()
     stdscr.clear()
     stdscr.refresh() 
+    
     # Border for entire terminal
     #stdscr.box()
-            
+
+
+    # Finding Terminal size. Height = y, width = x
+    height, width = stdscr.getmaxyx()
+
     panes(stdscr)
     textscr = panes(stdscr)
     artscr = panes(stdscr)
+    
     # Setup the menu and call menu function
 
     current_row = 0   
@@ -178,5 +183,5 @@ def curses_main(stdscr):
 def main():
    curses.wrapper(curses_main)
 
-# Call the main function
+# Call the 'main' function
 main()
