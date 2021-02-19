@@ -1,11 +1,9 @@
 import curses
 import time
-import os
-import sys
 
 
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
-def panes(stdscr):
+def filler(stdscr):
     
     # Blank the canvas
     stdscr = curses.initscr()
@@ -107,8 +105,6 @@ def menu(textscr, current_row):
 
     textscr.refresh()
 
-class TravelScreen():
-    pass
 
 def travel(artscr):
     art_height, art_width = artscr.getmaxyx()
@@ -181,7 +177,7 @@ def journal(artscr):
 
 # Setting up the wrapper so that we play nice with the terminal
 def main():
-   curses.wrapper(panes)
+   curses.wrapper(filler)
 
 # Call the main function
 main()
