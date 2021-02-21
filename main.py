@@ -1,7 +1,5 @@
 import curses
 import time
-import os
-import sys
 
 
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
@@ -128,9 +126,9 @@ def curses_main(stdscr):
     # Finding Terminal size. Height = y, width = x
     height, width = stdscr.getmaxyx()
 
-    panes(stdscr)
-    textscr = panes(stdscr)
-    artscr = panes(stdscr)
+     
+    textscr, artscr = panes(stdscr)
+    
     
     # Setup the menu and call menu function
 
