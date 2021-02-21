@@ -2,6 +2,19 @@ import curses
 import time
 
 
+MENU_OPTIONS = {
+        0: "travel",
+        1: "explore",
+        2: "interact",
+        3: "character",
+        4: "journal",
+        5: "quit",
+        }
+
+
+ASCII_ENTER = 10
+
+
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
 def filler(stdscr):
     
@@ -35,7 +48,10 @@ def filler(stdscr):
     textscr.refresh()
     
     current_row = 0   
-
+    
+    MENU_OPTIONS[current_row]
+    
+    
     menu(textscr, current_row)
 
     # Menu Loop 
@@ -50,7 +66,7 @@ def filler(stdscr):
             current_row += 1
             artscr.addstr(18, 5, "DOWN KEY PRESSES")
                
-        elif key == curses.KEY_ENTER: #Not working, ref doc says unreliable?
+        elif key == ASCII_ENTER: #Not working, ref doc says unreliable?
            artscr.addstr(17, 5, "ENTER KEY PRESSED")
 
         elif key == ord("t"):
@@ -70,6 +86,11 @@ def filler(stdscr):
 
         elif key == ord("q"):
             break
+
+        elif key == curses.KEY_ENTER and = 5:
+            break
+
+        # menu = {5: "quit"
         
         menu(textscr, current_row)
 
