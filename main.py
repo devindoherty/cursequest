@@ -48,23 +48,22 @@ def filler(stdscr):
     textscr.refresh()
     
     current_row = 0   
-    
-    MENU_OPTIONS[current_row]
-    
+       
     
     menu(textscr, current_row)
 
     # Menu Loop 
     while True:
         key = textscr.getch()
-
+        menu_selection = MENU_OPTIONS[current_row]
+        
         if key == curses.KEY_UP and current_row > 0:
            current_row -= 1
            artscr.addstr(19, 5, "UP KEY PRESSED")
 
         elif key == curses.KEY_DOWN and current_row < 5:
-            current_row += 1
-            artscr.addstr(18, 5, "DOWN KEY PRESSES")
+           current_row += 1
+           artscr.addstr(18, 5, "DOWN KEY PRESSES")
                
         elif key == ASCII_ENTER: #Not working, ref doc says unreliable?
            artscr.addstr(17, 5, "ENTER KEY PRESSED")
@@ -87,10 +86,19 @@ def filler(stdscr):
         elif key == ord("q"):
             break
 
-        elif key == curses.KEY_ENTER and = 5:
-            break
+        if key == ASCII_ENTER and menu_selection == "character":
+            character(artscr)
 
-        # menu = {5: "quit"
+        if key == ASCII_ENTER and menu_selection == "travel":
+           travel(artscr)
+            
+
+        if key == ASCII_ENTER and menu_selection == "interact":
+            interact(textscr)
+
+
+
+        #  = {5: "quit"
         
         menu(textscr, current_row)
 
@@ -157,6 +165,16 @@ def journal(artscr):
     artscr.addstr(5, 3, "JOURNAL ENTRY SKETCH")    
 
 
+
+#class JournalScreen():
+#    __init__():
+#        quest_log = 
+
+
+
+
+
+
 #    # Color Testing
 #    curses.start_color()
 #    curses.use_default_colors()
@@ -201,4 +219,5 @@ def main():
    curses.wrapper(filler)
 
 # Call the main function
-main()
+if __name__ == "__main__":
+    main()
