@@ -63,11 +63,8 @@ def filler(stdscr):
 
         elif key == curses.KEY_DOWN and current_row < 5:
            current_row += 1
-           artscr.addstr(18, 5, "DOWN KEY PRESSES")
+           artscr.addstr(18, 5, "DOWN KEY PRESSED")
                
-        elif key == ASCII_ENTER: #Not working, ref doc says unreliable?
-           artscr.addstr(17, 5, "ENTER KEY PRESSED")
-
         elif key == ord("t"):
             travel(artscr)
 
@@ -86,19 +83,26 @@ def filler(stdscr):
         elif key == ord("q"):
             break
 
-        if key == ASCII_ENTER and menu_selection == "character":
-            character(artscr)
 
         if key == ASCII_ENTER and menu_selection == "travel":
            travel(artscr)
-            
+
+        if key == ASCII_ENTER and menu_selection == "explore":
+            explore(artscr)
 
         if key == ASCII_ENTER and menu_selection == "interact":
             interact(textscr)
 
+        if key == ASCII_ENTER and menu_selection == "character":
+            character(artscr)
+
+        if key == ASCII_ENTER and menu_selection == "journal":
+            journal(artscr)
+        
+        if key == ASCII_ENTER and menu_selection == "quit":
+            break
 
 
-        #  = {5: "quit"
         
         menu(textscr, current_row)
 
