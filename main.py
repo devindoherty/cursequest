@@ -105,7 +105,7 @@ def menu(textscr, current_row):
    
 
 def curses_main(stdscr):
-     # Blank the canvas
+    # Blank the canvas
     stdscr = curses.initscr()
     stdscr.clear()
     stdscr.refresh() 
@@ -134,12 +134,12 @@ def curses_main(stdscr):
         menu_selection = MENU_OPTIONS[current_row]
         
         if key == curses.KEY_UP and current_row > 0:
-           current_row -= 1
-           artscr.addstr(19, 5, "UP KEY PRESSED")
+            current_row -= 1
+            artscr.addstr(19, 5, "UP KEY PRESSED")
 
         elif key == curses.KEY_DOWN and current_row < 5:
-           current_row += 1
-           artscr.addstr(18, 5, "DOWN KEY PRESSED")
+            current_row += 1
+            artscr.addstr(18, 5, "DOWN KEY PRESSED")
                
         elif key == ord("t"):
             travel(artscr)
@@ -161,7 +161,7 @@ def curses_main(stdscr):
 
 
         if key == ASCII_ENTER and menu_selection == "travel":
-           travel(artscr)
+            travel(artscr)
 
         if key == ASCII_ENTER and menu_selection == "explore":
             explore(artscr)
@@ -245,20 +245,7 @@ def journal(artscr):
 #
 #    # Setup the menu and call menu function
 #
-#def ascii_scan():
-#    f = open("art.txt", "r")
-#    print(f.read())
-#
-#    # Reading external files STILL BROKEN ARGHHHH
-#
-#    with open("art.txt", "r", encoding ="utf8") as f:
-#        lines = f.readlines()
-#
-#    for a in lines:
-#        artscr.addstr(20, 5, a.rstrip())
-#        artscr.refresh()
-
-   
+  
 
 # Setting up the wrapper so that we play nice with the terminal
 def main():
