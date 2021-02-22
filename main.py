@@ -1,7 +1,6 @@
 import curses
 import time
 
-
 MENU_OPTIONS = {
         0: "travel",
         1: "explore",
@@ -15,19 +14,11 @@ MENU_OPTIONS = {
 ASCII_ENTER = 10
 
 
+
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
-def filler(stdscr):
-    
-    # Blank the canvas
-    stdscr = curses.initscr()
-    stdscr.clear()
-    stdscr.refresh() 
-    # Border for entire terminal
-    #stdscr.box()
-    
-    # Finding Terminal size. Height = y, width = x
+def panes(stdscr):
     height, width = stdscr.getmaxyx()
-    
+   
     # Finding starting y,x for art and text panes
     art_x = 0
     art_y = 0
@@ -46,7 +37,92 @@ def filler(stdscr):
     textscr.keypad(True)
     textscr.box()
     textscr.refresh()
+
+    return textscr, artscr
     
+# Determining menu placement, formatting menu
+def menu(textscr, current_row):
+    
+    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    
+    text_height, text_width = textscr.getmaxyx()
+
+    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
+
+    for idx, element in enumerate(menu):
+        menu_y = (text_height // 2) + idx  
+        menu_x = (text_width // 2) - (len(element) // 2) 
+
+        if idx == current_row:
+            textscr.attron(curses.color_pair(1))
+            textscr.addstr(menu_y, menu_x, element)
+            textscr.attroff(curses.color_pair(1))
+
+        else:
+            textscr.addstr(menu_y, menu_x, element)
+
+    textscr.refresh()
+
+
+#def ascii_scan():
+#    f = open("art.txt", "r")
+#    print(f.read())
+#
+#    # Reading external files STILL BROKEN ARGHHHH
+#
+#    with open("art.txt", "r", encoding ="utf8") as f:
+#        lines = f.readlines()
+#
+#    for a in lines:
+#        artscr.addstr(20, 5, a.rstrip())
+#        artscr.refresh()
+#
+#
+#    # Color Testing
+#    curses.start_color()
+#    curses.use_default_colors()
+#    for i in range(0, curses.COLORS):
+#        curses.init_pair(i + 1, i, -1)
+#    try:
+#        for i in range(0, 255):
+#           textscr.addstr(str(i), curses.color_pair(i))
+#    except curses.ERR:
+#        pass
+#
+#
+#    # Print our different windows
+#
+#
+#   
+#    # Setup the test window
+#    testscr = curses.newwin(10, 10, 10, 10)
+#    
+#    # Draw a box around the test window and print a string
+#    
+#    testscr.addstr(1, 1, "Mobile Test Window! 1, 2, 3, A, B, C")
+#    testscr.box()
+#    testscr.refresh()
+   
+
+def curses_main(stdscr):
+     # Blank the canvas
+    stdscr = curses.initscr()
+    stdscr.clear()
+    stdscr.refresh() 
+    
+    # Border for entire terminal
+    #stdscr.box()
+
+
+    # Finding Terminal size. Height = y, width = x
+    height, width = stdscr.getmaxyx()
+
+     
+    textscr, artscr = panes(stdscr)
+    
+    
+    # Setup the menu and call menu function
+
     current_row = 0   
        
     
@@ -111,34 +187,6 @@ def filler(stdscr):
 
 
 
-# Determining menu placement, formatting menu
-# menu_y, menu_x placement
-# enumeration for format
-
-def menu(textscr, current_row):
-    
-    curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
-
-
-    text_height, text_width = textscr.getmaxyx()
-
-    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
-
-    for idx, element in enumerate(menu):
-        menu_y = (text_height // 2) + idx  
-        menu_x = (text_width // 2) - (len(element) // 2) 
-
-        if idx == current_row:
-            textscr.attron(curses.color_pair(1))
-            textscr.addstr(menu_y, menu_x, element)
-            textscr.attroff(curses.color_pair(1))
-
-        else:
-            textscr.addstr(menu_y, menu_x, element)
-
-    textscr.refresh()
-
-
 def travel(artscr):
     art_height, art_width = artscr.getmaxyx()
 
@@ -173,12 +221,6 @@ def journal(artscr):
 #class JournalScreen():
 #    __init__():
 #        quest_log = 
-
-
-
-
-
-
 #    # Color Testing
 #    curses.start_color()
 #    curses.use_default_colors()
@@ -220,8 +262,9 @@ def journal(artscr):
 
 # Setting up the wrapper so that we play nice with the terminal
 def main():
-   curses.wrapper(filler)
+   curses.wrapper(curses_main)
 
 # Call the main function
 if __name__ == "__main__":
     main()
+
