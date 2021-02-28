@@ -18,4 +18,4 @@ Most story elements should be handled by a standard choose your own adventure sy
 
 A stats system that tracks maybe Intellect, Might, and Soul, or something along those lines. A skill or perk system on top of that for changing certain game encounters.
 
-A combat system that can take advantage tactical decision making in an attack/defense system.
+Perhaps some kind of basic turn based combat system akin to Liberal Crime Squad.
