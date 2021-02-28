@@ -60,12 +60,12 @@ map_legend = {
         6: ["K", "keep"],
         7: ["C", "city"],
         8: ["H", "hall"],
-        9: ["E", "enclave"],
+        9: ["E", "enclave"]
         }
 
 
 def draw_map(artscr, world_map):
     for row in range(len(world_map)):
         for col in range(len(world_map[row])):
-            artscr.addch(row, col, map_legend[world_map[row]]
+            artscr.addch(row, col, map_legend[world_map[row]])
 

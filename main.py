@@ -1,6 +1,6 @@
 import curses
 import time
-import atlas 
+import atlas
 
 
 MENU_OPTIONS = {
@@ -18,13 +18,13 @@ ASCII_ENTER = 10
 
 # Setting up two windows, one for ASCII art and maps and whatnot, the other for text output/input
 def screens(stdscr):
-	height, width = stdscr.getmaxyx()
-	curses.start_color()
-
+    height, width = stdscr.getmaxyx()
+    curses.start_color()
+    
     # Finding starting y,x for art and text panes
     art_x = 0
     art_y = 0
-    text_x = 0 
+    text_x = 0
     text_y = int((height // 2) + 1)
 
     # Setup the Art Pane with artscr
@@ -51,7 +51,6 @@ def screens(stdscr):
     
 # Determining menu placement, formatting menu
 def menu(textscr, current_row):
-    
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
     
     text_height, text_width = textscr.getmaxyx()
@@ -193,22 +192,20 @@ def journal(artscr):
 
 
 
-#class JournalScreen():
-#    __init__():
-#        quest_log = 
+class JournalScreen:
+    pass
+ 
+class MapScreen:
+    pass
 
-#    # Color Testing
-#    curses.start_color()
-#    curses.use_default_colors()
-#    for i in range(0, curses.COLORS):
-#        curses.init_pair(i + 1, i, -1)
-#    try:
-#        for i in range(0, 255):
-#           textscr.addstr(str(i), curses.color_pair(i))
-#    except curses.ERR:
-#        pass
-#
-#   
+class ExploreScreen:
+    pass
+
+class CharacterScreen:
+    pass
+
+
+  
 #    # Setup the test window
 #    testscr = curses.newwin(10, 10, 10, 10)
 #    
