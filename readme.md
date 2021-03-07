@@ -8,6 +8,8 @@ You are Kryll of Klathia, heir to the Klathian Throne. The Uncrowned King usurpe
 
 The central quest will involve ridding yourself of the cursed sword and reclaiming your throne. Ideally at least a dozen side quests that can tie into the ending of the main quest. At the end of the day, a story that contains numerous branching endings is satisfying and replayable.
 
+An emphasis on crafty, story based solutions to problems rather than pure combat.
+
 ## World
 
 The world will feature a y by x (size to be determined) traversible grid, hopefully with each location having something unique about it.
@@ -18,4 +20,13 @@ Most story elements should be handled by a standard choose your own adventure sy
 
 A stats system that tracks maybe Intellect, Might, and Soul, or something along those lines. A skill or perk system on top of that for changing certain game encounters.
 
-Perhaps some kind of basic turn based combat system akin to Liberal Crime Squad.
+Perhaps some kind of basic turn based combat system akin to Liberal Crime Squad, not a full on roguelike but something intermediate.
+
+## Roadmap
+
+- <span style="color:green">Main Menu selection </span>
+- <span style="color:green">World Map </span>
+- <span style="color:red">Traversible World Map </span>
+- <span style="color:red">Interactive World Elements </span>
+- <span style="color:red">Main quest line </span>
+- <span style="color:red">Combat System </span> 
