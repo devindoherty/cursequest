@@ -24,9 +24,9 @@ Perhaps some kind of basic turn based combat system akin to Liberal Crime Squad,
 
 ## Roadmap
 
-- <span style="color:green">Main Menu selection </span>
-- <span style="color:green">World Map </span>
-- <span style="color:red">Traversible World Map </span>
-- <span style="color:red">Interactive World Elements </span>
-- <span style="color:red">Main quest line </span>
-- <span style="color:red">Combat System </span> 
+- Main Menu selection
+- World Map
+- Traversible World Map
+- Interactive World Elements
+- Main quest line
+- Combat System
