@@ -1,6 +1,6 @@
 import curses
 import time
-import atlas
+import atlas 
 
 
 MENU_OPTIONS = {
@@ -162,8 +162,8 @@ def curses_main(stdscr):
 
 def travel(artscr):
     art_height, art_width = artscr.getmaxyx()
-
     artscr.addstr(art_height // 2, art_width // 2, "YE OLDE MAP OF KLATHIA")
+    world_map = atlas.world_map
     atlas.draw_map(artscr, world_map) 
 
 def explore(artscr):

@@ -43,29 +43,30 @@ world_map = (
         (5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 2, 2, 1, 1, 1, 1),
         (5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1),
         (5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5)
-
-
         )
 
 
 
 
-map_legend = {
-        0: [" ", "empty"],
-        1: [".", "plain"],
-        2: [",", "grassland"],
-        3: ["A", "mountain"],
-        4: ["~", "water"],
-        5: ["t", "forest"],
-        6: ["K", "keep"],
-        7: ["C", "city"],
-        8: ["H", "hall"],
-        9: ["E", "enclave"]
-        }
+#map_legend = {
+#        0: [" ", "empty"],
+#        1: [".", "plain"],
+#        2: [",", "grassland"],
+#        3: ["A", "mountain"],
+#        4: ["~", "water"],
+#        5: ["t", "forest"],
+#        6: ["K", "keep"],
+#        7: ["C", "city"],
+#        8: ["H", "hall"],
+#        9: ["E", "enclave"]
+#        }
+
+map_legend = {0:" ", 1:".", 2:",", 3:"A", 4:"~", 5:"t", 6:"K", 7:"C", 8:"H", 9:"E"}
+
 
 
 def draw_map(artscr, world_map):
     for row in range(len(world_map)):
         for col in range(len(world_map[row])):
-            artscr.addch(row, col, map_legend[world_map[row]])
+            artscr.addch(row, col, map_legend[world_map[row][col]])
 
