@@ -164,7 +164,8 @@ def travel(artscr):
     art_height, art_width = artscr.getmaxyx()
     artscr.addstr(art_height // 2, art_width // 2, "YE OLDE MAP OF KLATHIA")
     world_map = atlas.world_map
-    atlas.draw_map(artscr, world_map) 
+    atlas.draw_map(artscr, world_map)
+    atlas.draw_player_position(artscr, world_map)
 
 def explore(artscr):
     artscr.addstr(4, 3, "EXPLORATION ART")
