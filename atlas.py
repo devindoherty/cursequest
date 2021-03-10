@@ -42,32 +42,10 @@ map_legend = {0:" ", 1:".", 2:",", 3:"A", 4:"~", 5:"t", 6:"K", 7:"C", 8:"H", 9:"
 
 
 def draw_map(artscr, world_map):
+    artscr.refresh()
     for row in range(len(world_map)):
         for col in range(len(world_map[row])):
             artscr.addch(row, col, map_legend[world_map[row][col]])
-        
-def draw_player_position(artscr, world_map):
-    player_y = 11
-    player_x = 11
-    while True:
-        key = curses.artscr.getch()
-        
-        if key == curses.KEY_UP:
-            player_y -= 1
-        
-        elif key == curses.KEY_DOWN:
-            player_y += 1
-        
-        elif key == curses.KEY_LEFT:
-            player_x -= 1
-        
-        elif key == curses.KEY_RIGHT:
-            player_x += 1
-        
-        draw_map(artscr, world_map)
-        artscr.addch(player_y, player_x, "@")
-        artscr.refresh()
-        
-        
-        
 
+def draw_player_position(artscr, player_y, player_x):
+    artscr.addch(player_y, player_x, "@")

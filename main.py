@@ -136,7 +136,7 @@ def curses_main(stdscr):
             artscr.addstr(18, 5, "DOWN KEY PRESSED")
                
         elif key == ord("t") or key == ASCII_ENTER and menu_selection == "travel":
-            travel(artscr)
+            travel(artscr, textscr, stdscr)
 
         elif key == ord("e") or key == ASCII_ENTER and menu_selection == "explore":
             explore(artscr)
@@ -160,18 +160,46 @@ def curses_main(stdscr):
 
 
 
-def travel(artscr):
+def travel(textscr, artscr, stdscr):
+    textscr, artscr = screens(stdscr)
     art_height, art_width = artscr.getmaxyx()
-    artscr.addstr(art_height // 2, art_width // 2, "YE OLDE MAP OF KLATHIA")
+    text_height, text_width = textscr.getmaxyx()    
     world_map = atlas.world_map
+    
+    player_y = 11
+    player_x = 11
+    playeryx = player_y, player_x
+
+    artscr.addstr(art_height // 2, art_width // 2, "YE OLDE MAP OF KLATHIA")
+    textscr.addstr(text_height // 2, text_width // 2, "Arrow or WASD Keys to Move")
     atlas.draw_map(artscr, world_map)
-    atlas.draw_player_position(artscr, world_map)
+        
+    while True:
+        key = textscr.getch()
+        
+        if key == curses.KEY_UP:
+            player_y -= 1
+            artscr.addstr(20, 6, "UP KEY PRESSED")
+        
+        elif key == curses.KEY_DOWN:
+            player_y += 1
+        
+        elif key == curses.KEY_LEFT:
+            player_x -= 1
+        
+        elif key == curses.KEY_RIGHT:
+            player_x += 1
+        
+        #atlas.draw_map(artscr, world_map)
+        atlas.draw_player_position(artscr, player_y, player_x)
+        artscr.refresh()
 
 def explore(artscr):
     artscr.addstr(4, 3, "EXPLORATION ART")
 
 def interact(textscr):
-    textscr.erase
+    textscr.erase()
+    textscr.refresh()
     textscr.addstr("INTERACTION OPTIONS MENU")
 
 def character(artscr):
