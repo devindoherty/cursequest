@@ -189,8 +189,12 @@ def travel(textscr, artscr, stdscr):
         
         elif key == curses.KEY_RIGHT:
             player_x += 1
-        
-        #atlas.draw_map(artscr, world_map)
+               
+        elif key == ord("q"):
+            break
+
+ 
+        atlas.draw_map(artscr, world_map)
         atlas.draw_player_position(artscr, player_y, player_x)
         artscr.refresh()
 
