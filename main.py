@@ -3,7 +3,7 @@ import time
 import atlas 
 
 
-MENU_OPTIONS = {
+MENU_CHOICE = {
         0: "travel",
         1: "explore",
         2: "interact",
@@ -50,14 +50,12 @@ def screens(stdscr):
     return textscr, artscr #testscr
     
 # Determining menu placement, formatting menu
-def menu(textscr, current_row):
+def menu(textscr, current_row, menu_options):
     curses.init_pair(1, curses.COLOR_BLACK, curses.COLOR_WHITE)
     
     text_height, text_width = textscr.getmaxyx()
 
-    menu = ["T - Travel", "E - Explore", "I - Interact", "C - Character", "J - Journal", "Q - Quit"]
-
-    for idx, element in enumerate(menu):
+    for idx, element in enumerate(menu_options):
         menu_y = (text_height // 2) + idx  
         menu_x = (text_width // 2) - (len(element) // 2) 
 
@@ -72,7 +70,7 @@ def menu(textscr, current_row):
     textscr.refresh()
 
 
-def scan():
+def draw_art():
     f = open("art.txt", "r")
     print(f.read())
 
@@ -119,14 +117,20 @@ def curses_main(stdscr):
     # Setup the menu and call menu function
 
     current_row = 0   
-        
-    menu(textscr, current_row)
+    menu_options = ["T - Travel",
+                    "E - Explore",
+                    "I - Interact", 
+                    "C - Character", 
+                    "J - Journal", 
+                    "Q - Quit"]
+    
+    menu(textscr, current_row, menu_options)
 
     # Menu Loop 
     while True:
         key = textscr.getch()
-        menu_selection = MENU_OPTIONS[current_row]
-        
+        menu_selection = MENU_CHOICE[current_row]
+          
         if key == curses.KEY_UP and current_row > 0:
             current_row -= 1
             artscr.addstr(19, 5, "UP KEY PRESSED")
@@ -153,13 +157,13 @@ def curses_main(stdscr):
         elif key == ord("q") or key == ASCII_ENTER and menu_selection == "quit":
             break
 
-        menu(textscr, current_row)
+        menu(textscr, current_row, menu_options)
 
         textscr.refresh()
         artscr.refresh()
 
 
-
+# Handles setting up the world map from atlas.py
 def travel(textscr, artscr, stdscr):
     textscr, artscr = screens(stdscr)
     art_height, art_width = artscr.getmaxyx()
@@ -172,6 +176,7 @@ def travel(textscr, artscr, stdscr):
 
     artscr.addstr(art_height // 2, art_width // 2, "YE OLDE MAP OF KLATHIA")
     textscr.addstr(text_height // 2, text_width // 2, "Arrow or WASD Keys to Move")
+    textscr.addstr(text_height // 2 + 1, text_width //2, "Q to return to Main Menu")
     atlas.draw_map(artscr, world_map)
         
     while True:
@@ -191,6 +196,7 @@ def travel(textscr, artscr, stdscr):
             player_x += 1
                
         elif key == ord("q"):
+            textscr.clear()
             break
 
  
@@ -204,6 +210,26 @@ def explore(artscr):
 def interact(textscr):
     textscr.erase()
     textscr.refresh()
+    
+    current_row = 0
+    menu_selection = MENU_CHOICE[current_row]
+    menu_options = ["Talk",
+                    "Fight",
+                    "Explore"]
+   
+    menu(textscr, current_row, menu_options)
+    
+
+    while True:
+        key = textscr.getch()
+
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+            
+        elif key == curses.KEY_DOWN and current_row < 5:
+            current_row += 1
+            
+
     textscr.addstr("INTERACTION OPTIONS MENU")
 
 def character(artscr):

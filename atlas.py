@@ -1,5 +1,5 @@
 import curses
-from main import screens
+#from main import screens
 
 world_map = (
         (3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3),
