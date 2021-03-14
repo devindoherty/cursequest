@@ -70,13 +70,13 @@ def menu(textscr, current_row, menu_options):
     textscr.refresh()
 
 
-def draw_art(artscr):
-    f = open("art.txt", "r")
+def draw_art(artscr, ascii_art):
+    f = open(ascii_art, "r")
     print(f.read())
 
     # Reading external files STILL BROKEN ARGHHHH
 
-    with open("art.txt", "r", encoding ="utf8") as f:
+    with open(ascii_art, "r", encoding ="utf8") as f:
         lines = f.readlines()
 
     for a in lines:
@@ -248,29 +248,56 @@ def character(textscr, artscr):
     menu(textscr, current_row, menu_options)
 
     def character_status():
-        ability_scores = base, modifiers, bonus
+        ability_score = base, modifiers, bonus
         base = 0
         modifers = 0
         bonus = 0
 
-        Body = statistic #Covers strength and speed
-        Mind = statistic #Knowledge and wisdom
-        Soul = statistic #Personality and charisma
+        Body = ability_score #Covers strength and speed
+        Mind = ability_score #Knowledge and wisdom
+        Soul = ability_score #Personality and charisma
+        
+        skill = base, modifiers, bonus
+        
+        
+        Blades
+        Archery
+        Diplomacy
+        Stealth
 
     while True:
         key = textscr.getch()
 
         if key == ord("s"):
-            artscr.addstr((art_height // 2) + 1, (art_width // 2), "-------------")
-            artscr.addstr((art_height // 2) + 2, (art_width // 2), " __________ \n")
-            artscr.addstr((art_height // 2) + 3, (art_width // 2), "/          \ \n")
-            artscr.addstr((art_height // 2) + 4, (art_width // 2), "|  o    o  | \n")
-            artscr.addstr((art_height // 2) + 5, (art_width // 2), "|     >    | \n")
-            artscr.addstr((art_height // 2) + 6, (art_width // 2), "|    ___   | \n")
-            artscr.addstr((art_height // 2) + 7, (art_width // 2), "|          | \n")
-            artscr.addstr((art_height // 2) + 8, (art_width // 2), " \ ______ /  \n")
-            artscr.addstr((art_height // 2) + 9, (art_width // 2), "-------------\n")
-            artscr.addstr((art_height // 2) + 10, (art_width // 2),"KRYLL the KLATHIAN\n")
+            
+            Kryll_face = (
+                         ("-------------"),
+                         (" __________ \n"),
+                         ("/          \ \n"),
+                         ("|  o    o  | \n"),
+                         ("|     >    | \n"),
+                         ("|    ___   | \n"),
+                         ("|          | \n"),
+                         (" \ ______ /  \n"),
+                         ("-------------\n"),
+                         ("KRYLL the KLATHIAN\n")
+            )                
+            
+            for row in range(len(kryll_face)):
+                for col in range(len(kryll_face[row])):
+                    artscr.addch(row, col, kryll_face[row][column])
+            
+            
+            #artscr.addstr((art_height // 2) + 1, (art_width // 2), "-------------")
+            #artscr.addstr((art_height // 2) + 2, (art_width // 2), " __________ \n")
+            #artscr.addstr((art_height // 2) + 3, (art_width // 2), "/          \ \n")
+            #artscr.addstr((art_height // 2) + 4, (art_width // 2), "|  o    o  | \n")
+            #artscr.addstr((art_height // 2) + 5, (art_width // 2), "|     >    | \n")
+            #artscr.addstr((art_height // 2) + 6, (art_width // 2), "|    ___   | \n")
+            #artscr.addstr((art_height // 2) + 7, (art_width // 2), "|          | \n")
+            #artscr.addstr((art_height // 2) + 8, (art_width // 2), " \ ______ /  \n")
+            #artscr.addstr((art_height // 2) + 9, (art_width // 2), "-------------\n")
+            #artscr.addstr((art_height // 2) + 10, (art_width // 2),"KRYLL the KLATHIAN\n")
 
         if key == ord("c"):
             character_status()
