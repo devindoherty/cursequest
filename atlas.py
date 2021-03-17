@@ -1,5 +1,5 @@
-import curses
-#from main import screens
+
+
 
 world_map = (
         (3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3),
@@ -59,3 +59,12 @@ def draw_map(artscr, world_map):
 
 def draw_player_position(artscr, player_y, player_x):
     artscr.addch(player_y, player_x, "@")
+
+
+def site_info(textscr):
+    site_summary
+    site_art
+    site_characters
+    site_locations
+    
+

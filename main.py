@@ -20,6 +20,7 @@ ASCII_ENTER = 10
 def screens(stdscr):
     height, width = stdscr.getmaxyx()
     curses.start_color()
+    curses.use_default_colors()
 
     # Finding starting y,x for art and text panes
     art_x = 0
@@ -29,14 +30,13 @@ def screens(stdscr):
 
     # Setup the Art Pane with artscr
     artscr = curses.newwin(int(height // 2) - 1, width, art_y, art_x)
-    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
-    artscr.addstr(1, 1, "This is the Art Window", curses.color_pair(2))
+    artscr.addstr(1, 1, "This is the Art Window")
     artscr.box()
     artscr.refresh()
 
     # Setup the Text Pane with textscr
     textscr = curses.newwin(int((height // 2) - 1) , width, text_y, text_x)
-    textscr.addstr(1, 1, "This is the Text Window", curses.color_pair(2))
+    textscr.addstr(1, 1, "This is the Text Window")
     textscr.keypad(True)
     textscr.box()
     textscr.refresh()
@@ -56,8 +56,8 @@ def menu(textscr, current_row, menu_options):
     text_height, text_width = textscr.getmaxyx()
 
     for idx, element in enumerate(menu_options):
-        menu_y = (text_height // 2) + idx  
-        menu_x = (text_width // 2) - (len(element) // 2) 
+        menu_y = (text_height // 2) + idx
+        menu_x = (text_width // 2) - (len(element) // 2)
 
         if idx == current_row:
             textscr.attron(curses.color_pair(1))
@@ -74,8 +74,6 @@ def draw_art(artscr, ascii_art):
     f = open(ascii_art, "r")
     print(f.read())
 
-    # Reading external files STILL BROKEN ARGHHHH
-
     with open(ascii_art, "r", encoding ="utf8") as f:
         lines = f.readlines()
 
@@ -85,18 +83,16 @@ def draw_art(artscr, ascii_art):
 
 
 # Color Testing
-def color_test(textscr):
-    curses.start_color()
-    curses.use_default_colors()
-    for i in range(0, curses.COLORS):
-        curses.init_pair(i + 1, i, -1)
-    try:
-        for i in range(0, 255):
-           textscr.addstr(str(i), curses.color_pair(i))
-    except curses.ERR:
-        pass
+#def color_test(textscr):
+#    for i in range(0, curses.COLORS):
+#        curses.init_pair(i + 1, i, -1)
+#    try:
+#        for i in range(0, 255):
+#           textscr.addstr(str(i), curses.color_pair(i))
+#    except curses.ERR:
+#        pass
 
-   
+
 def curses_main(stdscr):
     # Blank the canvas
     stdscr = curses.initscr()
@@ -112,7 +108,7 @@ def curses_main(stdscr):
 
     textscr, artscr = screens(stdscr)
 
-    color_test(textscr)
+
 
     # Setup the menu and call menu function
 
@@ -126,7 +122,7 @@ def curses_main(stdscr):
 
     menu(textscr, current_row, menu_options)
 
-    # Menu Loop 
+    # Main Menu Loop 
     while True:
         key = textscr.getch()
         menu_selection = MENU_CHOICE[current_row]
@@ -182,17 +178,16 @@ def travel(textscr, artscr, stdscr):
     while True:
         key = textscr.getch()
 
-        if key == curses.KEY_UP:
+        if key == curses.KEY_UP or key == ord("w"):
             player_y -= 1
-            artscr.addstr(20, 6, "UP KEY PRESSED")
 
-        elif key == curses.KEY_DOWN:
+        elif key == curses.KEY_DOWN or key == ord("s"):
             player_y += 1
 
-        elif key == curses.KEY_LEFT:
+        elif key == curses.KEY_LEFT or key == ord("a"):
             player_x -= 1
 
-        elif key == curses.KEY_RIGHT:
+        elif key == curses.KEY_RIGHT or key == ord("d"):
             player_x += 1
 
         elif key == ord("q"):
@@ -208,16 +203,31 @@ def explore(artscr):
     artscr.addstr(4, 3, "EXPLORATION ART")
 
 def interact(textscr):
-    textscr.erase()
     textscr.refresh()
 
     current_row = 0
     menu_selection = MENU_CHOICE[current_row]
     menu_options = ["Talk",
                     "Fight",
-                    "Explore"]
+                    "Explore",
+                    "Back"]
+
 
     menu(textscr, current_row, menu_options)
+    while True:
+        key = textscr.getch()
+
+        if key == curses.KEY_UP:
+            current_row  -= 1
+
+        if key == curses.KEY_DOWN:
+            current_row += 1
+
+        menu(textscr, current_row, menu_options)
+        textscr.refresh()
+
+
+
 
 
     while True:
@@ -234,11 +244,11 @@ def interact(textscr):
 
     textscr.addstr("INTERACTION OPTIONS MENU")
 
-def character(textscr, artscr):
+def character(artscr, textscr):
     art_height, art_width = artscr.getmaxyx()
     text_height, text_width = textscr.getmaxyx()
-    current_row = 0
 
+    current_row = 0
     menu_selection = MENU_CHOICE[current_row]
     menu_options = ["Inventory",
                     "Stats",
@@ -249,28 +259,36 @@ def character(textscr, artscr):
 
     def character_status():
         ability_score = base, modifiers, bonus
-        base = 0
+        base = 25
         modifers = 0
         bonus = 0
 
         Body = ability_score #Covers strength and speed
         Mind = ability_score #Knowledge and wisdom
         Soul = ability_score #Personality and charisma
-        
+
         skill = base, modifiers, bonus
-        
-        
-        Blades
-        Archery
-        Diplomacy
-        Stealth
+
+
+        Swordsmanship = skill
+        Archery = skill
+        Speechcraft = skill
+        Shadowplay = skill
+        Survival = skill
+        Sorcery = skill
+
+
+        while True:
+            addstr(text_height // 2, text_width // 2, "Kryll of Klathia")
+            addstr(text_height // 2 + 1, text_width // 2, "Level 1 Exile")
+            addstr(text_height // 2 + 2, text_wdith // 2, Body[0])
 
     while True:
         key = textscr.getch()
 
         if key == ord("s"):
-            
-            Kryll_face = (
+
+            kryll_face = (
                          ("-------------"),
                          (" __________ \n"),
                          ("/          \ \n"),
@@ -281,13 +299,13 @@ def character(textscr, artscr):
                          (" \ ______ /  \n"),
                          ("-------------\n"),
                          ("KRYLL the KLATHIAN\n")
-            )                
-            
+            )
+
             for row in range(len(kryll_face)):
                 for col in range(len(kryll_face[row])):
                     artscr.addch(row, col, kryll_face[row][column])
-            
-            
+
+
             #artscr.addstr((art_height // 2) + 1, (art_width // 2), "-------------")
             #artscr.addstr((art_height // 2) + 2, (art_width // 2), " __________ \n")
             #artscr.addstr((art_height // 2) + 3, (art_width // 2), "/          \ \n")
@@ -308,7 +326,8 @@ def character(textscr, artscr):
 
 
 def journal(artscr):
-    draw_art(artscr)
+    ascii_art = art.txt
+    draw_art(artscr, ascii_art)
 
 
 
