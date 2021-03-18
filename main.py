@@ -31,15 +31,20 @@ def screens(stdscr):
     # Setup the Art Pane with artscr
     artscr = curses.newwin(int(height // 2) - 1, width, art_y, art_x)
     artscr.addstr(1, 1, "This is the Art Window")
-    artscr.box()
+    #artscr.box()
     artscr.refresh()
 
+
+
     # Setup the Text Pane with textscr
-    textscr = curses.newwin(int((height // 2) - 1) , width, text_y, text_x)
+    textscr = curses.newwin(int(height // 2) - 1 , width, text_y, text_x)
     textscr.addstr(1, 1, "This is the Text Window")
     textscr.keypad(True)
-    textscr.box()
+    #textscr.box()
     textscr.refresh()
+
+
+
 
 #    # Setup the test window
 #    testscr = curses.newwin(10, 10, 10, 10)
@@ -47,7 +52,89 @@ def screens(stdscr):
 #    testscr.box()
 #    testscr.refresh()
 
-    return textscr, artscr #testscr
+    return artscr, textscr #testscr
+
+
+def window_screens(stdscr):
+    height, width = stdscr.getmaxyx()
+    art_x = 0
+    art_y = 0
+    text_x = 0
+    text_y = int((height // 2) + 1)
+
+    artwinscr = curses.newwin(int(height // 2) - 1, width, art_y, art_x)
+    artwinscr.box()
+    artwinscr.refresh()
+
+    textwinscr = curses.newwin(int(height // 2) - 1, width, text_y, text_x)
+    textwinscr.box()
+    textwinscr.refresh()
+
+    return artwinscr, textwinscr
+
+def curses_main(stdscr):
+    # Blank the canvas
+    stdscr = curses.initscr()
+    stdscr.clear()
+    stdscr.refresh()
+
+    artwinscr, textwinscr = window_screens(stdscr)
+    artwinscr.refresh()
+    textwinscr.refresh()
+
+    # Finding Terminal size. Height = y, width = x
+    height, width = stdscr.getmaxyx()
+
+    artscr, textscr = screens(stdscr)
+
+    # Setup the menu and call menu function
+
+    current_row = 0   
+    menu_options = ["T - Travel",
+                    "E - Explore",
+                    "I - Interact",
+                    "C - Character",
+                    "J - Journal",
+                    "Q - Quit"]
+
+    menu(textscr, current_row, menu_options)
+
+    # Main Menu Loop 
+    while True:
+        key = textscr.getch()
+        menu_selection = MENU_CHOICE[current_row]
+
+        if key == curses.KEY_UP and current_row > 0:
+            current_row -= 1
+            artscr.addstr(19, 5, "UP KEY PRESSED")
+
+        elif key == curses.KEY_DOWN and current_row < 5:
+            current_row += 1
+            artscr.addstr(18, 5, "DOWN KEY PRESSED")
+
+        elif key == ord("t") or key == ASCII_ENTER and menu_selection == "travel":
+            travel(stdscr, artscr, textscr)
+
+        elif key == ord("e") or key == ASCII_ENTER and menu_selection == "explore":
+            explore(artscr, stdscr)
+
+        elif key == ord("i") or key == ASCII_ENTER and menu_selection == "interact":
+            interact(stdscr, textscr)
+
+        elif key == ord("c") or key == ASCII_ENTER and menu_selection == "character":
+            character(artscr, textscr)
+
+        elif key == ord("j") or key == ASCII_ENTER and menu_selection == "journal":
+            journal(stdscr, artscr)
+
+        elif key == ord("q") or key == ASCII_ENTER and menu_selection == "quit":
+            break
+
+        menu(textscr, current_row, menu_options)
+
+        textscr.refresh()
+        artscr.refresh()
+
 
 # Determining menu placement, formatting menu
 def menu(textscr, current_row, menu_options):
@@ -92,76 +179,8 @@ def draw_art(artscr, ascii_art):
 #    except curses.ERR:
 #        pass
 
-
-def curses_main(stdscr):
-    # Blank the canvas
-    stdscr = curses.initscr()
-    stdscr.clear()
-    stdscr.refresh()
-
-    # Border for entire terminal
-    #stdscr.box()
-
-
-    # Finding Terminal size. Height = y, width = x
-    height, width = stdscr.getmaxyx()
-
-    textscr, artscr = screens(stdscr)
-
-
-
-    # Setup the menu and call menu function
-
-    current_row = 0   
-    menu_options = ["T - Travel",
-                    "E - Explore",
-                    "I - Interact",
-                    "C - Character",
-                    "J - Journal",
-                    "Q - Quit"]
-
-    menu(textscr, current_row, menu_options)
-
-    # Main Menu Loop 
-    while True:
-        key = textscr.getch()
-        menu_selection = MENU_CHOICE[current_row]
-
-        if key == curses.KEY_UP and current_row > 0:
-            current_row -= 1
-            artscr.addstr(19, 5, "UP KEY PRESSED")
-
-        elif key == curses.KEY_DOWN and current_row < 5:
-            current_row += 1
-            artscr.addstr(18, 5, "DOWN KEY PRESSED")
-
-        elif key == ord("t") or key == ASCII_ENTER and menu_selection == "travel":
-            travel(artscr, textscr, stdscr)
-
-        elif key == ord("e") or key == ASCII_ENTER and menu_selection == "explore":
-            explore(artscr)
-
-        elif key == ord("i") or key == ASCII_ENTER and menu_selection == "interact":
-            interact(textscr)
-
-        elif key == ord("c") or key == ASCII_ENTER and menu_selection == "character":
-            character(artscr, textscr)
-
-        elif key == ord("j") or key == ASCII_ENTER and menu_selection == "journal":
-            journal(artscr)
-
-        elif key == ord("q") or key == ASCII_ENTER and menu_selection == "quit":
-            break
-
-        menu(textscr, current_row, menu_options)
-
-        textscr.refresh()
-        artscr.refresh()
-
-
-
-def travel(textscr, artscr, stdscr):
-    textscr, artscr = screens(stdscr)
+def travel(stdscr, artscr, textscr):
+    artscr, textscr = screens(stdscr)
     art_height, art_width = artscr.getmaxyx()
     text_height, text_width = textscr.getmaxyx()
     world_map = atlas.world_map
@@ -191,7 +210,8 @@ def travel(textscr, artscr, stdscr):
             player_x += 1
 
         elif key == ord("q"):
-            textscr.clear()
+            textscr.erase()
+            textscr.refresh()
             break
 
 
@@ -199,37 +219,25 @@ def travel(textscr, artscr, stdscr):
         atlas.draw_player_position(artscr, player_y, player_x)
         artscr.refresh()
 
-def explore(artscr):
-    artscr.addstr(4, 3, "EXPLORATION ART")
+def explore(artscr, stdscr):
+    artscr, textscr = screens(stdscr)
+    art_height, art_width = artscr.getmaxyx()
+    text_height, text_width = textscr.getmaxyx()
 
-def interact(textscr):
-    textscr.refresh()
+def interact(stdscr, textscr):
+    artscr, textscr = screens(stdscr)
+    art_height, art_width = artscr.getmaxyx()
+    text_height, text_width = textscr.getmaxyx()
 
     current_row = 0
     menu_selection = MENU_CHOICE[current_row]
-    menu_options = ["Talk",
-                    "Fight",
-                    "Explore",
-                    "Back"]
+    menu_options = ["S - Speak",
+                    "F - Fight",
+                    "E - Explore",
+                    "B - Back"]
 
 
     menu(textscr, current_row, menu_options)
-    while True:
-        key = textscr.getch()
-
-        if key == curses.KEY_UP:
-            current_row  -= 1
-
-        if key == curses.KEY_DOWN:
-            current_row += 1
-
-        menu(textscr, current_row, menu_options)
-        textscr.refresh()
-
-
-
-
-
     while True:
         key = textscr.getch()
 
@@ -239,12 +247,25 @@ def interact(textscr):
         elif key == curses.KEY_DOWN and current_row < 5:
             current_row += 1
 
+        elif key == ord("s"):
+            pass
+
+        elif key == ord("f"):
+            pass
+
+        elif key == ord("e"):
+            pass
+
+        elif key == ord("b"):
+            pass
+
 
         menu(textscr, current_row, menu_options)
 
     textscr.addstr("INTERACTION OPTIONS MENU")
 
 def character(artscr, textscr):
+    artscr, textscr = screens(stdscr)
     art_height, art_width = artscr.getmaxyx()
     text_height, text_width = textscr.getmaxyx()
 
@@ -325,7 +346,11 @@ def character(artscr, textscr):
 
 
 
-def journal(artscr):
+def journal(stdscr, artscr):
+    artscr, textscr = screens(stdscr)
+    art_height, art_width = artscr.getmaxyx()
+    text_height, text_width = textscr.getmaxyx()
+
     ascii_art = art.txt
     draw_art(artscr, ascii_art)
 
