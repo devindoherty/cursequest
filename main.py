@@ -29,22 +29,17 @@ def screens(stdscr):
     text_y = int((height // 2) + 1)
 
     # Setup the Art Pane with artscr
-    artscr = curses.newwin(int(height // 2) - 1, width, art_y, art_x)
-    artscr.addstr(1, 1, "This is the Art Window")
+    artscr = curses.newwin(int(height // 2) - 3, width - 2, art_y + 1, art_x + 1)
     #artscr.box()
     artscr.refresh()
 
 
 
     # Setup the Text Pane with textscr
-    textscr = curses.newwin(int(height // 2) - 1 , width, text_y, text_x)
-    textscr.addstr(1, 1, "This is the Text Window")
+    textscr = curses.newwin(int(height // 2) - 3, width - 2, text_y + 1, text_x + 1)
     textscr.keypad(True)
     #textscr.box()
     textscr.refresh()
-
-
-
 
 #    # Setup the test window
 #    testscr = curses.newwin(10, 10, 10, 10)
@@ -55,7 +50,7 @@ def screens(stdscr):
     return artscr, textscr #testscr
 
 
-def window_screens(stdscr):
+def border_screens(stdscr):
     height, width = stdscr.getmaxyx()
     art_x = 0
     art_y = 0
@@ -78,7 +73,7 @@ def curses_main(stdscr):
     stdscr.clear()
     stdscr.refresh()
 
-    artwinscr, textwinscr = window_screens(stdscr)
+    artwinscr, textwinscr = border_screens(stdscr)
     artwinscr.refresh()
     textwinscr.refresh()
 
@@ -89,7 +84,7 @@ def curses_main(stdscr):
 
     # Setup the menu and call menu function
 
-    current_row = 0   
+    current_row = 0
     menu_options = ["T - Travel",
                     "E - Explore",
                     "I - Interact",
@@ -134,7 +129,6 @@ def curses_main(stdscr):
 
         textscr.refresh()
         artscr.refresh()
-
 
 # Determining menu placement, formatting menu
 def menu(textscr, current_row, menu_options):
