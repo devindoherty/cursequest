@@ -1,18 +1,37 @@
-struct _Menu {
-    items: Vec<_MenuItem>,
+use bracket_lib as bracket;
+use bracket::prelude::*;
+
+pub struct Menu {
+    pub items: Vec<MenuItem>,
 }
 
-struct _MenuItem {
-    display_name: String,
+pub struct MenuItem {
+    pub display_name: String,
 }
 
-impl _Menu {
-    fn _new() -> () //Menu
-    {
-
+impl Menu {
+    pub fn new() -> Menu {
+        let menu = Menu { items: Vec::new() };
+        menu
     }
 
-    fn _draw(&self){
+    pub fn update(&mut self, item: MenuItem) {
+        self.items.pop();
+    }
 
+    pub fn draw(&mut self, ctx: &mut BTerm) {
+        // for item in &self.items {
+        //     println!("{}", item.display_name);
+        let mut y = 42;
+        for item in &self.items {
+            ctx.print_color(
+                1, y, 
+                RGB::named(WHITE), RGB::named(BLACK), 
+                item.display_name.to_string()
+            );
+            y += 1;
+        }
+    
     }
 }
+

@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::Read;
+use std::io::{BufRead, BufReader, Read};
 use std::path::Path;
 
 use bracket_lib as bracket;
@@ -13,6 +13,7 @@ mod map;
 use map::Map;
 
 mod menu;
+use menu::{Menu, MenuItem};
 
 mod player;
 use player::Player;
@@ -23,6 +24,8 @@ struct State {
     run_mode: RunMode,
     // encounters: Vec<Encounter>,
     current_encounter: Encounter,
+    menu_manager: Menu,
+    art: Vec<String>,
 }
 
 
@@ -54,7 +57,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
             }
         }
     }  
-    else {
+    else if gs.run_mode == RunMode::Running {
         match ctx.key {
             None => {}
             Some(key) => match key {
@@ -70,7 +73,8 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 }
 
 fn update(gs: &mut State) {
-    println!("Player Position (x: {}, y: {}", gs.player.x, gs.player.y);
+    // println!("Player Position (x: {}, y: {})", gs.player.x, gs.player.y);
+    // gs.menu_manager.draw();
 }
 
 fn render(gs: &mut State, ctx: &mut BTerm) {
@@ -101,20 +105,34 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         block.render_to_draw_batch(&mut draw_batch);
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
+        let mut y = 25;
+        for line in &gs.art {
+            ctx.print_color(
+                30, y, 
+                RGB::named(WHITE), RGB::named(BLACK), 
+                line.to_string()
+            );
+            y += 1;
+        }
     }
-    else { // gs.run_mode == RunMode::Running {
+    else if gs.run_mode == RunMode::Running {
         ctx.cls();
         Map::draw(&gs.map.atlas, ctx);
         Player::draw(&gs.player, ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
+        ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "TESTING");
+        gs.menu_manager.draw(ctx);
     }
 }
 
-fn load_ascii_art(art: &Path) -> std::io::Result<Vec<u8>> {
+fn load_ascii_art(art: &str) -> Vec<String> {
     let mut file = File::open(art).expect("Error opening file!");
-    let mut data = Vec::new();
-    file.read_to_end(&mut data).expect("Error reading file!");
-    Ok(data)
+    let reader = BufReader::new(file);
+    
+    // for line in reader.lines() {
+    //     println!("{}", line?);
+    // }
+    reader.lines().map(|line| line.unwrap()).collect::<Vec<String>>()
 }
 
 fn main() -> BError {
@@ -163,6 +181,23 @@ fn main() -> BError {
     };
 
     // let act1 = vec![introduction];
+    let menu_item_one = MenuItem {
+        display_name: String::from("Menu Item One"),
+    };
+
+    let menu_item_two = MenuItem {
+        display_name: String::from("Menu Item Two"),
+    };
+
+    let menu_item_three = MenuItem {
+        display_name: String::from("Menu Item Three"),
+    };
+
+    let main_menu = Menu {
+        items: vec![menu_item_one, menu_item_two, menu_item_three],
+    };
+
+    let mut king = load_ascii_art("assets/king.txt");
 
     let gs: State = State {
         player: player,
@@ -170,9 +205,11 @@ fn main() -> BError {
         run_mode: RunMode::Intro,
         // encounters: act1,
         current_encounter: introduction,
+        menu_manager: main_menu,
+        art: king,
     };
 
-    let king = load_ascii_art(Path::new("assets/king.txt"));
+    
     // println!("{:?}", king);
     main_loop(context, gs)
 }
