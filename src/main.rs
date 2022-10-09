@@ -1,13 +1,12 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader, Read};
-use std::path::Path;
-
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
 mod encounter;
 use encounter::Encounter;
 use encounter::Kind;
+
+mod art;
+use art::*;
 
 mod map;
 use map::Map;
@@ -24,7 +23,7 @@ struct State {
     run_mode: RunMode,
     // encounters: Vec<Encounter>,
     current_encounter: Encounter,
-    menu_manager: Menu,
+    menu: Menu,
     art: Vec<String>,
 }
 
@@ -32,11 +31,11 @@ struct State {
 #[derive(PartialEq)]
 enum RunMode {
     Intro,
-    Chargen, 
+    // Chargen, 
     Running, 
     Waiting, 
-    Menu, 
-    Cinematic
+    Prompting, 
+    Scence
 }
 
 impl GameState for State {
@@ -48,6 +47,7 @@ impl GameState for State {
 }
 
 fn input(gs: &mut State, ctx: &mut BTerm) {
+    let mut player = &mut gs.player;
     if gs.run_mode == RunMode::Intro {
         match ctx.key {
             None => {}
@@ -56,19 +56,22 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
               _ => gs.run_mode = RunMode::Running,
             }
         }
-    }  
+    }
     else if gs.run_mode == RunMode::Running {
         match ctx.key {
             None => {}
             Some(key) => match key {
-                VirtualKeyCode::Left => if gs.player.x > 0 {gs.player.x -= 1},
-                VirtualKeyCode::Right => if gs.player.x < 19 {gs.player.x += 1},
-                VirtualKeyCode::Up => if gs.player.y > 0 { gs.player.y -= 1},
-                VirtualKeyCode::Down => if gs.player.y < 19 {gs.player.y += 1},
+                VirtualKeyCode::Left => player.map_move(-1, 0),
+                VirtualKeyCode::Right => player.map_move(1, 0),
+                VirtualKeyCode::Up => player.map_move(0, -1),
+                VirtualKeyCode::Down => player.map_move(0, 1),
                 VirtualKeyCode::Escape => ctx.quit(),
                 _ => {}
             }
         }
+    }
+    else if gs.run_mode == RunMode::Prompting {
+
     }
 }
 
@@ -121,18 +124,8 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         Player::draw(&gs.player, ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "TESTING");
-        gs.menu_manager.draw(ctx);
+        gs.menu.draw(ctx);
     }
-}
-
-fn load_ascii_art(art: &str) -> Vec<String> {
-    let mut file = File::open(art).expect("Error opening file!");
-    let reader = BufReader::new(file);
-    
-    // for line in reader.lines() {
-    //     println!("{}", line?);
-    // }
-    reader.lines().map(|line| line.unwrap()).collect::<Vec<String>>()
 }
 
 fn main() -> BError {
@@ -182,15 +175,23 @@ fn main() -> BError {
 
     // let act1 = vec![introduction];
     let menu_item_one = MenuItem {
-        display_name: String::from("Menu Item One"),
+        display_name: String::from("Travel"),
+        display_char: '1'
     };
 
     let menu_item_two = MenuItem {
-        display_name: String::from("Menu Item Two"),
+        display_name: String::from("Character"),
+        display_char: '2'
     };
 
     let menu_item_three = MenuItem {
-        display_name: String::from("Menu Item Three"),
+        display_name: String::from("Inventory"),
+        display_char: '3'
+    };
+
+    let menu_item_four = MenuItem {
+        display_name: String::from("Journal"),
+        display_char: '4'
     };
 
     let main_menu = Menu {
@@ -205,7 +206,7 @@ fn main() -> BError {
         run_mode: RunMode::Intro,
         // encounters: act1,
         current_encounter: introduction,
-        menu_manager: main_menu,
+        menu: main_menu,
         art: king,
     };
 

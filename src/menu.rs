@@ -7,6 +7,7 @@ pub struct Menu {
 
 pub struct MenuItem {
     pub display_name: String,
+    pub display_char: char,
 }
 
 impl Menu {
@@ -15,8 +16,12 @@ impl Menu {
         menu
     }
 
-    pub fn update(&mut self, item: MenuItem) {
-        self.items.pop();
+    pub fn push(&mut self, item: MenuItem) {
+        self.items.push(item)
+    }
+
+    pub fn pop(&mut self) -> Option<MenuItem>{
+        self.items.pop()
     }
 
     pub fn draw(&mut self, ctx: &mut BTerm) {
@@ -31,7 +36,22 @@ impl Menu {
             );
             y += 1;
         }
-    
     }
+
+    pub fn manage(&mut self, ctx: &mut BTerm) {
+        let mut selected_item = &self.items[0].display_name;
+    }
+
 }
 
+impl MenuItem {
+    
+    pub fn new(name: String, character: char) -> MenuItem {
+        let menu_item = MenuItem {
+            display_name: name,
+            display_char: character,
+        };
+
+        menu_item
+    }
+}

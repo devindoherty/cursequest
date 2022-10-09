@@ -9,11 +9,11 @@ pub struct Player {
 impl Player {
 
     pub fn draw(player: &Player, ctx: &mut BTerm) {
-        ctx.set(player.x, player.y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('@'))
+        ctx.set(player.x, player.y, RGB::named(GREEN), RGB::from_f32(0., 0., 0.), to_cp437('@'))
     }
 
-    pub fn update_player_position(player: &Player, ctx: &mut BTerm) {
-        player.x;
+    pub fn map_move(&mut self, xmv: i32, ymv: i32) {
+        self.x += xmv;
+        self.y += ymv;
     }
-
 }
