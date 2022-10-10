@@ -1,6 +1,6 @@
 # Curse Quest
 
-Curse Quest is a fantasy RPG in Python's wrapper of Curses. The goal is story driven choose your own adventure tale with some stats and roguelike map movement / combat complimented by ASCII art.
+Curse Quest is a fantasy RPG. The goal is story driven choose your own adventure tale with some stats and randomly generated / roguelike-inspired mechanics complimented by ASCII art.
 
 ## Story
 
@@ -8,25 +8,14 @@ You are Kryll of Klathia, heir to the Klathian Throne. The Uncrowned King usurpe
 
 The central quest will involve ridding yourself of the cursed sword and reclaiming your throne. Ideally at least a dozen side quests that can tie into the ending of the main quest. At the end of the day, a story that contains numerous branching endings is satisfying and replayable.
 
-An emphasis on crafty, story based solutions to problems rather than pure combat.
-
 ## World
 
 The world will feature a y by x (size to be determined) traversible grid, hopefully with each location having something unique about it.
 
 ## Systems
 
-Most story elements should be handled by a standard choose your own adventure system, perhaps with some limited parser interaction for naming things or whatnot.
+Most story elements should be handled by a standard choose your own adventure system, perhaps with some limited parser interaction for naming things or whatnot. Character development in story options to reflect what kind of king Kryll is becoming
 
 A stats system that tracks maybe Intellect, Might, and Soul, or something along those lines. A skill or perk system on top of that for changing certain game encounters.
 
-Perhaps some kind of basic turn based combat system akin to Liberal Crime Squad, not a full on roguelike but something intermediate.
-
-## Roadmap
-
-- Main Menu selection
-- World Map
-- Traversible World Map
-- Interactive World Elements
-- Main quest line
-- Combat System
+A combat system with some degree of randomness that utilizes the stats, skills, and perks that the player has selected.
