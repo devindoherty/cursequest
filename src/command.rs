@@ -1,9 +1,12 @@
-pub struct command {}
+use bracket_lib as bracket;
+use bracket::prelude::*;
 
-pub impl command {
-    
-    fn up() {
+pub struct Command {
+    pub key: VirtualKeyCode,
+}
 
+impl Command {
+    pub fn execute() {
+        
     }
-
 }

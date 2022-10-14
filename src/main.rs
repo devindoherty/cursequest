@@ -1,12 +1,15 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
+mod art;
+use art::*;
+
+mod command;
+use command::Command;
+
 mod encounter;
 use encounter::Encounter;
 use encounter::Kind;
-
-mod art;
-use art::*;
 
 mod map;
 use map::Map;
@@ -17,6 +20,7 @@ use menu::{Menu, MenuItem};
 mod player;
 use player::Player;
 
+// Gamestate struct, contains all data to update for game
 struct State {
     player: Player,
     map: Map,
@@ -27,9 +31,10 @@ struct State {
     startmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
+    commands: Vec<Command>,
 }
 
-
+// Different "modes" for the game
 #[derive(PartialEq)]
 enum RunMode {
     Start,
@@ -41,6 +46,7 @@ enum RunMode {
     Scence
 }
 
+// Bracket required implementation for the Gamestate
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
         input(self, ctx);
@@ -49,70 +55,35 @@ impl GameState for State {
     }
 }
 
+// Reads input from the terminal construct and handles the input for updating
 fn input(gs: &mut State, ctx: &mut BTerm) {
     let mut player = &mut gs.player;
-    if gs.run_mode == RunMode::Start {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-                VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-                VirtualKeyCode::Up => gs.startmenu.manage(ctx, VirtualKeyCode::Up),
-                VirtualKeyCode::Down => gs.startmenu.manage(ctx, VirtualKeyCode::Down),
-                VirtualKeyCode::Return => if gs.startmenu.selected == 0 {
-                    gs.run_mode = RunMode::Intro;
-                } else {
-                    ctx.quit();
-                }
-                _ => {}
+    match ctx.key {
+        None => {}
+        Some(key) => match key {
+            VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
+            VirtualKeyCode::Up => gs.startmenu.manage(ctx, VirtualKeyCode::Up),
+            VirtualKeyCode::Down => gs.startmenu.manage(ctx, VirtualKeyCode::Down),
+            VirtualKeyCode::Return => if gs.startmenu.selected == 0 {
+                gs.run_mode = RunMode::Intro;
+            } else {
+                ctx.quit();
             }
-        }
-    }
-    
-    
-    else if gs.run_mode == RunMode::Intro {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-              VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-              _ => gs.run_mode = RunMode::Running,
-            }
-        }
-    }
-    else if gs.run_mode == RunMode::Running {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-                VirtualKeyCode::Left => player.map_move(-1, 0),
-                VirtualKeyCode::Right => player.map_move(1, 0),
-                VirtualKeyCode::Up => player.map_move(0, -1),
-                VirtualKeyCode::Down => player.map_move(0, 1),
-                VirtualKeyCode::Return => gs.run_mode = RunMode::Prompting,
-                VirtualKeyCode::Escape => ctx.quit(),
-                _ => {}
-            }
-        }
-    }
-    else if gs.run_mode == RunMode::Prompting {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-                VirtualKeyCode::Up => gs.menu.manage(ctx, VirtualKeyCode::Up),
-                VirtualKeyCode::Down => gs.menu.manage(ctx, VirtualKeyCode::Down),
-                VirtualKeyCode::Right => println!("Arrow Right"),
-                VirtualKeyCode::Left => println!("Arrow Left"),
-                VirtualKeyCode::Return => gs.run_mode = RunMode::Running,
-                VirtualKeyCode::Escape => ctx.quit(),
-                _ => {}
-            }
+            _ => {}
         }
     }
 }
 
+
+// Plan on reading the command stream from input
 fn update(gs: &mut State) {
+    let mut com = &mut gs.commands;
+    
     // println!("Player Position (x: {}, y: {})", gs.player.x, gs.player.y);
     // gs.menu_manager.draw();
 }
 
+// Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
     let mut draw_batch = DrawBatch::new();
 
@@ -271,6 +242,8 @@ fn main() -> BError {
     let mut king = load_ascii_art("assets/king.txt");
     let mut sword = load_ascii_art("assets/sword.txt");
 
+    let mut com = Vec::new(); 
+
     let gs: State = State {
         player: player,
         map: world_map,
@@ -281,6 +254,7 @@ fn main() -> BError {
         startmenu: start_menu,
         art: king,
         startart: sword,
+        commands: com,
     };
 
     
