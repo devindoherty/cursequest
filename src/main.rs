@@ -31,7 +31,7 @@ struct State {
     startmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
-    commands: Vec<Command>,
+    commands: Vec<String>,
 }
 
 // Different "modes" for the game
@@ -64,6 +64,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
             VirtualKeyCode::Up => gs.startmenu.manage(ctx, VirtualKeyCode::Up),
             VirtualKeyCode::Down => gs.startmenu.manage(ctx, VirtualKeyCode::Down),
+            VirtualKeyCode::Left => VirtualKeyCode::Left.execute(),
             VirtualKeyCode::Return => if gs.startmenu.selected == 0 {
                 gs.run_mode = RunMode::Intro;
             } else {
@@ -77,7 +78,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 
 // Plan on reading the command stream from input
 fn update(gs: &mut State) {
-    let mut com = &mut gs.commands;
+    // let mut com = &mut gs.commands;
     
     // println!("Player Position (x: {}, y: {})", gs.player.x, gs.player.y);
     // gs.menu_manager.draw();
