@@ -27,6 +27,7 @@ struct State {
     startmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
+    log: Vec<String>
 }
 
 
@@ -80,10 +81,22 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
         match ctx.key {
             None => {}
             Some(key) => match key {
-                VirtualKeyCode::Left => player.map_move(-1, 0),
-                VirtualKeyCode::Right => player.map_move(1, 0),
-                VirtualKeyCode::Up => player.map_move(0, -1),
-                VirtualKeyCode::Down => player.map_move(0, 1),
+                VirtualKeyCode::Left => {
+                    player.map_move(-1, 0); 
+                    gs.log.push("You travel west.".to_string());
+                }
+                VirtualKeyCode::Right => {
+                    player.map_move(1, 0); 
+                    gs.log.push("You travel east.".to_string());
+                }
+                VirtualKeyCode::Up => {
+                    player.map_move(0, -1); 
+                    gs.log.push("You travel north.".to_string());
+                }
+                VirtualKeyCode::Down => {
+                    player.map_move(0, 1); 
+                    gs.log.push("You travel south.".to_string());
+                },
                 VirtualKeyCode::Return => gs.run_mode = RunMode::Prompting,
                 VirtualKeyCode::Escape => ctx.quit(),
                 _ => {}
@@ -172,11 +185,20 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move. ENTER to use Menu.");
         gs.menu.draw(ctx);
+        let mut i = 41;
+        for entry in &gs.log {
+            ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
+            i += 1;
+            if i == 62 {
+                i = 41;
+            }
+        }
     }
     else if gs.run_mode == RunMode::Prompting {
         // ctx.cls();
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.");
         gs.menu.draw(ctx);
+        
     }
 }
 
@@ -269,6 +291,8 @@ fn main() -> BError {
     let mut king = load_ascii_art("assets/king.txt");
     let mut sword = load_ascii_art("assets/sword.txt");
 
+    let game_log = Vec::new();
+
     let gs: State = State {
         player: player,
         map: world_map,
@@ -279,6 +303,7 @@ fn main() -> BError {
         startmenu: start_menu,
         art: king,
         startart: sword,
+        log: game_log,
     };
 
     // println!("{:?}", king);
