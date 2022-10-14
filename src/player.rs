@@ -16,11 +16,5 @@ impl Player {
         self.x += xmv;
         self.y += ymv;
     }
-
-    fn check_valid_move(&mut self) -> bool {
-        let valid: bool = true;
-        valid
-    }
-
 }
 

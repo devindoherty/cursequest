@@ -67,8 +67,6 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
             }
         }
     }
-    
-    
     else if gs.run_mode == RunMode::Intro {
         match ctx.key {
             None => {}
@@ -131,7 +129,6 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
         gs.startmenu.draw(ctx);
     }
-
     else if gs.run_mode == RunMode::Intro {
         // println!("{:#?}", ctx.get_char_size());
         ctx.cls();
@@ -177,6 +174,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         gs.menu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prompting {
+        // ctx.cls();
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.");
         gs.menu.draw(ctx);
     }
@@ -283,7 +281,6 @@ fn main() -> BError {
         startart: sword,
     };
 
-    
     // println!("{:?}", king);
     main_loop(context, gs)
 }
