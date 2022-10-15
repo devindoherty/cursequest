@@ -31,7 +31,7 @@ struct State {
     startmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
-    commands: Vec<String>,
+    commands: (), // alt: Vec<Command>,
 }
 
 // Different "modes" for the game
@@ -62,9 +62,10 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
         None => {}
         Some(key) => match key {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-            VirtualKeyCode::Up => gs.startmenu.manage(ctx, VirtualKeyCode::Up),
-            VirtualKeyCode::Down => gs.startmenu.manage(ctx, VirtualKeyCode::Down),
-            VirtualKeyCode::Left => VirtualKeyCode::Left.execute(),
+            VirtualKeyCode::Up => VirtualKeyCode::Up.execute(gs), // gs.startmenu.manage(ctx, VirtualKeyCode::Up),
+            VirtualKeyCode::Down => VirtualKeyCode::Down.execute(gs), // gs.startmenu.manage(ctx, VirtualKeyCode::Down),
+            VirtualKeyCode::Left => VirtualKeyCode::Left.execute(gs),
+            VirtualKeyCode::Right => VirtualKeyCode::Right.execute(gs),
             VirtualKeyCode::Return => if gs.startmenu.selected == 0 {
                 gs.run_mode = RunMode::Intro;
             } else {
@@ -78,10 +79,13 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 
 // Plan on reading the command stream from input
 fn update(gs: &mut State) {
-    // let mut com = &mut gs.commands;
-    
-    // println!("Player Position (x: {}, y: {})", gs.player.x, gs.player.y);
-    // gs.menu_manager.draw();
+    // for command in &gs.commands {
+    //     command;
+    //     println!("Executing {:?}", command)
+    // }
+    let command = gs.commands;
+    command;
+
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -243,7 +247,8 @@ fn main() -> BError {
     let mut king = load_ascii_art("assets/king.txt");
     let mut sword = load_ascii_art("assets/sword.txt");
 
-    let mut com = Vec::new(); 
+    let mut com = ();
+    // let mut com = Vec::new(); 
 
     let gs: State = State {
         player: player,

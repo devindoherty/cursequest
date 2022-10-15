@@ -53,7 +53,7 @@ impl Menu {
         }
     }
 
-    pub fn manage(&mut self, ctx: &mut BTerm, key: VirtualKeyCode) {
+    pub fn manage(&mut self, key: VirtualKeyCode) {
         match key {
             VirtualKeyCode::Up => if self.selected == 0 {} else {
                 self.selected -= 1;
