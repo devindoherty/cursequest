@@ -13,12 +13,19 @@ impl Player {
     }
 
     pub fn map_move(&mut self, xmv: i32, ymv: i32) {
-        self.x += xmv;
-        self.y += ymv;
+        if self.check_valid_move() {
+            self.x += xmv;
+            self.y += ymv;
+        }
+        println!("px: {}, py: {}", self.x, self.y);
     }
 
-    fn _check_valid_move(&mut self) -> bool {
-        let valid: bool = true;
+    fn check_valid_move(&mut self) -> bool {
+        let mut valid: bool = true;
+        if self.x > 19  || self. y > 20{
+            valid = false;
+        }
+
         valid
     }
 

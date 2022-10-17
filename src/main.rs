@@ -7,9 +7,9 @@ use art::*;
 mod command;
 use command::Command;
 
-mod encounter;
-use encounter::Encounter;
-use encounter::Kind;
+// mod encounter;
+// use encounter::Encounter;
+// use encounter::Kind;
 
 mod map;
 use map::Map;
@@ -17,33 +17,24 @@ use map::Map;
 mod menu;
 use menu::{Menu, MenuItem};
 
+mod mode;
+use mode::RunMode;
+
 mod player;
 use player::Player;
 
 // Gamestate struct, contains all data to update for game
-struct State {
+pub struct State {
     player: Player,
     map: Map,
     run_mode: RunMode,
     // encounters: Vec<Encounter>,
-    current_encounter: Encounter,
+    // current_encounter: Encounter,
     menu: Menu,
     startmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
-    commands: (), // alt: Vec<Command>,
-}
-
-// Different "modes" for the game
-#[derive(PartialEq)]
-enum RunMode {
-    Start,
-    Intro,
-    // Chargen, 
-    Running, 
-    Waiting, 
-    Prompting, 
-    Scence
+    commands: Vec<()>,
 }
 
 // Bracket required implementation for the Gamestate
@@ -57,35 +48,38 @@ impl GameState for State {
 
 // Reads input from the terminal construct and handles the input for updating
 fn input(gs: &mut State, ctx: &mut BTerm) {
-    let mut player = &mut gs.player;
     match ctx.key {
         None => {}
         Some(key) => match key {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-            VirtualKeyCode::Up => VirtualKeyCode::Up.execute(gs), // gs.startmenu.manage(ctx, VirtualKeyCode::Up),
-            VirtualKeyCode::Down => VirtualKeyCode::Down.execute(gs), // gs.startmenu.manage(ctx, VirtualKeyCode::Down),
-            VirtualKeyCode::Left => VirtualKeyCode::Left.execute(gs),
-            VirtualKeyCode::Right => VirtualKeyCode::Right.execute(gs),
-            VirtualKeyCode::Return => if gs.startmenu.selected == 0 {
-                gs.run_mode = RunMode::Intro;
-            } else {
-                ctx.quit();
-            }
-            _ => {}
+            VirtualKeyCode::Up => key.execute(gs, ctx), // gs.startmenu.manage(ctx, VirtualKeyCode::Up),
+            VirtualKeyCode::Down => key.execute(gs, ctx), // gs.startmenu.manage(ctx, VirtualKeyCode::Down),
+            VirtualKeyCode::Left => key.execute(gs, ctx),
+            VirtualKeyCode::Right => key.execute(gs, ctx),
+            VirtualKeyCode::Return => key.execute(gs, ctx),
+            _ => key.execute(gs, ctx),
         }
     }
 }
 
 
+
 // Plan on reading the command stream from input
 fn update(gs: &mut State) {
-    // for command in &gs.commands {
-    //     command;
-    //     println!("Executing {:?}", command)
-    // }
-    let command = gs.commands;
-    command;
-
+    if gs.commands.len() >= 1 {
+        for command in &gs.commands {
+            command;
+        }
+    gs.commands.pop();
+    println!("Commands Popped");
+    }
+    else {
+        println!("Empty Commands");
+    }
+    println!("Current RunMode: {:?}", gs.run_mode);
+    // let command = gs.commands;
+    // println!("Update Go. Running {:#?}", command);
+    // command;
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -195,13 +189,13 @@ fn main() -> BError {
         ]
     };
 
-    let introduction = Encounter {
-        name: String::from("The Curse Quest"),
-        // enemies: None,
-        flavor: String::from("Test"),
-        kind: Kind::Story,
-        art: 2
-    };
+    // let introduction = Encounter {
+    //     name: String::from("The Curse Quest"),
+    //     // enemies: None,
+    //     flavor: String::from("Test"),
+    //     kind: Kind::Story,
+    //     art: 2
+    // };
 
     // let act1 = vec![introduction];
     let menu_item_one = MenuItem {
@@ -244,18 +238,18 @@ fn main() -> BError {
     };
 
 
-    let mut king = load_ascii_art("assets/king.txt");
-    let mut sword = load_ascii_art("assets/sword.txt");
+    let king = load_ascii_art("assets/king.txt");
+    let sword = load_ascii_art("assets/sword.txt");
 
-    let mut com = ();
-    // let mut com = Vec::new(); 
+    // let mut com = ();
+    let com = Vec::new(); 
 
     let gs: State = State {
         player: player,
         map: world_map,
         run_mode: RunMode::Start,
         // encounters: act1,
-        current_encounter: introduction,
+        // current_encounter: introduction,
         menu: main_menu,
         startmenu: start_menu,
         art: king,

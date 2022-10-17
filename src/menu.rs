@@ -33,7 +33,7 @@ impl Menu {
         // for item in &self.items {
         //     println!("{}", item.display_name);
         let mut y = 43;
-        let mut i = 0;
+        // let mut i = 0;
         for (pos, item) in self.items.iter().enumerate() {
              if pos == self.selected {
                 ctx.print_color(
@@ -63,7 +63,7 @@ impl Menu {
                 self.selected += 1;
                 println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
-            _ => todo!()
+            _ => {}
         }
     }
 }
