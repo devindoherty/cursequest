@@ -14,10 +14,11 @@ pub struct MapTile {
     x: i32,
     y: i32,
     id: i32,
+    biome: Biome
 }
 
-pub enum MapType {
-    None,
+pub enum Biome {
+    Other,
     Plain,
     Grassland,
     Mountain,
@@ -27,6 +28,7 @@ pub enum MapType {
     City,
     Hall,
     Enclave,
+    Wasteland,
 }
 
 // map_legend = {0:" ",
@@ -55,7 +57,20 @@ impl Map {
                 desc: String::from("A Portion of the Land of Klathia"),
                 x: x,
                 y: y,
-                id: i, 
+                id: i,
+                biome: match c {
+                    '.' => Biome::Plain,
+                    ',' => Biome::Grassland,
+                    'A' | '^' => Biome::Mountain,
+                    '~' => Biome::Water,
+                    'f' | 'F' => Biome::Forest,
+                    'K' => Biome::Keep,
+                    'C' => Biome::City,
+                    'M' => Biome::Hall,
+                    'E' => Biome::Enclave,
+                    'x' => Biome::Wasteland,
+                    _ => Biome::Other,
+                } 
             };
             new_map.atlas.push(tile);
             i += 1;
