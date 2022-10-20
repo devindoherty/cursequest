@@ -1,8 +1,8 @@
-use std::io::{BufRead, BufReader, Read};
+use std::io::{BufRead, BufReader};
 use std::fs::File;
 
 pub fn load_ascii_art(art: &str) -> Vec<String> {
-    let mut file = File::open(art).expect("Error opening file!");
+    let file = File::open(art).expect("Error opening file!");
     let reader = BufReader::new(file);
     
     // for line in reader.lines() {

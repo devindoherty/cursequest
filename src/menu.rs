@@ -33,6 +33,7 @@ impl Menu {
         // for item in &self.items {
         //     println!("{}", item.display_name);
         let mut y = 43;
+        // let mut i = 0;
         for (pos, item) in self.items.iter().enumerate() {
              if pos == self.selected {
                 ctx.print_color(
@@ -52,7 +53,7 @@ impl Menu {
         }
     }
 
-    pub fn manage(&mut self, ctx: &mut BTerm, key: VirtualKeyCode) {
+    pub fn manage(&mut self, key: VirtualKeyCode) {
         match key {
             VirtualKeyCode::Up => if self.selected == 0 {} else {
                 self.selected -= 1;
@@ -62,7 +63,7 @@ impl Menu {
                 self.selected += 1;
                 println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
-            _ => todo!()
+            _ => {}
         }
     }
 }

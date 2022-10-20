@@ -1,12 +1,15 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
-mod encounter;
-use encounter::Encounter;
-use encounter::Kind;
-
 mod art;
 use art::*;
+
+mod command;
+use command::Command;
+
+// mod encounter;
+// use encounter::Encounter;
+// use encounter::Kind;
 
 mod map;
 use map::Map;
@@ -14,15 +17,19 @@ use map::Map;
 mod menu;
 use menu::{Menu, MenuItem};
 
+mod mode;
+use mode::RunMode;
+
 mod player;
 use player::Player;
 
-struct State {
+// Gamestate struct, contains all data to update for game
+pub struct State {
     player: Player,
     map: Map,
     run_mode: RunMode,
     // encounters: Vec<Encounter>,
-    current_encounter: Encounter,
+    // current_encounter: Encounter,
     menu: Menu,
     startmenu: Menu,
     art: Vec<String>,
@@ -30,18 +37,7 @@ struct State {
     log: Vec<String>
 }
 
-
-#[derive(PartialEq)]
-enum RunMode {
-    Start,
-    Intro,
-    // Chargen, 
-    Running, 
-    Waiting, 
-    Prompting, 
-    Scence
-}
-
+// Bracket required implementation for the Gamestate
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
         input(self, ctx);
@@ -50,80 +46,43 @@ impl GameState for State {
     }
 }
 
+// Reads input from the terminal construct and handles the input for updating
 fn input(gs: &mut State, ctx: &mut BTerm) {
-    let mut player = &mut gs.player;
-    if gs.run_mode == RunMode::Start {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-                VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-                VirtualKeyCode::Up => gs.startmenu.manage(ctx, VirtualKeyCode::Up),
-                VirtualKeyCode::Down => gs.startmenu.manage(ctx, VirtualKeyCode::Down),
-                VirtualKeyCode::Return => if gs.startmenu.selected == 0 {
-                    gs.run_mode = RunMode::Intro;
-                } else {
-                    ctx.quit();
-                }
-                _ => {}
-            }
-        }
-    }
-    else if gs.run_mode == RunMode::Intro {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-              VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-              _ => gs.run_mode = RunMode::Running,
-            }
-        }
-    }
-    else if gs.run_mode == RunMode::Running {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-                VirtualKeyCode::Left => {
-                    player.map_move(-1, 0); 
-                    gs.log.push("You travel west.".to_string());
-                }
-                VirtualKeyCode::Right => {
-                    player.map_move(1, 0); 
-                    gs.log.push("You travel east.".to_string());
-                }
-                VirtualKeyCode::Up => {
-                    player.map_move(0, -1); 
-                    gs.log.push("You travel north.".to_string());
-                }
-                VirtualKeyCode::Down => {
-                    player.map_move(0, 1); 
-                    gs.log.push("You travel south.".to_string());
-                },
-                VirtualKeyCode::Return => gs.run_mode = RunMode::Prompting,
-                VirtualKeyCode::Escape => ctx.quit(),
-                _ => {}
-            }
-        }
-    }
-    else if gs.run_mode == RunMode::Prompting {
-        match ctx.key {
-            None => {}
-            Some(key) => match key {
-                VirtualKeyCode::Up => gs.menu.manage(ctx, VirtualKeyCode::Up),
-                VirtualKeyCode::Down => gs.menu.manage(ctx, VirtualKeyCode::Down),
-                VirtualKeyCode::Right => println!("Arrow Right"),
-                VirtualKeyCode::Left => println!("Arrow Left"),
-                VirtualKeyCode::Return => gs.run_mode = RunMode::Running,
-                VirtualKeyCode::Escape => ctx.quit(),
-                _ => {}
-            }
+    match ctx.key {
+        None => {}
+        Some(key) => match key {
+            VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
+            VirtualKeyCode::Up => key.execute(gs, ctx), // gs.startmenu.manage(ctx, VirtualKeyCode::Up),
+            VirtualKeyCode::Down => key.execute(gs, ctx), // gs.startmenu.manage(ctx, VirtualKeyCode::Down),
+            VirtualKeyCode::Left => key.execute(gs, ctx),
+            VirtualKeyCode::Right => key.execute(gs, ctx),
+            VirtualKeyCode::Return => key.execute(gs, ctx),
+            _ => key.execute(gs, ctx),
         }
     }
 }
 
+
+
+// Plan on reading the command stream from input
 fn update(gs: &mut State) {
-    // println!("Player Position (x: {}, y: {})", gs.player.x, gs.player.y);
-    // gs.menu_manager.draw();
+    if gs.commands.len() >= 1 {
+        for command in &gs.commands {
+            command;
+        }
+    gs.commands.pop();
+    println!("Commands Popped");
+    }
+    else {
+        println!("Empty Commands");
+    }
+    println!("Current RunMode: {:?}", gs.run_mode);
+    // let command = gs.commands;
+    // println!("Update Go. Running {:#?}", command);
+    // command;
 }
 
+// Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
     let mut draw_batch = DrawBatch::new();
 
@@ -239,13 +198,13 @@ fn main() -> BError {
         ]
     };
 
-    let introduction = Encounter {
-        name: String::from("The Curse Quest"),
-        // enemies: None,
-        flavor: String::from("Test"),
-        kind: Kind::Story,
-        art: 2
-    };
+    // let introduction = Encounter {
+    //     name: String::from("The Curse Quest"),
+    //     // enemies: None,
+    //     flavor: String::from("Test"),
+    //     kind: Kind::Story,
+    //     art: 2
+    // };
 
     // let act1 = vec![introduction];
     let menu_item_one = MenuItem {
@@ -288,8 +247,11 @@ fn main() -> BError {
     };
 
 
-    let mut king = load_ascii_art("assets/king.txt");
-    let mut sword = load_ascii_art("assets/sword.txt");
+    let king = load_ascii_art("assets/king.txt");
+    let sword = load_ascii_art("assets/sword.txt");
+
+    // let mut com = ();
+    let com = Vec::new(); 
 
     let game_log = Vec::new();
 
@@ -298,12 +260,13 @@ fn main() -> BError {
         map: world_map,
         run_mode: RunMode::Start,
         // encounters: act1,
-        current_encounter: introduction,
+        // current_encounter: introduction,
         menu: main_menu,
         startmenu: start_menu,
         art: king,
         startart: sword,
         log: game_log,
+        commands: com,
     };
 
     // println!("{:?}", king);
