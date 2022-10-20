@@ -27,6 +27,5 @@ impl Player {
         }
         valid
     }
-
 }
 

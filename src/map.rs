@@ -16,7 +16,7 @@ pub struct MapTile {
 }
 
 pub enum MapType {
-    Blank,
+    None,
     Plain,
     Grassland,
     Mountain,
