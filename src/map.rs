@@ -18,17 +18,20 @@ pub struct MapTile {
 }
 
 pub enum Biome {
+    City,
+    Dungeon,
+    Enclave,
+    Farm,
+    Forest,
+    Grassland,
+    Hall,
+    Keep,
+    Mountain,
     Other,
     Plain,
-    Grassland,
-    Mountain,
-    Water,
-    Forest,
-    Keep,
-    City,
-    Hall,
-    Enclave,
+    Village,
     Wasteland,
+    Water,
 }
 
 // map_legend = {0:" ",
@@ -68,7 +71,9 @@ impl Map {
                     'C' => Biome::City,
                     'M' => Biome::Hall,
                     'E' => Biome::Enclave,
-                    'x' => Biome::Wasteland,
+                    'x' | 'y' => Biome::Wasteland,
+                    'V' | 'H' => Biome::Village,
+                    '#' => Biome::Farm,
                     _ => Biome::Other,
                 } 
             };
@@ -96,7 +101,7 @@ impl Map {
     }
 
     pub fn draw(map: &[MapTile], ctx: &mut BTerm){
-        for tile in map.iter() {
+        for tile in map {
             ctx.set(tile.x, tile.y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437(tile.icon));
         }
     }

@@ -162,8 +162,8 @@ fn main() -> BError {
     .build()?;
     
     let player: Player = Player {
-        x: 0,
-        y: 0,
+        x: 12,
+        y: 38,
     };
 
     let (start_menu, main_menu) = init::init_menus();
