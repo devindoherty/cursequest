@@ -22,7 +22,7 @@ impl Player {
 
     fn check_valid_move(&mut self, xmv: i32, ymv: i32) -> bool {
         let mut valid: bool = true;
-        if self.x + xmv > 19  || self.x + xmv < 0 || self. y + ymv > 19 || self. y + ymv < 0 {
+        if self.x + xmv > 127  || self.x + xmv < 0 || self. y + ymv > 39 || self. y + ymv < 0 {
             valid = false;
         }
         valid

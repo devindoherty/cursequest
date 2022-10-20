@@ -5,7 +5,7 @@ use std::io::{BufRead, BufReader};
 use std::fs::File;
 
 pub struct Map {
-    pub atlas: Vec<i32>,
+    pub atlas: Vec<MapTile>,
 }
 
 pub struct MapTile {
@@ -13,6 +13,7 @@ pub struct MapTile {
     desc: String,
     x: i32,
     y: i32,
+    id: i32,
 }
 
 pub enum MapType {
@@ -41,62 +42,47 @@ pub enum MapType {
 //               10:"@"}
 
 impl Map {
-    pub fn new() {
-
-    }
-
-    // pub fn load(mapfile: &str) -> Vec<i32> {
-    //     let file = File::open(mapfile).expect("Error opening file!");
-    //     let reader = BufReader::new(file);
-
-    //     reader.collect::<Vec<i32>>()
-    // }
-
-    pub fn draw(map: &[i32], ctx: &mut BTerm){
-        let mut y = 0;
+    pub fn new(raw_map: Vec<char>) -> Map {
+        let mut new_map = Map {
+            atlas: Vec::new(),
+        };
         let mut x = 0;
-        for tile in map.iter() {
-            match tile {
-                0 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437(' '));
-                }
-                1 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('.'));
-                }
-                2 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437(','));
-                }
-                3 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('A'));
-                }
-                4 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('~'));
-                }
-                5 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('.'));
-                }
-                6 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('K'));
-                }
-                7 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('C'));
-                }
-                8 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('H'));
-                }
-                9 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('E'));
-                }
-                10 => {
-                    ctx.set(x, y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437('@'));
-                }
-                _ => {}
-            }
+        let mut y = 0;
+        let mut i = 0;
+        for c in raw_map {
+            let tile = MapTile {
+                icon: c,
+                desc: String::from("A Portion of the Land of Klathia"),
+                x: x,
+                y: y,
+                id: i, 
+            };
+            new_map.atlas.push(tile);
+            i += 1;
             x += 1;
-            if x > 19 {
+            if x > 127 {
                 x = 0;
                 y += 1;
             }
+        }
+        new_map
+    }
+
+    pub fn load(mapfile: &str) -> Vec<char> {
+        let file = File::open(mapfile).expect("Error opening file!");
+        let reader = BufReader::new(file);
+        let mut raw_map = Vec::new();
+        for line in reader.lines() {
+            for c in line.expect("lines failed").chars() {
+                raw_map.push(c);
+            }
+        }
+        raw_map
+    }
+
+    pub fn draw(map: &[MapTile], ctx: &mut BTerm){
+        for tile in map.iter() {
+            ctx.set(tile.x, tile.y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437(tile.icon));
         }
     }
 }

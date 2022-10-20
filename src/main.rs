@@ -72,15 +72,7 @@ fn update(gs: &mut State) {
             command;
         }
     gs.commands.pop();
-    println!("Commands Popped");
     }
-    else {
-        println!("Empty Commands");
-    }
-    println!("Current RunMode: {:?}", gs.run_mode);
-    // let command = gs.commands;
-    // println!("Update Go. Running {:#?}", command);
-    // command;
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -174,8 +166,6 @@ fn main() -> BError {
         y: 0,
     };
 
-    let world_map = init::init_map();
-
     let (start_menu, main_menu) = init::init_menus();
 
     let king = load_ascii_art("assets/king.txt");
@@ -185,9 +175,12 @@ fn main() -> BError {
 
     let game_log = Vec::new();
 
+    let new_world_map = Map::load("assets/worldmap.txt");
+    let expanded_map = Map::new(new_world_map);
+
     let gs: State = State {
         player: player,
-        map: world_map,
+        map: expanded_map,
         run_mode: RunMode::Start,
         // encounters: act1,
         // current_encounter: introduction,
