@@ -7,6 +7,8 @@ use art::*;
 mod command;
 use command::Command;
 
+mod init;
+
 // mod encounter;
 // use encounter::Encounter;
 // use encounter::Kind;
@@ -34,7 +36,8 @@ pub struct State {
     startmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
-    log: Vec<String>
+    log: Vec<String>,
+    commands: Vec<()>,
 }
 
 // Bracket required implementation for the Gamestate
@@ -61,8 +64,6 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
         }
     }
 }
-
-
 
 // Plan on reading the command stream from input
 fn update(gs: &mut State) {
@@ -173,84 +174,13 @@ fn main() -> BError {
         y: 0,
     };
 
-    let world_map = Map {
-        atlas: vec![
-            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-            3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-            1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3, 3,
-            2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3,
-            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3,
-            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 3, 3, 3, 3,
-            2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3,
-            2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2,
-            2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 2, 2,
-            2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 2, 1, 1, 1,
-            1, 2, 2, 2, 4, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1,
-            1, 1, 2, 2, 2, 4, 4, 4, 4, 4, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1,
-            1, 1, 1, 2, 2, 2, 4, 4, 4, 4, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1,
-            1, 1, 1, 2, 2, 2, 2, 2, 4, 4, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1,
-            1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1,
-            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 2, 2, 1, 1, 1, 1, 1,
-            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 2, 2, 2, 2, 1, 1, 1, 1,
-            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 1, 1,
-            5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-        ]
-    };
+    let world_map = init::init_map();
 
-    // let introduction = Encounter {
-    //     name: String::from("The Curse Quest"),
-    //     // enemies: None,
-    //     flavor: String::from("Test"),
-    //     kind: Kind::Story,
-    //     art: 2
-    // };
-
-    // let act1 = vec![introduction];
-    let menu_item_one = MenuItem {
-        display_name: String::from("Travel"),
-        display_char: '1'
-    };
-
-    let menu_item_two = MenuItem {
-        display_name: String::from("Character"),
-        display_char: '2'
-    };
-
-    let menu_item_three = MenuItem {
-        display_name: String::from("Inventory"),
-        display_char: '3'
-    };
-
-    let menu_item_four = MenuItem {
-        display_name: String::from("Journal"),
-        display_char: '4'
-    };
-
-    let main_menu = Menu {
-        items: vec![menu_item_one, menu_item_two, menu_item_three, menu_item_four],
-        selected: 0,
-    };
-
-    let start_item_one = MenuItem{
-        display_name: String::from("Start"),
-        display_char: '0',
-    };
-    let start_item_two = MenuItem{
-        display_name: String::from("Quit"),
-        display_char: '1'
-    };
-
-    let start_menu = Menu {
-        items: vec![start_item_one, start_item_two],
-        selected: 0,
-    };
-
+    let (start_menu, main_menu) = init::init_menus();
 
     let king = load_ascii_art("assets/king.txt");
     let sword = load_ascii_art("assets/sword.txt");
 
-    // let mut com = ();
     let com = Vec::new(); 
 
     let game_log = Vec::new();
@@ -269,6 +199,5 @@ fn main() -> BError {
         commands: com,
     };
 
-    // println!("{:?}", king);
     main_loop(context, gs)
 }

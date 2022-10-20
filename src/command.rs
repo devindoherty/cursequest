@@ -13,9 +13,14 @@ impl Command for VirtualKeyCode {
         match self {
             // UP KEY
             Self::Up => {
+                let up = ();
                 if gs.run_mode == RunMode::Start {
                     gs.commands.push(gs.startmenu.manage(VirtualKeyCode::Up));
                 } 
+                if gs.run_mode == RunMode::Intro {
+                    let up = RunMode::new(gs, RunMode::Running);
+                    gs.commands.push(up);
+                }
                 if gs.run_mode == RunMode::Running {
                     gs.commands.push(gs.player.map_move(0, -1));
                 }

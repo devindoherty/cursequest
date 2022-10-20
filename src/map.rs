@@ -1,12 +1,21 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
+use std::io::{BufRead, BufReader};
+use std::fs::File;
 
 pub struct Map {
     pub atlas: Vec<i32>,
 }
 
-pub enum _MapTile {
+pub struct MapTile {
+    icon: char,
+    desc: String,
+    x: i32,
+    y: i32,
+}
+
+pub enum MapType {
     Blank,
     Plain,
     Grassland,
@@ -32,7 +41,17 @@ pub enum _MapTile {
 //               10:"@"}
 
 impl Map {
-    
+    pub fn new() {
+
+    }
+
+    // pub fn load(mapfile: &str) -> Vec<i32> {
+    //     let file = File::open(mapfile).expect("Error opening file!");
+    //     let reader = BufReader::new(file);
+
+    //     reader.collect::<Vec<i32>>()
+    // }
+
     pub fn draw(map: &[i32], ctx: &mut BTerm){
         let mut y = 0;
         let mut x = 0;
