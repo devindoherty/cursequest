@@ -73,6 +73,13 @@ fn update(gs: &mut State) {
         }
     gs.commands.pop();
     }
+
+    // for tile in &gs.map.atlas {
+    //     if tile.x == gs.player.x && tile.y == gs.player.y {
+    //         let desc = tile.desc.clone();
+    //         gs.log.push(desc);
+    //     }
+    // }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon

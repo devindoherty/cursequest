@@ -1,6 +1,7 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
+use std::collections::HashMap;
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 
@@ -9,14 +10,15 @@ pub struct Map {
 }
 
 pub struct MapTile {
-    icon: char,
-    desc: String,
-    x: i32,
-    y: i32,
+    pub icon: char,
+    pub desc: String,
+    pub x: i32,
+    pub y: i32,
+    pub biome: Biome,
     id: i32,
-    biome: Biome
 }
 
+#[derive(Eq, Hash, PartialEq)]
 pub enum Biome {
     City,
     Dungeon,
@@ -29,6 +31,8 @@ pub enum Biome {
     Mountain,
     Other,
     Plain,
+    Road,
+    Tundra,
     Village,
     Wasteland,
     Water,
@@ -74,6 +78,9 @@ impl Map {
                     'x' | 'y' => Biome::Wasteland,
                     'V' | 'H' => Biome::Village,
                     '#' => Biome::Farm,
+                    '=' | '/' | '\\' | '-' | '|' => Biome::Road,
+                    'D' => Biome::Dungeon,
+                    '*' => Biome::Tundra,
                     _ => Biome::Other,
                 } 
             };
@@ -101,8 +108,27 @@ impl Map {
     }
 
     pub fn draw(map: &[MapTile], ctx: &mut BTerm){
+        let colormap = HashMap::from([
+            (Biome::City, RGB::named(FIREBRICK1)),
+            (Biome::Dungeon, RGB::named(PURPLE)),
+            (Biome::Enclave, RGB::named(GREEN)),
+            (Biome::Farm, RGB::named(WHEAT3)),
+            (Biome::Forest, RGB::named(FORESTGREEN)),
+            (Biome::Grassland, RGB::named(LAWNGREEN)),
+            (Biome::Hall, RGB::named(STEELBLUE)),
+            (Biome::Keep, RGB::named(LIGHT_STEEL)),
+            (Biome::Mountain, RGB::named(DARK_GREY)),
+            (Biome::Other, RGB::named(PINK)),
+            (Biome::Plain, RGB::named(LIGHTGREEN)),
+            (Biome::Road, RGB::named(SLATEGREY)),
+            (Biome::Tundra, RGB::named(SNOW)),
+            (Biome::Village, RGB::named(YELLOW)),
+            (Biome::Wasteland, RGB::named(GREEN)),
+            (Biome::Water, RGB::named(BLUE)),
+        ]);
+
         for tile in map {
-            ctx.set(tile.x, tile.y, RGB::from_f32(0.5, 0.5, 0.5), RGB::from_f32(0., 0., 0.), to_cp437(tile.icon));
+            ctx.set(tile.x, tile.y, colormap[&tile.biome], RGB::named(BLACK), to_cp437(tile.icon));
         }
     }
 }
