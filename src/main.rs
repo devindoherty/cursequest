@@ -9,9 +9,8 @@ use command::Command;
 
 mod init;
 
-// mod encounter;
-// use encounter::Encounter;
-// use encounter::Kind;
+mod encounter;
+use encounter::Encounter;
 
 mod map;
 use map::Map;
