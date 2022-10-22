@@ -76,7 +76,7 @@ impl Map {
                     'M' => String::from("A dwarven mountain hall."),
                     'E' => String::from("An elven forest enclave."),
                     'x' => String::from("Blasted wasteland."),
-                    'y' => String::from("Cursed jungle."), 
+                    'y' | 'Y' => String::from("Cursed jungle."), 
                     'o' | ';' => String::from("Marshy swamps."),
                     'V' | 'H' => String::from("A provincial village"),
                     '#' => String::from("Flat farmland."),
