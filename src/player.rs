@@ -8,6 +8,13 @@ pub struct Player {
     pub magic: i32,
 }
 
+pub struct Statistics {
+    pub intellect: i32,
+    pub might: i32,
+    pub soul: i32,
+}
+
+
 impl Player {
 
     pub fn draw(player: &Player, ctx: &mut BTerm) {

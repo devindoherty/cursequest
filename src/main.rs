@@ -79,6 +79,12 @@ fn update(gs: &mut State) {
     //         gs.log.push(desc);
     //     }
     // }
+
+    
+    let _months = ["Sprout", "Harvest", "Solstice", "Wilts", "Wending", "Void", "Thaw"];
+    let _days = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"];
+    let _years = 7;
+    let _era = String::from("Era of the Uncrowned King");
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -142,7 +148,15 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         Player::draw(&gs.player, ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move. ENTER to use Menu.");
-        gs.menu.draw(ctx);
+        // gs.menu.draw(ctx);
+        for tile in &gs.map.atlas {
+            if gs.player.x == tile.x && gs.player.y == tile.y {
+                ctx.print_color(1, 42, RGB::named(WHITE), RGB::named(BLACK), &tile.desc);
+            }
+        }
+
+
+
         let mut i = 41;
         for entry in &gs.log {
             ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
@@ -183,12 +197,12 @@ fn main() -> BError {
 
     let game_log = Vec::new();
 
-    let new_world_map = Map::load("assets/worldmap.txt");
-    let expanded_map = Map::new(new_world_map);
+    let raw_world_map = Map::load("assets/worldmap.txt");
+    let world_map = Map::new(raw_world_map);
 
     let gs: State = State {
         player: player,
-        map: expanded_map,
+        map: world_map,
         run_mode: RunMode::Start,
         // encounters: act1,
         // current_encounter: introduction,
