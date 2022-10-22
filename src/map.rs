@@ -79,7 +79,7 @@ impl Map {
                     'y' | 'Y' => String::from("Cursed jungle."), 
                     'o' | ';' => String::from("Marshy swamps."),
                     'V' | 'H' => String::from("A provincial village"),
-                    '#' => String::from("Flat farmland."),
+                    '#' => String::from("Fertile farmland."),
                     '=' | '/' | '\\' | '-' | '|' => String::from("A traveller's road."),
                     'D' => String::from("A dangerous dungeon."),
                     '*' => String::from("Windswept tundra."),
@@ -138,7 +138,7 @@ impl Map {
 
     pub fn draw(map: &[MapTile], ctx: &mut BTerm){
         let colormap = HashMap::from([
-            (Biome::City, RGB::named(GOLD)),
+            (Biome::City, RGB::named(YELLOW)),
             (Biome::Desert, RGB::named(SANDYBROWN)),
             (Biome::Dungeon, RGB::named(PURPLE)),
             (Biome::Enclave, RGB::named(GREEN)),
@@ -155,7 +155,7 @@ impl Map {
             (Biome::Road, RGB::named(SLATEGREY)),
             (Biome::Temple, RGB::named(PINK)),
             (Biome::Tundra, RGB::named(SNOW)),
-            (Biome::Village, RGB::named(YELLOW)),
+            (Biome::Village, RGB::named(GOLD)),
             (Biome::Wasteland, RGB::named(OLIVE)),
             (Biome::Water, RGB::named(BLUE)),
         ]);
@@ -163,5 +163,22 @@ impl Map {
         for tile in map {
             ctx.set(tile.x, tile.y, colormap[&tile.biome], RGB::named(BLACK), to_cp437(tile.icon));
         }
+    }
+}
+
+impl MapTile {
+    // fn new(map: &Map, icon: char, desc: String, x: i32, y: i32, biome: Biome) -> MapTile {
+    //     let new_tile = MapTile {
+    //         icon: icon,
+    //         pub desc: desc,
+    //         pub x: x,
+    //         pub y: y,
+    //         biome: biome,
+    //     };
+    //     new_tile
+    // }
+
+    fn alter() {
+        
     }
 }

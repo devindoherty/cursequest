@@ -74,7 +74,6 @@ impl MenuItem {
             display_name: name,
             display_char: character,
         };
-
         menu_item
     }
 }

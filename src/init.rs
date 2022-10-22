@@ -7,15 +7,19 @@ pub fn init_menus() -> (Menu, Menu) {
     // Start Menu
     let start_item_one = MenuItem{
         display_name: String::from("Start"),
-        display_char: '0',
+        display_char: '1',
     };
     let start_item_two = MenuItem{
+        display_name: String::from("Continue"),
+        display_char: '2',
+    };
+    let start_item_three = MenuItem{
         display_name: String::from("Quit"),
-        display_char: '1'
+        display_char: '3'
     };
 
     let start_menu = Menu {
-        items: vec![start_item_one, start_item_two],
+        items: vec![start_item_one, start_item_two, start_item_three],
         selected: 0,
     };
 

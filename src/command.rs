@@ -16,7 +16,7 @@ impl Command for VirtualKeyCode {
                 let up = ();
                 if gs.run_mode == RunMode::Start {
                     gs.commands.push(gs.startmenu.manage(VirtualKeyCode::Up));
-                } 
+                }
                 if gs.run_mode == RunMode::Intro {
                     let up = RunMode::new(gs, RunMode::Running);
                     gs.commands.push(up);
@@ -59,6 +59,9 @@ impl Command for VirtualKeyCode {
                     if gs.startmenu.selected == 0 {
                         enter = RunMode::new(gs, RunMode::Intro);
                         return enter;
+                    } 
+                    if gs.startmenu.selected == 1 {
+                        println!("Continue");
                     } else {
                         ctx.quit();
                     }

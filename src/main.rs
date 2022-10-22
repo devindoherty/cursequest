@@ -79,12 +79,6 @@ fn update(gs: &mut State) {
     //         gs.log.push(desc);
     //     }
     // }
-
-    
-    let _months = ["Sprout", "Harvest", "Solstice", "Wilts", "Wending", "Void", "Thaw"];
-    let _days = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"];
-    let _years = 7;
-    let _era = String::from("Era of the Uncrowned King");
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -154,8 +148,6 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
                 ctx.print_color(1, 42, RGB::named(WHITE), RGB::named(BLACK), &tile.desc);
             }
         }
-
-
 
         let mut i = 41;
         for entry in &gs.log {

@@ -36,5 +36,13 @@ impl Player {
         }
         valid
     }
+
+    fn _take_inventory(&mut self) {
+
+    }
+
+    fn _status(&mut self) {
+        
+    }
 }
 

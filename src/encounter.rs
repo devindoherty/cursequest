@@ -7,7 +7,9 @@ pub struct Encounter {
     pub art: Vec<String>, 
 }
 
+
 struct Mob {}
+
 
 impl Encounter {
     fn new(&self, name: String, flavor: String, menu: Menu, art: Vec<String>) -> Encounter {

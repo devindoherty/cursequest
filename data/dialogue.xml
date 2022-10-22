@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+    <mobs>
+      <mob name="Elder Rose">
+        <dialogue>
+          <text>You have stirred. Good. You were half dead when we found you. Rest now. You are safe.</text>
+          <options>
+            <option action="question1">Where am I?</option>
+            <option action="question2">Who are you?</option>
+            <option action="question3">What happened?</option>
+          </options>
+        </dialogue>
+        <dialogue id="answer1">
+          <text>You are in the Shir Valley, in the home of Elder Rose.</text>
+        </dialogue>
+        <dialogue id="answer2">
+          <text>Why, I am Elder Rose, of course. This is the village of Finn's Glen</text>
+        </dialogue>
+        <dialogue id="answer3">
+          <text>"A group of farmers found you collapsed in the wilderness. You were holding this..."</text>
+          <text>She shows you a blade. "I had you brought here and have nursed you back to health"</text>
+          <options>
+            <option action="question4">What of the sword?</option>
+            <option action="question5">What was I doing out there?</option>
+            <option action="decision1">I wish to leave, now.</option>
+          </options>
+        </dialogue>
+      </mob>
+      <mob name = "Uncrowned King">
+        <dialogue>
+        </dialogue>
+      </mob>
+    </mobs>
