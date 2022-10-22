@@ -170,6 +170,8 @@ fn main() -> BError {
     let player: Player = Player {
         x: 12,
         y: 38,
+        health: 100,
+        magic: 100,
     };
 
     let (start_menu, main_menu) = init::init_menus();

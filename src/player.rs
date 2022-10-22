@@ -4,6 +4,8 @@ use bracket::prelude::*;
 pub struct Player {
     pub x: i32,
     pub y: i32,
+    pub health: i32,
+    pub magic: i32,
 }
 
 impl Player {
