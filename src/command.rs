@@ -12,7 +12,7 @@ impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> (){
         match self {
             // UP KEY
-            Self::Up => {
+            Self::Up | Self::Numpad8 => {
                 let up = ();
                 if gs.run_mode == RunMode::Start {
                     gs.commands.push(gs.startmenu.manage(VirtualKeyCode::Up));
@@ -30,7 +30,7 @@ impl Command for VirtualKeyCode {
             },
             
             // DOWN KEY
-            Self::Down => {
+            Self::Down | Self::Numpad2 => {
                 if gs.run_mode == RunMode::Start {
                     gs.commands.push(gs.startmenu.manage(VirtualKeyCode::Down));
                 }
@@ -43,13 +43,30 @@ impl Command for VirtualKeyCode {
             },
 
             // LEFT KEY
-            Self::Left => if gs.run_mode == RunMode::Running {
+            Self::Left | Self::Numpad4 => if gs.run_mode == RunMode::Running {
                 gs.commands.push(gs.player.map_move(-1, 0));
             },
 
             // Right KEY
-            Self::Right => if gs.run_mode == RunMode::Running {
+            Self::Right | Self::Numpad6 => if gs.run_mode == RunMode::Running {
                 gs.commands.push(gs.player.map_move(1, 0));
+            },
+
+            // DIAGONAL KEYS
+            Self::Numpad1 => if gs.run_mode == RunMode::Running {
+                gs.commands.push(gs.player.map_move(-1, 1));
+            }
+            
+            Self::Numpad3 => if gs.run_mode == RunMode::Running {
+                gs.commands.push(gs.player.map_move(1, 1));
+            }
+
+            Self::Numpad7 => if gs.run_mode == RunMode::Running {
+                gs.commands.push(gs.player.map_move(-1, -1));
+            },
+
+            Self::Numpad9 => if gs.run_mode == RunMode::Running {
+                gs.commands.push(gs.player.map_move(1, -1));
             },
 
             // ENTER KEY
