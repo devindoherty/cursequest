@@ -1,12 +1,17 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
+use crate::State;
+use crate::Player;
+use crate::Map;
+use crate::map::Biome;
+
 pub struct Menu {
     pub items: Vec<MenuItem>,
     pub selected: usize,
 }
 
-#[derive(PartialEq)]
+#[derive(Clone, PartialEq)]
 pub struct MenuItem {
     pub display_name: String,
     pub display_char: char,
@@ -66,6 +71,25 @@ impl Menu {
             _ => {}
         }
     }
+
+    pub fn alter(&mut self, player: &Player, map: &Map) {
+        let map = &map.atlas;
+        
+        let city = MenuItem {
+            display_name: String::from("Enter City"),
+            display_char: 'c',
+        };
+
+        for tile in map {
+            if player.x == tile.x && player.y == tile.y {
+                if tile.biome == Biome::City {
+                    self.push(city.clone());
+                }
+            }
+        }
+        
+    }
+
 }
 
 impl MenuItem {

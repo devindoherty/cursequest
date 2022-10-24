@@ -2,7 +2,7 @@ use crate::Encounter;
 use crate::Map;
 use crate::{Menu, MenuItem};
 
-pub fn init_menus() -> (Menu, Menu) {
+pub fn init_menus() -> (Menu, Menu, Menu) {
     
     // Start Menu
     let start_item_one = MenuItem{
@@ -50,34 +50,33 @@ pub fn init_menus() -> (Menu, Menu) {
     };
 
     // Travel Menu
-
     let travel_item_one = MenuItem {
-        display_name: String::from("Explore"),
+        display_name: String::from("Journey On"),
         display_char: '1',
     };
 
     let travel_item_two = MenuItem {
-        display_name: String::from("Hunt & Gather"),
+        display_name: String::from("Explore"),
         display_char: '2',
     };
 
     let travel_item_three = MenuItem {
-        display_name: String::from("Camp"),
+        display_name: String::from("Resupply"),
         display_char: '3',
     };
 
     let travel_item_four = MenuItem {
-        display_name: String::from("Journey On"),
+        display_name: String::from("Camp"),
         display_char: '4',
     };
 
     let travel_menu = Menu {
-        items: vec! [travel_item_one, travel_item_two, travel_item_three, travel_item_four],
+        items: vec![travel_item_one, travel_item_two, travel_item_three, travel_item_four],
         selected: 0,
     };
 
     // Return
-    (start_menu, main_menu)
+    (start_menu, main_menu, travel_menu)
 }
 
 fn init_encounters() {

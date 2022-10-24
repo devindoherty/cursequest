@@ -33,6 +33,7 @@ pub struct State {
     // current_encounter: Encounter,
     menu: Menu,
     startmenu: Menu,
+    travelmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
     log: Vec<String>,
@@ -61,6 +62,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 
 // Plan on reading the command stream from input
 fn update(gs: &mut State) {
+
     if gs.commands.len() >= 1 {
         for command in &gs.commands {
             command;
@@ -68,6 +70,7 @@ fn update(gs: &mut State) {
     gs.commands.pop();
     }
 
+    // gs.menu.alter(&gs.player, &gs.map)
     // for tile in &gs.map.atlas {
     //     if tile.x == gs.player.x && tile.y == gs.player.y {
     //         let desc = tile.desc.clone();
@@ -152,12 +155,12 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
                 i = 41;
             }
         }
+        gs.travelmenu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prompting {
         // ctx.cls();
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.");
         gs.menu.draw(ctx);
-        
     }
 }
 
@@ -175,7 +178,7 @@ fn main() -> BError {
         magic: 100,
     };
 
-    let (start_menu, main_menu) = init::init_menus();
+    let (start_menu, main_menu, travel_menu) = init::init_menus();
 
     let king = load_ascii_art("assets/king.txt");
     let sword = load_ascii_art("assets/sword.txt");
@@ -195,6 +198,7 @@ fn main() -> BError {
         // current_encounter: introduction,
         menu: main_menu,
         startmenu: start_menu,
+        travelmenu: travel_menu,
         art: king,
         startart: sword,
         log: game_log,

@@ -14,7 +14,7 @@ pub struct MapTile {
     pub desc: String,
     pub x: i32,
     pub y: i32,
-    biome: Biome,
+    pub biome: Biome,
     id: i32,
 }
 
@@ -34,6 +34,7 @@ pub enum Biome {
     Mountain,
     Other,
     Plain,
+    Poi,
     Road,
     Temple,
     Tundra,
@@ -110,6 +111,7 @@ impl Map {
                     '.' => Biome::Plain,
                     ',' => Biome::Grassland,
                     'T' => Biome::Temple,
+                    '!' => Biome::Poi,
                     _ => Biome::Other,
                 } 
             };
@@ -152,6 +154,7 @@ impl Map {
             (Biome::Mountain, RGB::named(DARK_GREY)),
             (Biome::Other, RGB::named(BLUE)),
             (Biome::Plain, RGB::named(LIGHTGREEN)),
+            (Biome::Poi, RGB::named(RED)),
             (Biome::Road, RGB::named(SLATEGREY)),
             (Biome::Temple, RGB::named(PINK)),
             (Biome::Tundra, RGB::named(SNOW)),
