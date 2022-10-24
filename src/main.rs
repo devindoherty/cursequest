@@ -54,11 +54,6 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
         None => {}
         Some(key) => match key {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
-            VirtualKeyCode::Up => key.execute(gs, ctx), // gs.startmenu.manage(ctx, VirtualKeyCode::Up),
-            VirtualKeyCode::Down => key.execute(gs, ctx), // gs.startmenu.manage(ctx, VirtualKeyCode::Down),
-            VirtualKeyCode::Left => key.execute(gs, ctx),
-            VirtualKeyCode::Right => key.execute(gs, ctx),
-            VirtualKeyCode::Return => key.execute(gs, ctx),
             _ => key.execute(gs, ctx),
         }
     }
