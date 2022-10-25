@@ -158,7 +158,10 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         gs.travelmenu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prompting {
-        // ctx.cls();
+        ctx.cls();
+        Map::draw(&gs.map.atlas, ctx);
+        Player::draw(&gs.player, ctx);
+        ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.");
         gs.menu.draw(ctx);
     }

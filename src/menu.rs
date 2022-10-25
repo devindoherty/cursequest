@@ -35,10 +35,7 @@ impl Menu {
     }
 
     pub fn draw(&mut self, ctx: &mut BTerm) {
-        // for item in &self.items {
-        //     println!("{}", item.display_name);
-        let mut y = 43;
-        // let mut i = 0;
+        let mut y = 45;
         for (pos, item) in self.items.iter().enumerate() {
              if pos == self.selected {
                 ctx.print_color(

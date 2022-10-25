@@ -61,17 +61,34 @@ pub fn init_menus() -> (Menu, Menu, Menu) {
     };
 
     let travel_item_three = MenuItem {
-        display_name: String::from("Resupply"),
+        display_name: String::from("Hunt"),
         display_char: '3',
     };
 
     let travel_item_four = MenuItem {
+        display_name: String::from("Forage"),
+        display_char: '3',
+    };
+
+    let travel_item_five = MenuItem {
         display_name: String::from("Camp"),
-        display_char: '4',
+        display_char: '5',
+    };
+
+    let travel_item_six = MenuItem {
+        display_name: String::from("Interact"),
+        display_char: '6',
     };
 
     let travel_menu = Menu {
-        items: vec![travel_item_one, travel_item_two, travel_item_three, travel_item_four],
+        items: vec![
+            travel_item_one, 
+            travel_item_two, 
+            travel_item_three, 
+            travel_item_four, 
+            travel_item_five,
+            travel_item_six
+        ],
         selected: 0,
     };
 
