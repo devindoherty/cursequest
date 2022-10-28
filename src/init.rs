@@ -1,8 +1,8 @@
-use crate::Encounter;
+// use crate::Encounter;
 use crate::Map;
 use crate::{Menu, MenuItem};
 
-pub fn init_menus() -> (Menu, Menu, Menu) {
+pub fn start_menu() -> Menu {
     
     // Start Menu
     let start_item_one = MenuItem{
@@ -21,8 +21,13 @@ pub fn init_menus() -> (Menu, Menu, Menu) {
     let start_menu = Menu {
         items: vec![start_item_one, start_item_two, start_item_three],
         selected: 0,
+        last: vec![],
     };
 
+    start_menu
+}
+
+pub fn main_menu() -> Vec<MenuItem> {
     // Running Menu
     let menu_item_one = MenuItem {
         display_name: String::from("Travel"),
@@ -44,11 +49,11 @@ pub fn init_menus() -> (Menu, Menu, Menu) {
         display_char: '4'
     };
 
-    let main_menu = Menu {
-        items: vec![menu_item_one, menu_item_two, menu_item_three, menu_item_four],
-        selected: 0,
-    };
+    let items = vec![menu_item_one, menu_item_two, menu_item_three, menu_item_four];
+    items
+}
 
+pub fn travel_menu() -> Vec<MenuItem> {
     // Travel Menu
     let travel_item_one = MenuItem {
         display_name: String::from("Journey On"),
@@ -80,32 +85,28 @@ pub fn init_menus() -> (Menu, Menu, Menu) {
         display_char: '6',
     };
 
-    let travel_menu = Menu {
-        items: vec![
-            travel_item_one, 
-            travel_item_two, 
-            travel_item_three, 
-            travel_item_four, 
-            travel_item_five,
-            travel_item_six
-        ],
-        selected: 0,
-    };
-
-    // Return
-    (start_menu, main_menu, travel_menu)
+    let items = vec![
+        travel_item_one, 
+        travel_item_two, 
+        travel_item_three, 
+        travel_item_four, 
+        travel_item_five,
+        travel_item_six
+    ];
+    items
 }
 
-fn init_encounters() {
-    let main_quest_menu = Menu{
-        items: Vec::new(),
-        selected: 0,
-    };
+// fn init_encounters() {
+//     // let main_quest_menu = Menu{
+//     //     items: Vec::new(),
+//     //     selected: 0,
 
-    let main_quest = Encounter {
-        name: String::from("The Curse Quest"),
-        flavor: String::from("The village elder, a wizened crone of a halfling woman informs you that you are lucky to be alive. You have been cursed."),
-        menu: main_quest_menu,
-        art: Vec::new(), 
-    };
-}
+//     // };
+
+//     // let main_quest = Encounter {
+//     //     name: String::from("The Curse Quest"),
+//     //     flavor: String::from("The village elder, a wizened crone of a halfling woman informs you that you are lucky to be alive. You have been cursed."),
+//     //     menu: main_quest_menu,
+//     //     art: Vec::new(), 
+//     // };
+// }

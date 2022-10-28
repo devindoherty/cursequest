@@ -43,18 +43,6 @@ pub enum Biome {
     Water,
 }
 
-// map_legend = {0:" ",
-//               1:".",
-//               2:",",
-//               3:"A",
-//               4:"~",
-//               5:"t",
-//               6:"K",
-//               7:"C",
-//               8:"H",
-//               9:"E",
-//               10:"@"}
-
 impl Map {
     pub fn new(raw_map: Vec<char>) -> Map {
         let mut new_map = Map {

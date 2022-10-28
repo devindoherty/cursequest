@@ -9,8 +9,8 @@ use command::Command;
 
 mod init;
 
-mod encounter;
-use encounter::Encounter;
+// mod encounter;
+// use encounter::Encounter;
 
 mod map;
 use map::Map;
@@ -32,8 +32,6 @@ pub struct State {
     // encounters: Vec<Encounter>,
     // current_encounter: Encounter,
     menu: Menu,
-    startmenu: Menu,
-    travelmenu: Menu,
     art: Vec<String>,
     startart: Vec<String>,
     log: Vec<String>,
@@ -96,7 +94,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
             y += 1;
         }
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
-        gs.startmenu.draw(ctx);
+        gs.menu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Intro {
         // println!("{:#?}", ctx.get_char_size());
@@ -155,7 +153,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
                 i = 41;
             }
         }
-        gs.travelmenu.draw(ctx);
+        gs.menu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prompting {
         ctx.cls();
@@ -171,7 +169,7 @@ fn main() -> BError {
     let context = BTermBuilder::simple(128, 64)
     .unwrap()
     .with_title("Curse Quest")
-    .with_automatic_console_resize(true)
+    .with_automatic_console_resize(false)
     .build()?;
     
     let player: Player = Player {
@@ -181,7 +179,7 @@ fn main() -> BError {
         magic: 100,
     };
 
-    let (start_menu, main_menu, travel_menu) = init::init_menus();
+    let mut start_menu = init::start_menu();
 
     let king = load_ascii_art("assets/king.txt");
     let sword = load_ascii_art("assets/sword.txt");
@@ -199,9 +197,7 @@ fn main() -> BError {
         run_mode: RunMode::Start,
         // encounters: act1,
         // current_encounter: introduction,
-        menu: main_menu,
-        startmenu: start_menu,
-        travelmenu: travel_menu,
+        menu: start_menu,
         art: king,
         startart: sword,
         log: game_log,
@@ -210,3 +206,4 @@ fn main() -> BError {
 
     main_loop(context, gs)
 }
+

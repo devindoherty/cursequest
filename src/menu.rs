@@ -6,9 +6,12 @@ use crate::Player;
 use crate::Map;
 use crate::map::Biome;
 
+
+#[derive(Clone)]
 pub struct Menu {
     pub items: Vec<MenuItem>,
     pub selected: usize,
+    pub last: Vec<Menu>,
 }
 
 #[derive(Clone, PartialEq)]
@@ -18,19 +21,28 @@ pub struct MenuItem {
 }
 
 impl Menu {
-    pub fn new() -> Menu {
-        let menu = Menu { 
-            items: Vec::new(),
+    pub fn new(&self, items: Vec<MenuItem>) -> Menu {
+        let menu = Menu {
+            items,
             selected: 0,
+            last: self.last.clone(),
         };
         menu
     }
 
-    pub fn push(&mut self, item: MenuItem) {
+    pub fn push_menu(&mut self, previous: Menu) {
+        self.last.push(previous);
+    }
+
+    pub fn pop_menu(&mut self,) -> Option<Menu> {
+        self.last.pop()
+    }
+
+    pub fn push_item(&mut self, item: MenuItem) {
         self.items.push(item)
     }
 
-    pub fn pop(&mut self) -> Option<MenuItem>{
+    pub fn pop_item(&mut self) -> Option<MenuItem>{
         self.items.pop()
     }
 
@@ -69,23 +81,23 @@ impl Menu {
         }
     }
 
-    pub fn alter(&mut self, player: &Player, map: &Map) {
-        let map = &map.atlas;
+    // pub fn alter(&mut self, player: &Player, map: &Map) {
+    //     let map = &map.atlas;
         
-        let city = MenuItem {
-            display_name: String::from("Enter City"),
-            display_char: 'c',
-        };
+    //     let city = MenuItem {
+    //         display_name: String::from("Enter City"),
+    //         display_char: 'c',
+    //     };
 
-        for tile in map {
-            if player.x == tile.x && player.y == tile.y {
-                if tile.biome == Biome::City {
-                    self.push(city.clone());
-                }
-            }
-        }
+    //     for tile in map {
+    //         if player.x == tile.x && player.y == tile.y {
+    //             if tile.biome == Biome::City {
+    //                 self.push(city.clone());
+    //             }
+    //         }
+    //     }
         
-    }
+    // }
 
 }
 

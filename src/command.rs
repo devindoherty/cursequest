@@ -1,5 +1,6 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
+use crate::init;
 use crate::State;
 use crate::RunMode;
 
@@ -15,7 +16,7 @@ impl Command for VirtualKeyCode {
             Self::Up | Self::Numpad8 => {
                 let up = ();
                 if gs.run_mode == RunMode::Start {
-                    gs.commands.push(gs.startmenu.manage(VirtualKeyCode::Up));
+                    gs.commands.push(gs.menu.manage(VirtualKeyCode::Up));
                 } 
                 if gs.run_mode == RunMode::Intro {
                     let up = RunMode::new(gs, RunMode::Running);
@@ -32,7 +33,7 @@ impl Command for VirtualKeyCode {
             // DOWN KEY
             Self::Down | Self::Numpad2 => {
                 if gs.run_mode == RunMode::Start {
-                    gs.commands.push(gs.startmenu.manage(VirtualKeyCode::Down));
+                    gs.commands.push(gs.menu.manage(VirtualKeyCode::Down));
                 }
                 if gs.run_mode == RunMode::Running {
                     gs.commands.push(gs.player.map_move(0, 1));
@@ -47,7 +48,7 @@ impl Command for VirtualKeyCode {
                 gs.commands.push(gs.player.map_move(-1, 0));
             },
 
-            // Right KEY
+            // RIGHT KEY
             Self::Right | Self::Numpad6 => if gs.run_mode == RunMode::Running {
                 gs.commands.push(gs.player.map_move(1, 0));
             },
@@ -73,7 +74,7 @@ impl Command for VirtualKeyCode {
             Self::Return => {
                 let mut enter = ();
                 if gs.run_mode == RunMode::Start {
-                    if gs.startmenu.selected == 0 {
+                    if gs.menu.selected == 0 {
                         enter = RunMode::new(gs, RunMode::Intro);
                         return enter;
                     } else {
@@ -82,16 +83,30 @@ impl Command for VirtualKeyCode {
                 }
                 if gs.run_mode == RunMode::Intro {
                     enter = RunMode::new(gs, RunMode::Running);
+                    gs.menu = gs.menu.new(init::main_menu());
                     return enter;
                 }
                 if gs.run_mode == RunMode::Running {
                     enter = RunMode::new(gs, RunMode::Prompting);
+                    gs.menu = gs.menu.new(init::travel_menu());
                     return enter;
                 }
                 if gs.run_mode == RunMode::Prompting {
                     return RunMode::new(gs, RunMode::Running);
                 }
                 gs.commands.push(enter);
+            }
+
+            // B KEY
+
+            Self::B => {
+                if gs.run_mode == RunMode::Intro {
+                    RunMode::new(gs, RunMode::Start);
+                }
+                if gs.run_mode == RunMode::Running {
+                    RunMode::new(gs, RunMode::Intro);
+                    gs.menu.pop_menu();
+                }
             }
 
             // OTHER
