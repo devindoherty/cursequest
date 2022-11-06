@@ -11,7 +11,7 @@ use crate::map::Biome;
 pub struct Menu {
     pub items: Vec<MenuItem>,
     pub selected: usize,
-    pub last: Vec<Menu>,
+    pub last: Vec<Self>,
 }
 
 #[derive(Clone, PartialEq)]
@@ -22,12 +22,23 @@ pub struct MenuItem {
 
 impl Menu {
     pub fn new(&self, items: Vec<MenuItem>) -> Menu {
+        let tmp_selected = self.selected;
+        let tmp_last = self.last.clone();
         let menu = Menu {
             items,
-            selected: 0,
-            last: self.last.clone(),
+            selected: tmp_selected,
+            last: tmp_last,
         };
         menu
+    }
+
+    pub fn restore(&self) {
+       println!("{}", self.last.len()); 
+        // let menu = Menu {
+        //     items: last_menu.items,
+        //     selected: last_menu.selected,
+        //     last: last_menu.last,
+        // };
     }
 
     pub fn push_menu(&mut self, previous: Menu) {

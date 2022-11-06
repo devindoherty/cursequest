@@ -21,7 +21,7 @@ pub fn start_menu() -> Menu {
     let start_menu = Menu {
         items: vec![start_item_one, start_item_two, start_item_three],
         selected: 0,
-        last: vec![],
+        last: Vec::new(),
     };
 
     start_menu
