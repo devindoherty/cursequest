@@ -93,7 +93,7 @@ impl Command for VirtualKeyCode {
                     return enter;
                 }
                 if gs.run_mode == RunMode::Prompting {
-                    gs.menu.restore();
+                    gs.menu= gs.menu.restore();
                     return RunMode::new(gs, RunMode::Running);
                 }
                 gs.commands.push(enter);
@@ -106,6 +106,7 @@ impl Command for VirtualKeyCode {
                     RunMode::new(gs, RunMode::Start);
                 }
                 if gs.run_mode == RunMode::Running {
+                    gs.menu = gs.menu.restore();
                     RunMode::new(gs, RunMode::Intro);
                     // gs.menu.pop_menu();
                 }
