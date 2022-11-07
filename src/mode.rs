@@ -6,7 +6,7 @@ pub enum RunMode {
     Start,
     Intro,
     // Chargen, 
-    Running, 
+    Travelling, 
     // Waiting, 
     Prompting, 
     // Scence

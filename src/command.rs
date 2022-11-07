@@ -16,17 +16,17 @@ impl Command for VirtualKeyCode {
             Self::Up | Self::Numpad8 => {
                 let up = ();
                 if gs.run_mode == RunMode::Start {
-                    gs.commands.push(gs.menu.manage(VirtualKeyCode::Up));
+                    gs.commands.push(gs.menu.manage(*self));
                 } 
                 if gs.run_mode == RunMode::Intro {
-                    let up = RunMode::new(gs, RunMode::Running);
+                    let up = RunMode::new(gs, RunMode::Travelling);
                     gs.commands.push(up);
                 }
-                if gs.run_mode == RunMode::Running {
+                if gs.run_mode == RunMode::Travelling {
                     gs.commands.push(gs.player.map_move(0, -1));
                 }
                 if gs.run_mode == RunMode::Prompting {
-                    gs.commands.push(gs.menu.manage(VirtualKeyCode::Up))
+                    gs.commands.push(gs.menu.manage(*self))
                 }
             },
             
@@ -35,7 +35,7 @@ impl Command for VirtualKeyCode {
                 if gs.run_mode == RunMode::Start {
                     gs.commands.push(gs.menu.manage(VirtualKeyCode::Down));
                 }
-                if gs.run_mode == RunMode::Running {
+                if gs.run_mode == RunMode::Travelling {
                     gs.commands.push(gs.player.map_move(0, 1));
                 }
                 if gs.run_mode == RunMode::Prompting {
@@ -44,29 +44,29 @@ impl Command for VirtualKeyCode {
             },
 
             // LEFT KEY
-            Self::Left | Self::Numpad4 => if gs.run_mode == RunMode::Running {
+            Self::Left | Self::Numpad4 => if gs.run_mode == RunMode::Travelling {
                 gs.commands.push(gs.player.map_move(-1, 0));
             },
 
             // RIGHT KEY
-            Self::Right | Self::Numpad6 => if gs.run_mode == RunMode::Running {
+            Self::Right | Self::Numpad6 => if gs.run_mode == RunMode::Travelling {
                 gs.commands.push(gs.player.map_move(1, 0));
             },
 
             // DIAGONAL KEYS
-            Self::Numpad1 => if gs.run_mode == RunMode::Running {
+            Self::Numpad1 => if gs.run_mode == RunMode::Travelling {
                 gs.commands.push(gs.player.map_move(-1, 1));
             }
             
-            Self::Numpad3 => if gs.run_mode == RunMode::Running {
+            Self::Numpad3 => if gs.run_mode == RunMode::Travelling {
                 gs.commands.push(gs.player.map_move(1, 1));
             }
 
-            Self::Numpad7 => if gs.run_mode == RunMode::Running {
+            Self::Numpad7 => if gs.run_mode == RunMode::Travelling {
                 gs.commands.push(gs.player.map_move(-1, -1));
             },
 
-            Self::Numpad9 => if gs.run_mode == RunMode::Running {
+            Self::Numpad9 => if gs.run_mode == RunMode::Travelling {
                 gs.commands.push(gs.player.map_move(1, -1));
             },
 
@@ -82,19 +82,19 @@ impl Command for VirtualKeyCode {
                     }
                 }
                 if gs.run_mode == RunMode::Intro {
-                    enter = RunMode::new(gs, RunMode::Running);
+                    enter = RunMode::new(gs, RunMode::Travelling);
                     gs.menu = gs.menu.new(init::main_menu());
                     gs.menu.restore();
                     return enter;
                 }
-                if gs.run_mode == RunMode::Running {
+                if gs.run_mode == RunMode::Travelling {
                     enter = RunMode::new(gs, RunMode::Prompting);
                     gs.menu = gs.menu.new(init::travel_menu());
                     return enter;
                 }
                 if gs.run_mode == RunMode::Prompting {
                     gs.menu= gs.menu.restore();
-                    return RunMode::new(gs, RunMode::Running);
+                    return RunMode::new(gs, RunMode::Travelling);
                 }
                 gs.commands.push(enter);
             }
@@ -105,13 +105,13 @@ impl Command for VirtualKeyCode {
                 if gs.run_mode == RunMode::Intro {
                     RunMode::new(gs, RunMode::Start);
                 }
-                if gs.run_mode == RunMode::Running {
+                if gs.run_mode == RunMode::Travelling {
                     gs.menu = gs.menu.restore();
                     RunMode::new(gs, RunMode::Intro);
                     // gs.menu.pop_menu();
                 }
                 if gs.run_mode == RunMode::Prompting {
-                    // RunMode::new(gs, RunMode::Running);
+                    // RunMode::new(gs, RunMode::Travelling);
                     gs.menu = gs.menu.restore();
                 }
             }
@@ -119,7 +119,7 @@ impl Command for VirtualKeyCode {
             // OTHER
             _ => {
                 if gs.run_mode == RunMode::Intro {
-                    gs.run_mode = RunMode::Running;
+                    gs.run_mode = RunMode::Travelling;
                 }
             }
         }

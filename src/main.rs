@@ -61,7 +61,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 // Plan on reading the command stream from input
 fn update(gs: &mut State) {
 
-    if gs.commands.len() >= 1 {
+    if !gs.commands.is_empty() {
         for command in &gs.commands {
             command;
         }
@@ -132,7 +132,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
             y += 1;
         }
     }
-    else if gs.run_mode == RunMode::Running {
+    else if gs.run_mode == RunMode::Travelling {
         ctx.cls();
         Map::draw(&gs.map.atlas, ctx);
         Player::draw(&gs.player, ctx);

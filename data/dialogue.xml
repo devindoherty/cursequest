@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="US-ASCII"?>
     <mobs>
-      <mob name="Elder Rose">
-        <dialogue>
+      <mob name="ElderRose">
+        <dialogue id="awakenings">
           <text>You have stirred. Good. You were half dead when we found you. Rest now. You are safe.</text>
           <options>
-            <option action="question1">Where am I?</option>
-            <option action="question2">Who are you?</option>
-            <option action="question3">What happened?</option>
+            <option target="shir">Where am I?</option>
+            <option target="rose">Who are you?</option>
+            <option target="rescue">What happened?</option>
           </options>
         </dialogue>
-        <dialogue id="answer1">
+        <dialogue id="shir">
           <text>You are in the Shir Valley, in the home of Elder Rose.</text>
         </dialogue>
-        <dialogue id="answer2">
+        <dialogue id="rose">
           <text>Why, I am Elder Rose, of course. This is the village of Finn's Glen</text>
         </dialogue>
-        <dialogue id="answer3">
-          <text>"A group of farmers found you collapsed in the wilderness. You were holding this..."</text>
-          <text>She shows you a blade. "I had you brought here and have nursed you back to health"</text>
+        <dialogue id="rescue">
+          <text>
+          "A group of farmers found you collapsed in the wilderness. You were holding this..."
+          She points out a blade among your belongings. 
+          "I had you brought here and have nursed you back to health."
+          </text>
           <options>
-            <option action="question4">What of the sword?</option>
-            <option action="question5">What was I doing out there?</option>
-            <option action="decision1">I wish to leave, now.</option>
+            <option target="sword">What of the sword?</option>
+            <option target="tomb">What was I doing out there?</option>
+            <option target="end">I wish to leave, now. [END CONVERSATION]</option>
           </options>
         </dialogue>
+        <dialogue id="sword">
+          <text> 
+          The Elder looks apprehensive. "I dare not touch it. It bears the mark of the Uncrowned King."
+          She studies the sword for a moment and looks at you worriedly. 
+          "Any who bore this blade are doomed to whatever foul magic enchants it."
+          </text>
+        </dialogue>
+        <dialogue id="tomb">
+          <text>
+          "There is a tomb to the last Good King of Klathia just west of the Glen. Perhaps you were plundering it?"
+          </text>
+        </dialogue>
+        <dialogue id="end">
+          <text>
+          You are free to leave, but know this: The Shir Valley is relatively safe, 
+          but the Uncrowned King holds court upon the Klathian throne. His armies 
+          are vast, and his sorceries vile. The elven queen hides in her forest 
+          realm and the dwarven king cowers in his mountain hall. Any who would openly defy
+          him, especially those he has cursed, would be doomed to fail. Even those
+          whose claim to the throne is strong.
+          </text>
       </mob>
       <mob name = "Uncrowned King">
         <dialogue>

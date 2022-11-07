@@ -18,13 +18,11 @@ pub fn start_menu() -> Menu {
         display_char: '3'
     };
 
-    let start_menu = Menu {
+    Menu {
         items: vec![start_item_one, start_item_two, start_item_three],
         selected: 0,
         last: Vec::new(),
-    };
-
-    start_menu
+    }
 }
 
 pub fn main_menu() -> Vec<MenuItem> {
