@@ -21,24 +21,22 @@ pub struct MenuItem {
 }
 
 impl Menu {
-    pub fn new(&self, items: Vec<MenuItem>) -> Menu {
-        let tmp_selected = self.selected;
+    pub fn new(&mut self, items: Vec<MenuItem>) -> Menu {
+        self.last.push(self.clone());
         let tmp_last = self.last.clone();
-        let menu = Menu {
+        Menu {
             items,
-            selected: tmp_selected,
+            selected: 0,
             last: tmp_last,
-        };
-        menu
+        }
     }
 
-    pub fn restore(&self) {
-       println!("{}", self.last.len()); 
-        // let menu = Menu {
-        //     items: last_menu.items,
-        //     selected: last_menu.selected,
-        //     last: last_menu.last,
-        // };
+    pub fn restore(&mut self) -> Menu {
+        let last = self.last.pop();
+        match last {
+            None => Menu {items: Vec::new(), selected: 0, last: Vec::new()},
+            Some(menu) => menu
+        }
     }
 
     pub fn push_menu(&mut self, previous: Menu) {
@@ -114,10 +112,9 @@ impl Menu {
 
 impl MenuItem {
     pub fn new(name: String, character: char) -> MenuItem {
-        let menu_item = MenuItem {
+        MenuItem {
             display_name: name,
             display_char: character,
-        };
-        menu_item
+        }
     }
 }

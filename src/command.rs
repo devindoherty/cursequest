@@ -109,6 +109,10 @@ impl Command for VirtualKeyCode {
                     RunMode::new(gs, RunMode::Intro);
                     // gs.menu.pop_menu();
                 }
+                if gs.run_mode == RunMode::Prompting {
+                    // RunMode::new(gs, RunMode::Running);
+                    gs.menu = gs.menu.restore();
+                }
             }
 
             // OTHER
