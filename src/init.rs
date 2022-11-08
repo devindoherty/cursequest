@@ -94,6 +94,10 @@ pub fn travel_menu() -> Vec<MenuItem> {
     items
 }
 
+// pub fn prologue() -> Scene {
+//     Scene{}
+// }
+
 // fn init_encounters() {
 //     // let main_quest_menu = Menu{
 //     //     items: Vec::new(),

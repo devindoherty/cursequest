@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="US-ASCII"?>
     <mobs>
-      <mob name="ElderRose">
+      <mob name="rose">
         <dialogue id="awakenings">
           <text>You have stirred. Good. You were half dead when we found you. Rest now. You are safe.</text>
           <options>
@@ -43,14 +43,22 @@
           <text>
           You are free to leave, but know this: The Shir Valley is relatively safe, 
           but the Uncrowned King holds court upon the Klathian throne. His armies 
-          are vast, and his sorceries vile. The elven queen hides in her forest 
-          realm and the dwarven king cowers in his mountain hall. Any who would openly defy
-          him, especially those he has cursed, would be doomed to fail. Even those
-          whose claim to the throne is strong.
+          are vast, and his sorceries vile. Evil creatures are drawn to him. 
+          The elven queen hides in her forest realm and the dwarven king cowers 
+          in his mountain hall. Any who would openly defy him, especially those he has 
+          cursed, would be doomed to fail. Even those whose claim to the throne is strong.
           </text>
       </mob>
       <mob name = "Uncrowned King">
-        <dialogue>
+        <dialogue id="greetings">
+        <text>
+        I know your face. You're that welp, Kryll, they call you the trueborn Klathian.
+        So, have you finally come to claim your throne?
+        </text>
+        <option target="throne"> I have come to claim what is mine, by right.</option>
+        <option target="evil"> I have come to rid the kingdom of your evil.</option>
+        <option target="reject"> You can keep the throne.</option>
+        <option target="curse"> I've come to return
         </dialogue>
       </mob>
     </mobs>

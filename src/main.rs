@@ -24,6 +24,8 @@ use mode::RunMode;
 mod player;
 use player::Player;
 
+mod scene;
+
 // Gamestate struct, contains all data to update for game
 pub struct State {
     player: Player,
@@ -167,10 +169,10 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
 
 fn main() -> BError {
     let context = BTermBuilder::simple(128, 64)
-    .unwrap()
-    .with_title("Curse Quest")
-    .with_automatic_console_resize(false)
-    .build()?;
+        .unwrap()
+        .with_title("Curse Quest")
+        .with_automatic_console_resize(false)
+        .build()?;
     
     let player: Player = Player {
         x: 12,
@@ -189,11 +191,11 @@ fn main() -> BError {
     let game_log = Vec::new();
 
     let raw_world_map = Map::load("assets/worldmap.txt");
-    let world_map = Map::new(raw_world_map);
+    let map = Map::new(raw_world_map);
 
     let gs: State = State {
-        player: player,
-        map: world_map,
+        player,
+        map,
         run_mode: RunMode::Start,
         // encounters: act1,
         // current_encounter: introduction,

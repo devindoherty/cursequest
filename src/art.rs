@@ -1,9 +1,9 @@
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 
-struct Art {
-    ascii: Vec<String>,
-    caption: String,
+pub struct Art {
+    pub ascii: Vec<String>,
+    pub caption: String,
 }
 
 
