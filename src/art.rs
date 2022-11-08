@@ -7,7 +7,6 @@ pub struct Art {
 }
 
 
-
 pub fn load_ascii_art(art: &str) -> Vec<String> {
     let file = File::open(art).expect("Error opening file!");
     let reader = BufReader::new(file);
@@ -16,4 +15,14 @@ pub fn load_ascii_art(art: &str) -> Vec<String> {
     //     println!("{}", line?);
     // }
     reader.lines().map(|line| line.unwrap()).collect::<Vec<String>>()
+}
+
+impl Art {
+    pub fn new(path: &str, caption: String) -> Self {
+        let ascii = load_ascii_art(path);
+        Art {
+            ascii,
+            caption,
+        }
+    }
 }

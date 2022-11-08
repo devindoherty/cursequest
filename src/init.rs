@@ -1,6 +1,8 @@
 // use crate::Encounter;
+use crate::Art;
 use crate::Map;
 use crate::{Menu, MenuItem};
+use crate::Scene;
 
 pub fn start_menu() -> Menu {
     
@@ -47,8 +49,8 @@ pub fn main_menu() -> Vec<MenuItem> {
         display_char: '4'
     };
 
-    let items = vec![menu_item_one, menu_item_two, menu_item_three, menu_item_four];
-    items
+    vec![menu_item_one, menu_item_two, menu_item_three, menu_item_four]
+
 }
 
 pub fn travel_menu() -> Vec<MenuItem> {
@@ -83,20 +85,24 @@ pub fn travel_menu() -> Vec<MenuItem> {
         display_char: '6',
     };
 
-    let items = vec![
+    vec![
         travel_item_one, 
         travel_item_two, 
         travel_item_three, 
         travel_item_four, 
         travel_item_five,
         travel_item_six
-    ];
-    items
+    ]
 }
 
-// pub fn prologue() -> Scene {
-//     Scene{}
-// }
+pub fn prologue() -> Scene {
+    let title = String::from("Prologue");
+    let main = String::from("A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control...");
+    let art = Art::new("assets/king.txt", String::from("king"));
+    let menu: Option<Menu> = None;
+
+    Scene::new(title, main, art, menu)
+}
 
 // fn init_encounters() {
 //     // let main_quest_menu = Menu{

@@ -25,6 +25,7 @@ mod player;
 use player::Player;
 
 mod scene;
+use scene::Scene;
 
 // Gamestate struct, contains all data to update for game
 pub struct State {
@@ -34,7 +35,7 @@ pub struct State {
     // encounters: Vec<Encounter>,
     // current_encounter: Encounter,
     menu: Menu,
-    art: Vec<String>,
+    scene: Scene,
     startart: Vec<String>,
     log: Vec<String>,
     commands: Vec<()>,
@@ -101,38 +102,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     else if gs.run_mode == RunMode::Intro {
         // println!("{:#?}", ctx.get_char_size());
         ctx.cls();
-        draw_batch.cls();
-        let mut block = TextBlock::new(1, 0, 126, 21);
-        let mut buf = TextBuilder::empty();
-        buf.ln()
-            .fg(RGB::named(YELLOW))
-            .bg(RGB::named(BLUE))
-            .centered("Prologue")
-            .fg(RGB::named(WHITE))
-            .bg(RGB::named(BLACK))
-            .ln().ln()
-            .line_wrap(
-                "Hail Kryll of Klathia, true heir to the Throne!")
-            .ln().ln()
-            .line_wrap(
-                "A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control...")
-            .ln().ln()
-            .line_wrap(
-                "ESC or Q to quit. Press any other key to continue...")
-            .reset();
-        block.print(&buf).expect("Line too long!");
-        block.render_to_draw_batch(&mut draw_batch);
-        draw_batch.submit(0).expect("Batch Error");
-        render_draw_buffer(ctx).expect("Render Error");
-        let mut y = 25;
-        for line in &gs.art {
-            ctx.print_color(
-                30, y, 
-                RGB::named(WHITE), RGB::named(BLACK), 
-                line.to_string()
-            );
-            y += 1;
-        }
+        gs.scene.draw_fullscreen(ctx);
     }
     else if gs.run_mode == RunMode::Travelling {
         ctx.cls();
@@ -183,7 +153,7 @@ fn main() -> BError {
 
     let mut start_menu = init::start_menu();
 
-    let king = load_ascii_art("assets/king.txt");
+    let prologue = init::prologue();
     let sword = load_ascii_art("assets/sword.txt");
 
     let com = Vec::new(); 
@@ -200,7 +170,7 @@ fn main() -> BError {
         // encounters: act1,
         // current_encounter: introduction,
         menu: start_menu,
-        art: king,
+        scene: prologue,
         startart: sword,
         log: game_log,
         commands: com,

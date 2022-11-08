@@ -1,19 +1,29 @@
 use crate::Art;
 use crate::State;
+use crate::Menu;
 
 
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
-
 pub struct Scene {
     pub title: String,
     pub main: String,
     pub art: Art,
+    pub menu: Option<Menu>,
 }
 
 impl Scene {
-    pub fn draw_fullscreen(&self, gs: State, ctx: &mut BTerm) {
+    pub fn new(title: String, main: String, art: Art, menu: Option<Menu>) -> Self {
+        Scene {
+            title,
+            main,
+            art,
+            menu,
+        }
+    }
+
+    pub fn draw_fullscreen(&self, ctx: &mut BTerm) {
         let mut draw_batch = DrawBatch::new();
         ctx.cls();
         draw_batch.cls();
@@ -42,4 +52,9 @@ impl Scene {
             y += 1;
         }
     }
+
+    pub fn draw_halfscreen(&self, ctx: &mut BTerm) {
+
+    }
+
 }
