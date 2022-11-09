@@ -1,30 +1,28 @@
-// use crate::Menu;
+use crate::Menu;
 
-// pub struct Encounter <'a>{
-//     pub name: String,
-//     pub flavor: String,
-//     pub menu: Menu<'a>,
-//     pub art: Vec<String>, 
-// }
+pub struct Encounter <'a>{
+    pub name: String,
+    pub menu: Menu<'a>,
+}
 
 
-// struct Mob {}
+struct Mob {}
 
 
-// impl Encounter <'_>{
-//     fn new(&self, name: String, flavor: String, menu: Menu, art: Vec<String>) -> Encounter {
-//         let new_encounter = Encounter {
-//             name: name,
-//             flavor: flavor,
-//             menu: menu,
-//             art: art,
-//         };
-//         new_encounter
-//     }
-// }
+impl Encounter <'_>{
+    fn new(name: String, flavor: String, menu: Menu, art: Vec<String>) -> Encounter {
+        let new_encounter = Encounter {
+            name: name,
+            flavor: flavor,
+            menu: menu,
+            art: art,
+        };
+        new_encounter
+    }
+}
 
-// impl Mob {
-//     fn new() {
+impl Mob {
+    fn new() {
 
-//     }
-// }
+    }
+}

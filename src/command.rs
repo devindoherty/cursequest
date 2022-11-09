@@ -14,7 +14,6 @@ impl Command for VirtualKeyCode {
         match self {
             // UP KEY
             Self::Up | Self::Numpad8 => {
-                let up = ();
                 if gs.run_mode == RunMode::Start {
                     gs.commands.push(gs.menu.manage(*self));
                 } 

@@ -6,6 +6,7 @@ pub struct Player {
     pub y: i32,
     pub health: i32,
     pub magic: i32,
+    pub stats: Statistics,
 }
 
 pub struct Statistics {

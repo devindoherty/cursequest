@@ -1,10 +1,10 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
-use crate::State;
-use crate::Player;
-use crate::Map;
-use crate::map::Biome;
+// use crate::State;
+// use crate::Player;
+// use crate::Map;
+// use crate::map::Biome;
 
 
 #[derive(Clone)]
@@ -39,21 +39,23 @@ impl Menu {
         }
     }
 
-    pub fn push_menu(&mut self, previous: Menu) {
-        self.last.push(previous);
-    }
+    // Unused for now
 
-    pub fn pop_menu(&mut self,) -> Option<Menu> {
-        self.last.pop()
-    }
+    // pub fn push_menu(&mut self, previous: Menu) {
+    //     self.last.push(previous);
+    // }
 
-    pub fn push_item(&mut self, item: MenuItem) {
-        self.items.push(item)
-    }
+    // pub fn pop_menu(&mut self,) -> Option<Menu> {
+    //     self.last.pop()
+    // }
 
-    pub fn pop_item(&mut self) -> Option<MenuItem>{
-        self.items.pop()
-    }
+    // pub fn push_item(&mut self, item: MenuItem) {
+    //     self.items.push(item)
+    // }
+
+    // pub fn pop_item(&mut self) -> Option<MenuItem>{
+    //     self.items.pop()
+    // }
 
     pub fn draw(&mut self, ctx: &mut BTerm) {
         let mut y = 45;
@@ -110,11 +112,13 @@ impl Menu {
 
 }
 
-impl MenuItem {
-    pub fn new(name: String, character: char) -> MenuItem {
-        MenuItem {
-            display_name: name,
-            display_char: character,
-        }
-    }
-}
+// Unused for now
+
+// impl MenuItem {
+//     pub fn new(name: String, character: char) -> MenuItem {
+//         MenuItem {
+//             display_name: name,
+//             display_char: character,
+//         }
+//     }
+// }

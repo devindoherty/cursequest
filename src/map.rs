@@ -15,7 +15,7 @@ pub struct MapTile {
     pub x: i32,
     pub y: i32,
     pub biome: Biome,
-    id: i32,
+    _id: i32,
 }
 
 #[derive(Eq, Hash, PartialEq)]
@@ -78,7 +78,7 @@ impl Map {
                 }, 
                 x: x,
                 y: y,
-                id: i,
+                _id: i,
                 biome: match c {
                     'x' => Biome::Wasteland,
                     'o' | ';' => Biome::Marsh,
@@ -169,7 +169,7 @@ impl MapTile {
     //     new_tile
     // }
 
-    fn alter() {
+    // fn alter() {
         
-    }
+    // }
 }

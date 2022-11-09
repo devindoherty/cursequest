@@ -22,7 +22,7 @@ mod mode;
 use mode::RunMode;
 
 mod player;
-use player::Player;
+use player::{Player, Statistics};
 
 mod scene;
 use scene::Scene;
@@ -62,14 +62,14 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 }
 
 // Plan on reading the command stream from input
-fn update(gs: &mut State) {
+fn update(_gs: &mut State) {
 
-    if !gs.commands.is_empty() {
-        for command in &gs.commands {
-            command;
-        }
-    gs.commands.pop();
-    }
+    // if !gs.commands.is_empty() {
+    //     for command in &gs.commands {
+    //         command;
+    //     }
+    // gs.commands.pop();
+    // }
 
     // gs.menu.alter(&gs.player, &gs.map)
     // for tile in &gs.map.atlas {
@@ -149,9 +149,10 @@ fn main() -> BError {
         y: 38,
         health: 100,
         magic: 100,
+        stats: Statistics {intellect: 50, might: 50, soul: 50},
     };
 
-    let mut start_menu = init::start_menu();
+    let start_menu = init::start_menu();
 
     let prologue = init::prologue();
     let sword = load_ascii_art("assets/sword.txt");

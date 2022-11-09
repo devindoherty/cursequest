@@ -1,5 +1,5 @@
 use crate::Art;
-use crate::State;
+// use crate::State;
 use crate::Menu;
 
 
@@ -53,8 +53,9 @@ impl Scene {
         }
     }
 
-    pub fn draw_halfscreen(&self, ctx: &mut BTerm) {
+    // Work in progress
+    // pub fn draw_halfscreen(&self, _ctx: &mut BTerm) {
 
-    }
+    // }
 
 }
