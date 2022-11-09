@@ -38,7 +38,6 @@ pub struct State {
     scene: Scene,
     startart: Vec<String>,
     log: Vec<String>,
-    commands: Vec<()>,
 }
 
 // Bracket required implementation for the Gamestate
@@ -157,8 +156,6 @@ fn main() -> BError {
     let prologue = init::prologue();
     let sword = load_ascii_art("assets/sword.txt");
 
-    let com = Vec::new(); 
-
     let game_log = Vec::new();
 
     let raw_world_map = Map::load("assets/worldmap.txt");
@@ -174,7 +171,6 @@ fn main() -> BError {
         scene: prologue,
         startart: sword,
         log: game_log,
-        commands: com,
     };
 
     main_loop(context, gs)
