@@ -15,91 +15,84 @@ impl Command for VirtualKeyCode {
             // UP KEY
             Self::Up | Self::Numpad8 => {
                 if gs.run_mode == RunMode::Start {
-                    gs.commands.push(gs.menu.manage(*self));
+                    gs.menu.manage(*self);
                 } 
                 if gs.run_mode == RunMode::Intro {
-                    let up = RunMode::new(gs, RunMode::Travelling);
-                    gs.commands.push(up);
+                    RunMode::new(gs, RunMode::Travelling);
                 }
                 if gs.run_mode == RunMode::Travelling {
-                    gs.commands.push(gs.player.map_move(0, -1));
+                    gs.player.map_move(0, -1);
                 }
                 if gs.run_mode == RunMode::Prompting {
-                    gs.commands.push(gs.menu.manage(*self))
+                    gs.menu.manage(*self)
                 }
             },
             
             // DOWN KEY
             Self::Down | Self::Numpad2 => {
                 if gs.run_mode == RunMode::Start {
-                    gs.commands.push(gs.menu.manage(VirtualKeyCode::Down));
+                    gs.menu.manage(VirtualKeyCode::Down);
                 }
                 if gs.run_mode == RunMode::Travelling {
-                    gs.commands.push(gs.player.map_move(0, 1));
+                    gs.player.map_move(0, 1);
                 }
                 if gs.run_mode == RunMode::Prompting {
-                    gs.commands.push(gs.menu.manage(VirtualKeyCode::Down))
+                    gs.menu.manage(VirtualKeyCode::Down)
                 }
             },
 
             // LEFT KEY
             Self::Left | Self::Numpad4 => if gs.run_mode == RunMode::Travelling {
-                gs.commands.push(gs.player.map_move(-1, 0));
+                gs.player.map_move(-1, 0);
             },
 
             // RIGHT KEY
             Self::Right | Self::Numpad6 => if gs.run_mode == RunMode::Travelling {
-                gs.commands.push(gs.player.map_move(1, 0));
+                gs.player.map_move(1, 0);
             },
 
             // DIAGONAL KEYS
             Self::Numpad1 => if gs.run_mode == RunMode::Travelling {
-                gs.commands.push(gs.player.map_move(-1, 1));
+                gs.player.map_move(-1, 1);
             }
             
             Self::Numpad3 => if gs.run_mode == RunMode::Travelling {
-                gs.commands.push(gs.player.map_move(1, 1));
+                gs.player.map_move(1, 1);
             }
 
             Self::Numpad7 => if gs.run_mode == RunMode::Travelling {
-                gs.commands.push(gs.player.map_move(-1, -1));
+                gs.player.map_move(-1, -1);
             },
 
             Self::Numpad9 => if gs.run_mode == RunMode::Travelling {
-                gs.commands.push(gs.player.map_move(1, -1));
+                gs.player.map_move(1, -1);
             },
 
             // ENTER KEY
             Self::Return => {
-                let mut enter = ();
                 if gs.run_mode == RunMode::Start {
                     if gs.menu.selected == 0 {
-                        enter = RunMode::new(gs, RunMode::Intro);
-                        return enter;
+                        return RunMode::new(gs, RunMode::Intro);
                     } else {
                         ctx.quit();
                     }
                 }
                 if gs.run_mode == RunMode::Intro {
-                    enter = RunMode::new(gs, RunMode::Travelling);
                     gs.menu = gs.menu.new(init::main_menu());
                     gs.menu.restore();
-                    return enter;
-                }
-                if gs.run_mode == RunMode::Travelling {
-                    enter = RunMode::new(gs, RunMode::Prompting);
-                    gs.menu = gs.menu.new(init::travel_menu());
-                    return enter;
-                }
-                if gs.run_mode == RunMode::Prompting {
-                    gs.menu= gs.menu.restore();
                     return RunMode::new(gs, RunMode::Travelling);
                 }
-                gs.commands.push(enter);
+                if gs.run_mode == RunMode::Travelling {
+                    gs.menu = gs.menu.new(init::travel_menu());
+                    return RunMode::new(gs, RunMode::Prompting);
+                }
+                if gs.run_mode == RunMode::Prompting {
+                    gs.menu = gs.menu.restore();
+                    return RunMode::new(gs, RunMode::Travelling);
+                }
             }
 
-            // B KEY
-
+           // B KEY
             Self::B => {
                 if gs.run_mode == RunMode::Intro {
                     RunMode::new(gs, RunMode::Start);
