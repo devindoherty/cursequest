@@ -82,11 +82,11 @@ impl Menu {
         match key {
             VirtualKeyCode::Up => if self.selected == 0 {} else {
                 self.selected -= 1;
-                println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
             VirtualKeyCode::Down => if self.selected >= self.items.len() - 1 {} else {
                 self.selected += 1;
-                println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
             _ => {}
         }

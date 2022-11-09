@@ -6,6 +6,11 @@ use crate::Menu;
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
+pub struct StageManager {
+
+}
+
+
 pub struct Scene {
     pub title: String,
     pub main: String,
@@ -15,12 +20,7 @@ pub struct Scene {
 
 impl Scene {
     pub fn new(title: String, main: String, art: Art, menu: Option<Menu>) -> Self {
-        Scene {
-            title,
-            main,
-            art,
-            menu,
-        }
+        Scene { title, main, art, menu}
     }
 
     pub fn draw_fullscreen(&self, ctx: &mut BTerm) {

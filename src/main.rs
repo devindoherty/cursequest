@@ -110,20 +110,18 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move. ENTER to use Menu.");
         // gs.menu.draw(ctx);
-        for tile in &gs.map.atlas {
-            if gs.player.x == tile.x && gs.player.y == tile.y {
-                ctx.print_color(1, 42, RGB::named(WHITE), RGB::named(BLACK), &tile.desc);
-            }
-        }
+        
 
-        let mut i = 41;
-        for entry in &gs.log {
-            ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
-            i += 1;
-            if i == 62 {
-                i = 41;
-            }
-        }
+
+        // Game Log - Unused for now
+        // let mut i = 41;
+        // for entry in &gs.log {
+        //     ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
+        //     i += 1;
+        //     if i == 62 {
+        //         i = 41;
+        //     }
+        // }
         gs.menu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prompting {
