@@ -11,6 +11,10 @@ pub struct Player {
     pub stats: Statistics,
 }
 
+pub struct Journal {
+    
+}
+
 pub struct Statistics {
     pub intellect: i32,
     pub might: i32,

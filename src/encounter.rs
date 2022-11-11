@@ -5,11 +5,14 @@ pub struct Encounter {
     pub menu: Menu,
 }
 
+pub struct Quest {
+    
+}
 
 struct Mob {}
 
 
-impl Encounter <'_>{
+impl Encounter {
     fn new(name: String, flavor: String, menu: Menu, art: Vec<String>) -> Encounter {
         Encounter {
             name,

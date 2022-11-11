@@ -3,12 +3,29 @@
 // let _years = 7;
 // let _era = String::from("Era of the Uncrowned King");
 
-pub struct Calendar {
+pub struct Calendar<'a> {
     hours: i32,
-    days: Days,
-    months: Month,
+    days: [&'a str; 7],
+    months: [&'a str; 7],
     years: i32,
     era: String
+}
+
+impl Calendar<'_> {
+
+    fn new() -> Calendar<'static> {
+        Calendar {
+            hours: 1,
+            days: ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"],
+            months: ["Sprout", "Harvest", "Solstice", "Wilts", "Wending", "Void", "Thaw"],
+            years: 1,
+            era: String::from("Era of the Uncrowned King"),
+        }
+    }
+    
+    fn set_date(){
+
+    }
 }
 
 enum Days {

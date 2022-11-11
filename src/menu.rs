@@ -6,7 +6,6 @@ use bracket::prelude::*;
 // use crate::Map;
 // use crate::map::Biome;
 
-
 #[derive(Clone)]
 pub struct Menu {
     pub items: Vec<MenuItem>,
@@ -80,11 +79,11 @@ impl Menu {
 
     pub fn manage(&mut self, key: VirtualKeyCode) {
         match key {
-            VirtualKeyCode::Up => if self.selected == 0 {} else {
+            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if self.selected == 0 {} else {
                 self.selected -= 1;
                 // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
-            VirtualKeyCode::Down => if self.selected >= self.items.len() - 1 {} else {
+            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if self.selected >= self.items.len() - 1 {} else {
                 self.selected += 1;
                 // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },

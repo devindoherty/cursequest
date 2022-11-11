@@ -9,8 +9,8 @@ use command::Command;
 
 mod init;
 
-// mod encounter;
-// use encounter::Encounter;
+mod encounter;
+use encounter::Encounter;
 
 mod map;
 use map::Map;
@@ -27,13 +27,14 @@ use player::{Player, Statistics};
 mod scene;
 use scene::Scene;
 
+mod world;
+use world::Calendar;
+
 // Gamestate struct, contains all data to update for game
 pub struct State {
     player: Player,
     map: Map,
     run_mode: RunMode,
-    // encounters: Vec<Encounter>,
-    // current_encounter: Encounter,
     menu: Menu,
     scene: Scene,
     startart: Vec<String>,
