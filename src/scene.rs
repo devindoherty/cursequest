@@ -18,9 +18,10 @@ pub struct Scene {
 
 impl Scene {
     pub fn new(title: String, main: String, art: Art, encounter: Option<Encounter>) -> Self {
-        Scene { title, main, art, encounter}
+        Scene {title, main, art, encounter}
     }
 
+    // Full Screen cinematic style
     pub fn draw_fullscreen(&self, ctx: &mut BTerm) {
         let mut draw_batch = DrawBatch::new();
         ctx.cls();
@@ -40,20 +41,30 @@ impl Scene {
         block.render_to_draw_batch(&mut draw_batch);
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
-        let mut y = 25;
-        for line in &self.art.ascii {
-            ctx.print_color(
-                30, y, 
-                RGB::named(WHITE), RGB::named(BLACK), 
-                line.to_string()
-            );
-            y += 1;
-        }
+        self.art.draw(ctx, 30, 25);
     }
 
-    // Work in progress
-    // pub fn draw_halfscreen(&self, _ctx: &mut BTerm) {
-
-    // }
-
+    // Half screen within
+    pub fn draw_halfscreen(&self, ctx: &mut BTerm) {
+        ctx.cls();
+        self.art.draw(ctx, 32, 1);
+        let mut draw_batch = DrawBatch::new();
+        // ctx.cls();
+        // draw_batch.cls();
+        let mut block = TextBlock::new(32, 41, 96, 21);
+        let mut buf = TextBuilder::empty();
+        buf.ln()
+            .fg(RGB::named(YELLOW))
+            .bg(RGB::named(BLUE))
+            .centered(&self.title)
+            .fg(RGB::named(WHITE))
+            .bg(RGB::named(BLACK))
+            .ln().ln()
+            .line_wrap(&self.main)
+            .reset();
+        block.print(&buf).expect("Line too long!");
+        block.render_to_draw_batch(&mut draw_batch);
+        draw_batch.submit(0).expect("Batch Error");
+        render_draw_buffer(ctx).expect("Render Error");
+    }
 }

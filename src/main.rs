@@ -37,7 +37,8 @@ pub struct State {
     run_mode: RunMode,
     menu: Menu,
     scene: Scene,
-    startart: Vec<String>,
+    // sm: StageManager // scene_manager: StageManager,
+    startart: Art,
     log: Vec<String>,
 }
 
@@ -63,43 +64,26 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 
 // Plan on reading the command stream from input
 fn update(_gs: &mut State) {
-
-    // if !gs.commands.is_empty() {
-    //     for command in &gs.commands {
-    //         command;
-    //     }
-    // gs.commands.pop();
-    // }
-
-    // gs.menu.alter(&gs.player, &gs.map)
-    // for tile in &gs.map.atlas {
-    //     if tile.x == gs.player.x && tile.y == gs.player.y {
-    //         let desc = tile.desc.clone();
-    //         gs.log.push(desc);
+    // Game Log - Unused for now
+    // let mut i = 41;
+    // for entry in &gs.log {
+    //     ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
+    //     i += 1;
+    //     if i == 62 {
+    //         i = 41;
     //     }
     // }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
-    let mut draw_batch = DrawBatch::new();
-
     if gs.run_mode == RunMode::Start {
         ctx.cls();
-        draw_batch.cls();
-        let mut y = 8;
-        for line in &gs.startart {
-            ctx.print_color(
-            16, y, 
-                RGB::named(WHITE), RGB::named(BLACK), 
-                line.to_string()
-            );
-            y += 1;
-        }
+        gs.startart.draw(ctx, 16, 8);
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
         gs.menu.draw(ctx);
     }
-    else if gs.run_mode == RunMode::Intro {
+    else if gs.run_mode == RunMode::Prologue {
         // println!("{:#?}", ctx.get_char_size());
         ctx.cls();
         gs.scene.draw_fullscreen(ctx);
@@ -107,28 +91,16 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     else if gs.run_mode == RunMode::Travelling {
         ctx.cls();
         Map::draw(&gs.map.atlas, ctx);
-        Player::draw(&gs.player, ctx);
+        gs.player.draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move. ENTER to use Menu.");
-        // gs.menu.draw(ctx);
-        
-
-
-        // Game Log - Unused for now
-        // let mut i = 41;
-        // for entry in &gs.log {
-        //     ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
-        //     i += 1;
-        //     if i == 62 {
-        //         i = 41;
-        //     }
-        // }
         gs.menu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prompting {
         ctx.cls();
+        gs.scene.draw_halfscreen(ctx);
         Map::draw(&gs.map.atlas, ctx);
-        Player::draw(&gs.player, ctx);
+        gs.player.draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.");
         gs.menu.draw(ctx);
@@ -153,7 +125,7 @@ fn main() -> BError {
     let start_menu = init::start_menu();
 
     let prologue = init::prologue();
-    let sword = load_ascii_art("assets/sword.txt");
+    let title = Art::new("assets/title.txt", String::from("Curse Quest"));
 
     let game_log = Vec::new();
 
@@ -168,7 +140,7 @@ fn main() -> BError {
         // current_encounter: introduction,
         menu: start_menu,
         scene: prologue,
-        startart: sword,
+        startart: title,
         log: game_log,
     };
 

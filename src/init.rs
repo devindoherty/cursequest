@@ -106,6 +106,33 @@ pub fn prologue() -> Scene {
     Scene::new(title, main, art, encounter)
 }
 
+pub fn shir() -> Scene {
+    let title = String::from("Elder Rose");
+    let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
+    let art = Art::new("assets/elder.txt", String::from("Elder Rose"));
+
+    let encounter_item_one = MenuItem {
+        display_name: String::from("Where am I?"),
+        display_char: '1',
+    };
+
+    let encounter_item_two = MenuItem {
+        display_name: String::from("Who are you?"),
+        display_char: '2',
+    };
+
+    let encounter_item_three = MenuItem {
+        display_name: String::from("What happened?"),
+        display_char: '3',
+    };
+
+    let encounter_items = vec![encounter_item_one, encounter_item_two, encounter_item_three];
+
+    let encounter = Encounter::new(String::from("Elder Rose"), encounter_items);
+
+    Scene::new(title, main, art, Some(encounter))
+}
+
 // fn init_encounters() {
 //     // let main_quest_menu = Menu{
 //     //     items: Vec::new(),

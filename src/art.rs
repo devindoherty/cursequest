@@ -1,3 +1,6 @@
+use bracket_lib as bracket;
+use bracket::prelude::*;
+
 use std::io::{BufRead, BufReader};
 use std::fs::File;
 
@@ -23,6 +26,17 @@ impl Art {
         Art {
             ascii,
             caption,
+        }
+    }
+
+    pub fn draw(&self, ctx: &mut BTerm, x: i32, mut y: i32) {
+        for line in &self.ascii {
+            ctx.print_color(
+                x, y, 
+                RGB::named(WHITE), RGB::named(BLACK), 
+                line.to_string()
+            );
+            y += 1;
         }
     }
 }
