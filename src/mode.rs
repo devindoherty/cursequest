@@ -7,6 +7,7 @@ pub enum RunMode {
     Prologue,
     Travelling, 
     Prompting,
+    Storytelling,
     Updating, 
 }
 

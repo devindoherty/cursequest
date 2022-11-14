@@ -26,6 +26,9 @@ impl Command for VirtualKeyCode {
                 if gs.run_mode == RunMode::Prompting {
                     gs.menu.manage(*self)
                 }
+                if gs.run_mode == RunMode::Storytelling {
+                    gs.menu.manage(*self)
+                }
             },
             
             // DOWN KEY
@@ -38,6 +41,9 @@ impl Command for VirtualKeyCode {
                 }
                 if gs.run_mode == RunMode::Prompting {
                     gs.menu.manage(VirtualKeyCode::Down)
+                }
+                if gs.run_mode == RunMode::Storytelling {
+                    gs.menu.manage(*self)
                 }
             },
 
@@ -97,8 +103,8 @@ impl Command for VirtualKeyCode {
                     gs.scene = init::shir();
                     let scene_menu = init::shir().encounter.unwrap().menu;
                     gs.menu = gs.menu.new(scene_menu);
-                    println!("{}", gs.menu.items[0].display_name);
-                    return RunMode::new(gs, RunMode::Prompting);
+                    // println!("{}", gs.menu.items[0].display_name);
+                    return RunMode::new(gs, RunMode::Storytelling);
                 }
             }
 
