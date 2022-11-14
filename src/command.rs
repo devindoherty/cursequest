@@ -95,8 +95,9 @@ impl Command for VirtualKeyCode {
             Self::J => {
                 if gs.run_mode == RunMode::Travelling {
                     gs.scene = init::shir();
-                    // let scene_menu = gs.scene.encounter.unwrap().menu;
-                    // gs.menu.new(scene_menu);
+                    let scene_menu = init::shir().encounter.unwrap().menu;
+                    gs.menu = gs.menu.new(scene_menu);
+                    println!("{}", gs.menu.items[0].display_name);
                     return RunMode::new(gs, RunMode::Prompting);
                 }
             }
