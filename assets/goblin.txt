@@ -1,0 +1,19 @@
+            ^                                           ^
+            H                   ^                       H
+           HHH                 hhh                     HHH
+          HHHHH              hhhhhhh                  HHH  
+          HHHHHH         hhHHHHHHHHHHHhh            HHHHH    
+           HHHHH       HHHHHHHHHHHHHHHHHHHH         HHHH   
+            HHHHH    HHHHHHHHHHHHHHHHHHHHHHHHHH  HHHHHHH
+              HHhhHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+                hhhhHHHHHHHHHHHHHHHHHHHHHHHHHhhhhhh
+                 hhHHHH      HHHHHHHHHHH     hhh
+                 HHHHH          HHHHHH        hhh
+                HHHHHHH   o       HHH      o   hhh
+                 HHHHH    ---     (H)     ---   hhh
+                   \               |             |
+                    \              <>           /
+                     \                         /
+                      \         _________     /
+                       \__     / V    V  \   /
+                          \____\__^__^___/__/

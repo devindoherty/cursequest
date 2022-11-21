@@ -3,7 +3,6 @@ use crate::Art;
 // use crate::Map;
 use crate::{Menu, MenuItem};
 use crate::Scene;
-use crate::Encounter;
 
 
 pub fn start_menu() -> Menu {
@@ -101,15 +100,15 @@ pub fn prologue() -> Scene {
     let title = String::from("Prologue");
     let main = String::from("A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control...");
     let art = Art::new("assets/king.txt", String::from("king"));
-    let encounter: Option<Encounter> = None;
+    let encounter: Option<Menu> = None;
 
     Scene::new(title, main, art, encounter)
 }
 
 pub fn shir() -> Scene {
-    let title = String::from("Elder Rose");
+    let title = String::from("Rose");
     let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
-    let art = Art::new("assets/elder.txt", String::from("Elder Rose"));
+    let art = Art::new("assets/rose.txt", String::from("Roseberry"));
 
     let encounter_item_one = MenuItem {
         display_name: String::from("Where am I?"),
@@ -126,9 +125,23 @@ pub fn shir() -> Scene {
         display_char: '3',
     };
 
-    let encounter_items = vec![encounter_item_one, encounter_item_two, encounter_item_three];
+    let encounter_item_four = MenuItem {
+        display_name: String::from("Farewell [END CONVERSATION]"),
+        display_char: '4',
+    };
 
-    let encounter = Encounter::new(String::from("Elder Rose"), encounter_items);
+    let encounter_items = vec![
+        encounter_item_one, 
+        encounter_item_two, 
+        encounter_item_three, 
+        encounter_item_four
+    ];
+
+    let encounter = Menu {
+        items: encounter_items,
+        selected: 0,
+        last: Vec::new(),
+    };
 
     Scene::new(title, main, art, Some(encounter))
 }

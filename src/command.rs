@@ -79,34 +79,41 @@ impl Command for VirtualKeyCode {
                 if gs.run_mode == RunMode::Start {
                     if gs.menu.selected == 0 {
                         return RunMode::new(gs, RunMode::Prologue);
-                    } else {
+                    } 
+                    else if gs.menu.selected == 1 {
+                        gs.menu.items[1].display_name = "Continue (Not Implemented)".to_string();
+                    }
+                    else {
                         ctx.quit();
                     }
                 }
                 if gs.run_mode == RunMode::Prologue {
-                    gs.menu = gs.menu.new(init::main_menu());
-                    gs.menu.restore();
-                    return RunMode::new(gs, RunMode::Travelling);
+                    gs.scene = init::shir();
+                    let scene_menu = init::shir().encounter.unwrap().items;
+                    gs.menu = gs.menu.switch(scene_menu);
+                    return RunMode::new(gs, RunMode::Storytelling);
                 }
                 if gs.run_mode == RunMode::Travelling {
-                    gs.menu = gs.menu.new(init::travel_menu());
+                    gs.menu = gs.menu.switch(init::travel_menu());
                     return RunMode::new(gs, RunMode::Prompting);
                 }
                 if gs.run_mode == RunMode::Prompting {
-                    gs.menu = gs.menu.restore();
                     return RunMode::new(gs, RunMode::Travelling);
+                }
+                if gs.run_mode == RunMode::Storytelling {
+                    gs.menu.manage(*self)
                 }
             }
 
-            Self::J => {
-                if gs.run_mode == RunMode::Travelling {
-                    gs.scene = init::shir();
-                    let scene_menu = init::shir().encounter.unwrap().menu;
-                    gs.menu = gs.menu.new(scene_menu);
-                    // println!("{}", gs.menu.items[0].display_name);
-                    return RunMode::new(gs, RunMode::Storytelling);
-                }
-            }
+            // Self::J => {
+            //     if gs.run_mode == RunMode::Travelling {
+            //         gs.scene = init::shir();
+            //         let scene_menu = init::shir().encounter.unwrap().menu;
+            //         gs.menu = gs.menu.switch(scene_menu);
+            //         // println!("{}", gs.menu.items[0].display_name);
+            //         return RunMode::new(gs, RunMode::Storytelling);
+            //     }
+            // }
 
             // B KEY
             Self::B => {

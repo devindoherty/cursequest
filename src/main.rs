@@ -9,9 +9,6 @@ use command::Command;
 
 mod init;
 
-mod encounter;
-use encounter::Encounter;
-
 mod map;
 use map::Map;
 
@@ -118,6 +115,7 @@ fn main() -> BError {
         .unwrap()
         .with_title("Curse Quest")
         .with_automatic_console_resize(false)
+        .with_fps_cap(30.0)
         .build()?;
     
     let player: Player = Player {

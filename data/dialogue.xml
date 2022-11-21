@@ -10,10 +10,10 @@
           </options>
         </dialogue>
         <dialogue id="shir">
-          <text>You are in the Shir Valley, in the home of Elder Rose.</text>
+          <text>You are in the Shir Valley, in my humble home.</text>
         </dialogue>
         <dialogue id="rose">
-          <text>Why, I am Elder Rose, of course. This is the village of Finn's Glen</text>
+          <text>Why, I'm Roseberry, of course. This is the village of Finn's Glen</text>
         </dialogue>
         <dialogue id="rescue">
           <text>
@@ -29,7 +29,7 @@
         </dialogue>
         <dialogue id="sword">
           <text> 
-          The Elder looks apprehensive. "I dare not touch it. It bears the mark of the Uncrowned King."
+          The healer looks apprehensive. "I dare not touch it. It bears the mark of the Uncrowned King."
           She studies the sword for a moment and looks at you worriedly. 
           "Any who bore this blade are doomed to whatever foul magic enchants it."
           </text>

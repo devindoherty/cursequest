@@ -1,6 +1,6 @@
 use crate::Art;
 // use crate::State;
-use crate::Encounter;
+use crate::Menu;
 
 use bracket_lib as bracket;
 use bracket::prelude::*;
@@ -13,11 +13,11 @@ pub struct Scene {
     pub title: String,
     pub main: String,
     pub art: Art,
-    pub encounter: Option<Encounter>,
+    pub encounter: Option<Menu>,
 }
 
 impl Scene {
-    pub fn new(title: String, main: String, art: Art, encounter: Option<Encounter>) -> Self {
+    pub fn new(title: String, main: String, art: Art, encounter: Option<Menu>) -> Self {
         Scene {title, main, art, encounter}
     }
 
@@ -67,4 +67,9 @@ impl Scene {
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
     }
+
+    pub fn end_encounter() {
+        
+    }
+
 }
