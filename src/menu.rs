@@ -16,6 +16,8 @@ pub struct Menu {
 
 #[derive(Clone, PartialEq)]
 pub struct MenuItem {
+    // parent: Option<ItemID>,
+    // child: Option<ItemID>,
     pub display_name: String,
     pub display_char: char,
 }
@@ -64,6 +66,14 @@ impl Menu {
         }
     }
 
+    fn select(&self) {
+        let item = &self.items[self.selected].display_name;
+        println!("{}", item);
+        if item.contains("[END CONVERSATION") {
+            println!("YOoooooOOOo GET ME OUTA HERE!");
+        }
+    }
+
     pub fn manage(&mut self, key: VirtualKeyCode) {
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if self.selected == 0 {} else {
@@ -74,7 +84,7 @@ impl Menu {
                 self.selected += 1;
                 // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
-            VirtualKeyCode::Return => println!("{}", self.items[self.selected].display_name),
+            VirtualKeyCode::Return => self.select(),
             _ => {}
         }
     }
