@@ -106,9 +106,9 @@ pub fn prologue() -> Scene {
 }
 
 pub fn shir() -> Scene {
-    let title = String::from("Rose");
+    let title = String::from("Roseberry the Healer");
     let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
-    let art = Art::new("assets/rose.txt", String::from("Roseberry"));
+    let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
 
     let encounter_item_one = MenuItem {
         display_name: String::from("Where am I?"),
@@ -146,17 +146,6 @@ pub fn shir() -> Scene {
     Scene::new(title, main, art, Some(encounter))
 }
 
-// fn init_encounters() {
-//     // let main_quest_menu = Menu{
-//     //     items: Vec::new(),
-//     //     selected: 0,
-
-//     // };
-
-//     // let main_quest = Encounter {
-//     //     name: String::from("The Curse Quest"),
-//     //     flavor: String::from("The village elder, a wizened crone of a halfling woman informs you that you are lucky to be alive. You have been cursed."),
-//     //     menu: main_quest_menu,
-//     //     art: Vec::new(), 
-//     // };
-// }
+pub fn gshir(){ // -> Scene {
+    
+}

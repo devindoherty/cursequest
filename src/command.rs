@@ -125,7 +125,7 @@ impl Command for VirtualKeyCode {
                     RunMode::new(gs, RunMode::Prologue);
                     // gs.menu.pop_menu();
                 }
-                if gs.run_mode == RunMode::Prompting {
+                if gs.run_mode == RunMode::Prompting || gs.run_mode == RunMode::Storytelling{
                     // RunMode::new(gs, RunMode::Travelling);
                     gs.menu = gs.menu.restore();
                 }

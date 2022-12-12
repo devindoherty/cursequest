@@ -16,6 +16,10 @@ pub struct Scene {
     pub encounter: Option<Menu>,
 }
 
+pub struct Mob {}
+
+pub struct Item {}
+
 impl Scene {
     pub fn new(title: String, main: String, art: Art, encounter: Option<Menu>) -> Self {
         Scene {title, main, art, encounter}

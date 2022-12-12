@@ -66,10 +66,10 @@ impl Menu {
         }
     }
 
-    fn select(&self) {
+    fn select(&mut self) {
         let item = &self.items[self.selected].display_name;
         println!("{}", item);
-        if item.contains("[END CONVERSATION") {
+        if item.contains("[END CONVERSATION]") {
             println!("YOoooooOOOo GET ME OUTA HERE!");
         }
     }

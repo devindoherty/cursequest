@@ -15,6 +15,11 @@ use map::Map;
 mod menu;
 use menu::{Menu, MenuItem};
 
+mod tmenu;
+use tmenu::{MenuManager};
+
+mod hmenu;
+
 mod mode;
 use mode::RunMode;
 
@@ -37,6 +42,7 @@ pub struct State {
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
     log: Vec<String>,
+    manager: MenuManager,
 }
 
 // Bracket required implementation for the Gamestate
@@ -75,7 +81,7 @@ fn update(_gs: &mut State) {
 // Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
     if gs.run_mode == RunMode::Start {
-        ctx.cls();
+        // ctx.cls();
         gs.startart.draw(ctx, 16, 8);
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
         gs.menu.draw(ctx);
@@ -146,6 +152,7 @@ fn main() -> BError {
         scene: prologue,
         startart: title,
         log: game_log,
+        manager: MenuManager::new(),
     };
 
     main_loop(context, gs)
