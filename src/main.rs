@@ -66,6 +66,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 }
 
 // Plan on reading the command stream from input
+// Mob actions, updating quests and scenes
 fn update(_gs: &mut State) {
     // Game Log - Unused for now
     // let mut i = 41;
