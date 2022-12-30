@@ -38,6 +38,7 @@ pub struct State {
     map: Map,
     run_mode: RunMode,
     menu: Menu,
+    hmenu: hmenu::Menu,
     scene: Scene,
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
@@ -130,7 +131,7 @@ fn main() -> BError {
         y: 38,
         health: 100,
         magic: 100,
-        stats: Statistics {intellect: 50, might: 50, soul: 50},
+        stats: Statistics {grace: 50, might: 50, mind: 50, soul: 50},
     };
 
     let start_menu = init::start_menu();
@@ -143,6 +144,8 @@ fn main() -> BError {
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
 
+    let hashmenu = hmenu::Menu::new();
+
     let gs: State = State {
         player,
         map,
@@ -150,6 +153,7 @@ fn main() -> BError {
         // encounters: act1,
         // current_encounter: introduction,
         menu: start_menu,
+        hmenu: hashmenu, 
         scene: prologue,
         startart: title,
         log: game_log,

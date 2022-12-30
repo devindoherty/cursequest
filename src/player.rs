@@ -22,9 +22,10 @@ pub struct Inventory {
 }
 
 pub struct Statistics {
-    pub intellect: i32,
-    pub might: i32,
-    pub soul: i32,
+    pub grace: i32, // Agility and dexterity; change to hit with all attacks
+    pub might: i32, // Constitution and strength; damage for all attacks
+    pub mind: i32, // Wisdom and Intellect; magical aptitude and potency
+    pub soul: i32, // Force of personality and ego; interpersonal skills, regen, and divine luck
 }
 
 pub struct Skill {

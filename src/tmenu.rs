@@ -1,7 +1,6 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
-
 pub struct ItemID {
     index: usize,
 }
@@ -40,5 +39,3 @@ impl MenuManager {
         }
     }
 }
-
-
