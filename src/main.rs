@@ -144,7 +144,26 @@ fn main() -> BError {
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
 
-    let hashmenu = hmenu::Menu::new();
+    let mut hashmenu = hmenu::Menu::new();
+    let mut htest1 = hmenu::MenuItem {
+        name: "Yepper".to_string(),
+        id: hmenu::NodeID {index: 10},
+        edges: None,
+    };
+    let mut htest2 = hmenu::MenuItem {
+        name: "Yepper2".to_string(),
+        id: hmenu::NodeID {index: 10},
+        edges: None,
+    };
+    let mut htest3 = hmenu::MenuItem {
+        name: "Yepper3".to_string(),
+        id: hmenu::NodeID {index: 10},
+        edges: None,
+    };
+
+    hashmenu.add_item(htest1);
+    hashmenu.add_item(htest2);
+    hashmenu.add_item(htest3);
 
     let gs: State = State {
         player,

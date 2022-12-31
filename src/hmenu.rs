@@ -1,12 +1,15 @@
 use std::collections::HashMap;
 
+#[derive(Clone)]
 pub struct NodeID {
-    index: usize,
+    pub index: usize,
 }
 
+#[derive(Clone)]
 pub struct MenuItem {
-    name: String,
-    edges: HashMap<NodeID, MenuItem>,
+    pub name: String,
+    pub id: NodeID,
+    pub edges: Option<HashMap<NodeID, MenuItem>>,
 }
 
 pub struct Menu {
@@ -18,10 +21,18 @@ impl Menu {
         Menu {items: Vec::new()}
     }
 
-    fn add_item(&self, item: MenuItem) -> NodeID {
+    pub fn add_item(&mut self, mut item: MenuItem) -> NodeID {
         let next_index = self.items.len();
+        item.id.index = next_index;
+        self.items.push(item.clone());
+        println!("The index of {} is now: {}", item.name, next_index);
+        
         NodeID {
             index: next_index,
         }
+    }
+
+    fn connect_edge(&self, item: NodeID) {
+
     }
 }
