@@ -1,5 +1,6 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
+use std::collections::HashMap;
 
 mod art;
 use art::*;
@@ -18,7 +19,7 @@ use menu::{Menu, MenuItem};
 mod tmenu;
 use tmenu::{MenuManager};
 
-mod hmenu;
+mod nmenu;
 
 mod mode;
 use mode::RunMode;
@@ -38,7 +39,7 @@ pub struct State {
     map: Map,
     run_mode: RunMode,
     menu: Menu,
-    hmenu: hmenu::Menu,
+    nmenu: nmenu::Menu,
     scene: Scene,
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
@@ -144,26 +145,27 @@ fn main() -> BError {
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
 
-    let mut hashmenu = hmenu::Menu::new();
-    let mut htest1 = hmenu::MenuItem {
-        name: "Yepper".to_string(),
-        id: hmenu::NodeID {index: 10},
-        edges: None,
+    let mut nmenu = nmenu::Menu::new();
+    let mut ntest1 = nmenu::MenuItem {
+        name: String::from("Yepper"),
+        id: nmenu::NodeID {index: 10},
+        children: vec![nmenu::NodeID {index: 1}],
     };
-    let mut htest2 = hmenu::MenuItem {
-        name: "Yepper2".to_string(),
-        id: hmenu::NodeID {index: 10},
-        edges: None,
+    let mut ntest2 = nmenu::MenuItem {
+        name: String::from("Yepper2"),
+        id: nmenu::NodeID {index: 10},
+        children: vec![],
     };
-    let mut htest3 = hmenu::MenuItem {
-        name: "Yepper3".to_string(),
-        id: hmenu::NodeID {index: 10},
-        edges: None,
+    let mut ntest3 = nmenu::MenuItem {
+        name: String::from("Yepper3"),
+        id: nmenu::NodeID {index: 10},
+        children: vec![],
     };
 
-    hashmenu.add_item(htest1);
-    hashmenu.add_item(htest2);
-    hashmenu.add_item(htest3);
+    nmenu.add_item(ntest1);
+    nmenu.add_item(ntest2);
+    nmenu.add_item(ntest3);
+    nmenu.add_children(nmenu::NodeID {index: 0}, nmenu::NodeID {index: 2});
 
     let gs: State = State {
         player,
@@ -172,7 +174,7 @@ fn main() -> BError {
         // encounters: act1,
         // current_encounter: introduction,
         menu: start_menu,
-        hmenu: hashmenu, 
+        nmenu: nmenu, 
         scene: prologue,
         startart: title,
         log: game_log,
