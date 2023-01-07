@@ -16,9 +16,6 @@ use map::Map;
 mod menu;
 use menu::{Menu, MenuItem};
 
-mod tmenu;
-use tmenu::{MenuManager};
-
 mod nmenu;
 
 mod mode;
@@ -44,7 +41,6 @@ pub struct State {
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
     log: Vec<String>,
-    manager: MenuManager,
 }
 
 // Bracket required implementation for the Gamestate
@@ -178,7 +174,6 @@ fn main() -> BError {
         scene: prologue,
         startart: title,
         log: game_log,
-        manager: MenuManager::new(),
     };
 
     main_loop(context, gs)
