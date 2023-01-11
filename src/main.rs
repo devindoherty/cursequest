@@ -116,7 +116,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     }
     else if gs.run_mode == RunMode::NMenu {
         ctx.cls();
-        gs.nmenu.draw(ctx, NodeID {index: 0});
+        gs.nmenu.ndraw(ctx, NodeID {index: 0});
     }
 }
 
@@ -151,16 +151,19 @@ fn main() -> BError {
         name: String::from("Foo"),
         id: nmenu::NodeID {index: 10},
         children: vec![],
+        selected: 0,
     };
     let ntest2 = nmenu::MenuItem {
         name: String::from("Bar"),
         id: nmenu::NodeID {index: 10},
         children: vec![],
+        selected: 0,
     };
     let ntest3 = nmenu::MenuItem {
         name: String::from("Yar"),
         id: nmenu::NodeID {index: 10},
         children: vec![],
+        selected: 0,
     };
 
     let foo_id = nmenu.add_item(ntest1);
@@ -168,8 +171,10 @@ fn main() -> BError {
     let yar_id = nmenu.add_item(ntest3);
     nmenu.add_child(foo_id, bar_id);
     nmenu.add_child(foo_id, yar_id);
+    nmenu.add_child(bar_id, yar_id);
     nmenu.list_children(foo_id);
     nmenu.terminal_draw_children(foo_id);
+    nmenu.terminal_draw_children(bar_id);
 
     let _sword = Skill {
         name: String::from("Sword"),

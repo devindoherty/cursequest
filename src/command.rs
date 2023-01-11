@@ -3,6 +3,7 @@ use bracket::prelude::*;
 use crate::init;
 use crate::State;
 use crate::RunMode;
+use crate::NodeID;
 
 
 pub trait Command {
@@ -29,6 +30,9 @@ impl Command for VirtualKeyCode {
                 if gs.run_mode == RunMode::Storytelling {
                     gs.menu.manage(*self)
                 }
+                if gs.run_mode == RunMode::NMenu {
+                    gs.nmenu.manage(*self, NodeID{index:0})
+                }
             },
             
             // DOWN KEY
@@ -44,6 +48,9 @@ impl Command for VirtualKeyCode {
                 }
                 if gs.run_mode == RunMode::Storytelling {
                     gs.menu.manage(*self)
+                }
+                if gs.run_mode == RunMode::NMenu {
+                    gs.nmenu.manage(*self, NodeID{index:0})
                 }
             },
 

@@ -10,6 +10,7 @@ pub struct MenuItem {
     pub name: String,
     pub id: NodeID,
     pub children: Vec<NodeID>,
+    pub selected: usize,
 }
 
 pub struct Menu {
@@ -40,7 +41,7 @@ impl Menu {
 
     }
 
-    pub fn find_child(&self, item_id: NodeID, child_id: NodeID) {
+    pub fn find_child(&self, item_id: NodeID, child_id: NodeID, search: &str) {
         let item = &self.items[item_id.index];
         let child = &self.items[child_id.index];
         for child in &item.children {
@@ -64,12 +65,24 @@ impl Menu {
         }
     }
 
-    pub fn select_child() {}
+    pub fn select_child(&self) {}
 
     pub fn traverse(&self) {}
     
-    pub fn manage() {
-
+    pub fn manage(&mut self, key: VirtualKeyCode, current_id: NodeID) {
+        let item = &mut self.items[current_id.index];
+        match key {
+            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if item.selected == 0 {} else {
+                item.selected -= 1;
+                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+            },
+            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if item.selected >= item.children.len() - 1 {} else {
+                item.selected += 1;
+                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+            },
+            VirtualKeyCode::Return => self.select_child(),
+            _ => {}
+        }
     }
 
     pub fn draw(&self, ctx: &mut BTerm, current_id: NodeID) {
@@ -81,6 +94,31 @@ impl Menu {
                 self.items[id.index].name.to_string()
             );
             y += 1;
+        
+        }
+
+        
+    }
+
+    pub fn ndraw(&self, ctx: &mut BTerm, current_id: NodeID) {
+        let mut y = 45;
+        let item = &self.items[current_id.index];
+        for (pos, child) in item.children.iter().enumerate() {
+             if pos == item.selected {
+                ctx.print_color(
+                    1, y,
+                    RGB::named(BLACK), RGB::named(WHITE),
+                    item.name.to_string()
+                );
+                y += 1;
+            } else {
+                ctx.print_color(
+                    1, y, 
+                    RGB::named(WHITE), RGB::named(BLACK), 
+                    item.name.to_string()
+                );
+                y += 1;
+            }
         }
     }
 }
