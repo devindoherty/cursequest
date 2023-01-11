@@ -81,7 +81,10 @@ impl Command for VirtualKeyCode {
                         return RunMode::new(gs, RunMode::Prologue);
                     } 
                     else if gs.menu.selected == 1 {
-                        gs.menu.items[1].display_name = "Continue (Not Implemented)".to_string();
+                        gs.menu.items[1].display_name = "Continue (Sorry! Not Implemented Yet)".to_string();
+                    }
+                    else if gs.menu.selected == 2 {
+                        return RunMode::new(gs, RunMode::NMenu);
                     }
                     else {
                         ctx.quit();

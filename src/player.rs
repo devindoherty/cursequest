@@ -32,9 +32,15 @@ pub struct Skill {
     pub name: String,
     pub desc: String,
     pub value: i32,
+    pub abilities: Vec<Ability>,
 }
 
-pub struct Perk {
+pub struct Ability {
+    pub name: String,
+    pub desc: String,
+}
+
+pub struct Talen {
     pub name: String,
     pub desc: String,
     pub value: i32,

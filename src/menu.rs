@@ -6,7 +6,6 @@ use bracket::prelude::*;
 // use crate::Map;
 // use crate::map::Biome;
 
-
 #[derive(Clone)]
 pub struct Menu {
     pub items: Vec<MenuItem>,
@@ -66,7 +65,7 @@ impl Menu {
         }
     }
 
-    fn select(&mut self) {
+    fn select(&self) {
         let item = &self.items[self.selected].display_name;
         println!("{}", item);
         if item.contains("[END CONVERSATION]") {
@@ -105,7 +104,6 @@ impl Menu {
     // pub fn pop_item(&mut self) -> Option<MenuItem>{
     //     self.items.pop()
     // }
-
 }
 
 

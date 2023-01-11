@@ -17,12 +17,13 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod nmenu;
+use nmenu::{NodeID};
 
 mod mode;
 use mode::RunMode;
 
 mod player;
-use player::{Player, Statistics};
+use player::{Player, Skill, Statistics};
 
 mod scene;
 use scene::Scene;
@@ -113,6 +114,10 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         gs.menu.draw(ctx);
     }
+    else if gs.run_mode == RunMode::NMenu {
+        ctx.cls();
+        gs.nmenu.draw(ctx, NodeID {index: 0});
+    }
 }
 
 fn main() -> BError {
@@ -142,26 +147,43 @@ fn main() -> BError {
     let map = Map::new(raw_world_map);
 
     let mut nmenu = nmenu::Menu::new();
-    let mut ntest1 = nmenu::MenuItem {
-        name: String::from("Yepper"),
-        id: nmenu::NodeID {index: 10},
-        children: vec![nmenu::NodeID {index: 1}],
-    };
-    let mut ntest2 = nmenu::MenuItem {
-        name: String::from("Yepper2"),
+    let ntest1 = nmenu::MenuItem {
+        name: String::from("Foo"),
         id: nmenu::NodeID {index: 10},
         children: vec![],
     };
-    let mut ntest3 = nmenu::MenuItem {
-        name: String::from("Yepper3"),
+    let ntest2 = nmenu::MenuItem {
+        name: String::from("Bar"),
+        id: nmenu::NodeID {index: 10},
+        children: vec![],
+    };
+    let ntest3 = nmenu::MenuItem {
+        name: String::from("Yar"),
         id: nmenu::NodeID {index: 10},
         children: vec![],
     };
 
-    nmenu.add_item(ntest1);
-    nmenu.add_item(ntest2);
-    nmenu.add_item(ntest3);
-    nmenu.add_children(nmenu::NodeID {index: 0}, nmenu::NodeID {index: 2});
+    let foo_id = nmenu.add_item(ntest1);
+    let bar_id = nmenu.add_item(ntest2);
+    let yar_id = nmenu.add_item(ntest3);
+    nmenu.add_child(foo_id, bar_id);
+    nmenu.add_child(foo_id, yar_id);
+    nmenu.list_children(foo_id);
+    nmenu.terminal_draw_children(foo_id);
+
+    let _sword = Skill {
+        name: String::from("Sword"),
+        desc: String::from("Mastery of the Cursed Blade."),
+        value: 10,
+        abilities: vec![]
+    };
+
+    let _sorcery = Skill {
+        name: String::from("Sorcery"),
+        desc: String::from("Mastery of magic."),
+        value: 10,
+        abilities: vec![],
+    };
 
     let gs: State = State {
         player,
