@@ -31,7 +31,7 @@ impl Command for VirtualKeyCode {
                     gs.menu.manage(*self)
                 }
                 if gs.run_mode == RunMode::NMenu {
-                    gs.nmenu.manage(*self, NodeID{index:0})
+                    gs.nmenu.manage(*self)
                 }
             },
             
@@ -50,7 +50,7 @@ impl Command for VirtualKeyCode {
                     gs.menu.manage(*self)
                 }
                 if gs.run_mode == RunMode::NMenu {
-                    gs.nmenu.manage(*self, NodeID{index:0})
+                    gs.nmenu.manage(*self)
                 }
             },
 
@@ -112,6 +112,9 @@ impl Command for VirtualKeyCode {
                 }
                 if gs.run_mode == RunMode::Storytelling {
                     gs.menu.manage(*self)
+                }
+                if gs.run_mode == RunMode::NMenu {
+                    gs.nmenu.manage(*self)
                 }
             }
 

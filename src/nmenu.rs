@@ -1,7 +1,7 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub struct NodeID {
     pub index: usize,
 }
@@ -14,12 +14,16 @@ pub struct MenuItem {
 }
 
 pub struct Menu {
-    items: Vec<MenuItem>
+    items: Vec<MenuItem>,
+    current: NodeID
 }
 
 impl Menu {
     pub fn new() -> Menu {
-        Menu {items: Vec::new()}
+        Menu {
+            items: Vec::new(),
+            current: NodeID {index: 0},
+        }
     }
 
     pub fn add_item(&mut self, mut item: MenuItem) -> NodeID {
@@ -65,12 +69,18 @@ impl Menu {
         }
     }
 
-    pub fn select_child(&self) {}
+    pub fn select_child(&self) {
+        let item = &self.items[self.current.index];
+        for child in &item.children {
+            println!("{} selected!", self.items[child.index].name);
+        }
+        
+    }
 
     pub fn traverse(&self) {}
     
-    pub fn manage(&mut self, key: VirtualKeyCode, current_id: NodeID) {
-        let item = &mut self.items[current_id.index];
+    pub fn manage(&mut self, key: VirtualKeyCode) {
+        let item = &mut self.items[self.current.index];
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if item.selected == 0 {} else {
                 item.selected -= 1;
@@ -85,37 +95,37 @@ impl Menu {
         }
     }
 
-    pub fn draw(&self, ctx: &mut BTerm, current_id: NodeID) {
-        let mut y = 45;
-        for id in &self.items[current_id.index].children {
-            ctx.print_color(
-                1, y, 
-                RGB::named(WHITE), RGB::named(BLACK), 
-                self.items[id.index].name.to_string()
-            );
-            y += 1;
+    // pub fn draw(&self, ctx: &mut BTerm, current_id: NodeID) {
+    //     let mut y = 45;
+    //     for id in &self.items[current_id.index].children {
+    //         ctx.print_color(
+    //             1, y, 
+    //             RGB::named(WHITE), RGB::named(BLACK), 
+    //             self.items[id.index].name.to_string()
+    //         );
+    //         y += 1;
         
-        }
+    //     }
 
         
-    }
+    // }
 
-    pub fn ndraw(&self, ctx: &mut BTerm, current_id: NodeID) {
+    pub fn draw(&self, ctx: &mut BTerm) {
         let mut y = 45;
-        let item = &self.items[current_id.index];
+        let item = &self.items[self.current.index];
         for (pos, child) in item.children.iter().enumerate() {
              if pos == item.selected {
                 ctx.print_color(
                     1, y,
                     RGB::named(BLACK), RGB::named(WHITE),
-                    item.name.to_string()
+                    self.items[child.index].name.to_string()
                 );
                 y += 1;
             } else {
                 ctx.print_color(
                     1, y, 
                     RGB::named(WHITE), RGB::named(BLACK), 
-                    item.name.to_string()
+                    self.items[child.index].name.to_string()
                 );
                 y += 1;
             }

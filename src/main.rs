@@ -116,7 +116,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     }
     else if gs.run_mode == RunMode::NMenu {
         ctx.cls();
-        gs.nmenu.ndraw(ctx, NodeID {index: 0});
+        gs.nmenu.draw(ctx);
     }
 }
 
