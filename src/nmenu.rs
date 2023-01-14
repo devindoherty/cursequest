@@ -69,25 +69,30 @@ impl Menu {
         }
     }
 
-    pub fn select_child(&self) {
+    pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        for child in &item.children {
-            println!("{} selected!", self.items[child.index].name);
-        }
-        
+        let child = item.children[item.selected];
+        println!("Selected: {}", self.items[child.index].name);
+        self.traverse(child);
     }
 
-    pub fn traverse(&self) {}
+    pub fn traverse(&mut self, item_id: NodeID) {
+        self.current = item_id;
+        let item = &self.items[item_id.index];
+        println!("Traversed to {}", item.name);
+    }
     
     pub fn manage(&mut self, key: VirtualKeyCode) {
         let item = &mut self.items[self.current.index];
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if item.selected == 0 {} else {
                 item.selected -= 1;
+                println!("{} selected: {}", item.name, item.selected);
                 // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if item.selected >= item.children.len() - 1 {} else {
                 item.selected += 1;
+                println!("{} selected: {}", item.name, item.selected);
                 // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
             VirtualKeyCode::Return => self.select_child(),

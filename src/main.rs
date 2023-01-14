@@ -172,9 +172,10 @@ fn main() -> BError {
     nmenu.add_child(foo_id, bar_id);
     nmenu.add_child(foo_id, yar_id);
     nmenu.add_child(bar_id, yar_id);
-    nmenu.list_children(foo_id);
-    nmenu.terminal_draw_children(foo_id);
-    nmenu.terminal_draw_children(bar_id);
+    nmenu.add_child(yar_id, foo_id);
+    // nmenu.list_children(foo_id);
+    // nmenu.terminal_draw_children(foo_id);
+    // nmenu.terminal_draw_children(bar_id);
 
     let _sword = Skill {
         name: String::from("Sword"),

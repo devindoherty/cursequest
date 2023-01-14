@@ -9,6 +9,10 @@ pub struct StageManager {
     scenes: Vec<Scene>,
 }
 
+pub struct SceneID {
+    index: usize,
+}
+
 pub struct Scene {
     pub title: String,
     pub main: String,
