@@ -177,6 +177,8 @@ fn main() -> BError {
     // nmenu.terminal_draw_children(foo_id);
     // nmenu.terminal_draw_children(bar_id);
 
+    
+
     let _sword = Skill {
         name: String::from("Sword"),
         desc: String::from("Mastery of the Cursed Blade."),
@@ -191,7 +193,7 @@ fn main() -> BError {
         abilities: vec![],
     };
 
-    let gs: State = State {
+    let mut gs: State = State {
         player,
         map,
         run_mode: RunMode::Start,
@@ -203,6 +205,9 @@ fn main() -> BError {
         startart: title,
         log: game_log,
     };
+
+    //Scene test
+    init::nshir(&mut gs);
 
     main_loop(context, gs)
 }

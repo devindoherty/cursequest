@@ -79,7 +79,8 @@ impl Menu {
     pub fn traverse(&mut self, item_id: NodeID) {
         self.current = item_id;
         let item = &self.items[item_id.index];
-        println!("Traversed to {}", item.name);
+        println!("Traversed to: {}", item.name);
+        self.terminal_draw_children(item_id);
     }
     
     pub fn manage(&mut self, key: VirtualKeyCode) {

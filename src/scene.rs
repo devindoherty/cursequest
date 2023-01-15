@@ -1,6 +1,7 @@
 use crate::Art;
 // use crate::State;
 use crate::Menu;
+use crate::NodeID;
 
 use bracket_lib as bracket;
 use bracket::prelude::*;
@@ -18,6 +19,7 @@ pub struct Scene {
     pub main: String,
     pub art: Art,
     pub encounter: Option<Menu>,
+    pub nencounter: Option<NodeID>,
 }
 
 pub struct Mob {}
@@ -25,8 +27,8 @@ pub struct Mob {}
 pub struct Item {}
 
 impl Scene {
-    pub fn new(title: String, main: String, art: Art, encounter: Option<Menu>) -> Self {
-        Scene {title, main, art, encounter}
+    pub fn new(title: String, main: String, art: Art, encounter: Option<Menu>, nencounter: Option<NodeID>) -> Self {
+        Scene {title, main, art, encounter, nencounter}
     }
 
     // Full Screen cinematic style
@@ -79,5 +81,4 @@ impl Scene {
     pub fn end_encounter() {
         
     }
-
 }

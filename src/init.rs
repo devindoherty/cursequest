@@ -3,6 +3,9 @@ use crate::Art;
 // use crate::Map;
 use crate::{Menu, MenuItem};
 use crate::Scene;
+use crate::NodeID;
+use crate::nmenu;
+use crate::State;
 
 
 pub fn start_menu() -> Menu {
@@ -105,8 +108,8 @@ pub fn prologue() -> Scene {
     let main = String::from("A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control...");
     let art = Art::new("assets/king.txt", String::from("king"));
     let encounter: Option<Menu> = None;
-
-    Scene::new(title, main, art, encounter)
+    let nencounter: Option<NodeID> = None;
+    Scene::new(title, main, art, encounter, nencounter)
 }
 
 pub fn shir() -> Scene {
@@ -147,9 +150,51 @@ pub fn shir() -> Scene {
         last: Vec::new(),
     };
 
-    Scene::new(title, main, art, Some(encounter))
+    let nencounter: Option<NodeID> = None;
+
+    Scene::new(title, main, art, Some(encounter), nencounter)
 }
 
-pub fn gshir(){ // -> Scene {
+pub fn nshir(gs: &mut State) {
+ 
+    let title = String::from("Roseberry the Healer");
+    let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
+    let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
+
+    let encounter_item_one = nmenu::MenuItem {
+        name: String::from("Where am I?"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_two = nmenu::MenuItem {
+        name: String::from("Who are you?"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_three = nmenu::MenuItem {
+        name: String::from("What happened?"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_four = nmenu::MenuItem {
+        name: String::from("Farewell [END CONVERSATION]"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    gs.nmenu.add_item(encounter_item_one);
+    gs.nmenu.add_item(encounter_item_two);
+    gs.nmenu.add_item(encounter_item_three);
+    gs.nmenu.add_item(encounter_item_four);
     
+    let encounter: Option<Menu> = None;
+    let nencounter: Option<NodeID> = None;
+    Scene::new(title, main, art, encounter, nencounter); 
 }
