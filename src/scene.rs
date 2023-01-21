@@ -7,7 +7,14 @@ use bracket_lib as bracket;
 use bracket::prelude::*;
 
 pub struct StageManager {
-    scenes: Vec<Scene>,
+    act: u8,
+    scenes: Vec<SceneID>,
+    flags: Vec<Flag>,
+}
+
+pub struct Flag {
+    name: String,
+    flagged: bool,
 }
 
 pub struct SceneID {
@@ -25,6 +32,11 @@ pub struct Scene {
 pub struct Mob {}
 
 pub struct Item {}
+
+impl StageManager {
+
+}
+
 
 impl Scene {
     pub fn new(title: String, main: String, art: Art, encounter: Option<Menu>, nencounter: Option<NodeID>) -> Self {
@@ -78,7 +90,6 @@ impl Scene {
         render_draw_buffer(ctx).expect("Render Error");
     }
 
-    pub fn end_encounter() {
-        
+    pub fn _begin_combat() {
     }
 }

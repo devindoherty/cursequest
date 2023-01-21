@@ -116,6 +116,8 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     }
     else if gs.run_mode == RunMode::NMenu {
         ctx.cls();
+        gs.scene.draw_halfscreen(ctx);
+        ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         gs.nmenu.draw(ctx);
     }
 }
@@ -176,22 +178,6 @@ fn main() -> BError {
     // nmenu.list_children(foo_id);
     // nmenu.terminal_draw_children(foo_id);
     // nmenu.terminal_draw_children(bar_id);
-
-    
-
-    let _sword = Skill {
-        name: String::from("Sword"),
-        desc: String::from("Mastery of the Cursed Blade."),
-        value: 10,
-        abilities: vec![]
-    };
-
-    let _sorcery = Skill {
-        name: String::from("Sorcery"),
-        desc: String::from("Mastery of magic."),
-        value: 10,
-        abilities: vec![],
-    };
 
     let mut gs: State = State {
         player,

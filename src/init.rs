@@ -3,6 +3,7 @@ use crate::Art;
 // use crate::Map;
 use crate::{Menu, MenuItem};
 use crate::Scene;
+use crate::Skill;
 use crate::NodeID;
 use crate::nmenu;
 use crate::State;
@@ -157,7 +158,7 @@ pub fn shir() -> Scene {
 
 pub fn nshir(gs: &mut State) {
  
-    let title = String::from("Roseberry the Healer");
+    let title = String::from("Rosebery the Healer");
     let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
 
@@ -197,4 +198,56 @@ pub fn nshir(gs: &mut State) {
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
     Scene::new(title, main, art, encounter, nencounter); 
+}
+
+pub fn _skills() {
+    
+    let _sword = Skill {
+        name: String::from("Sword"),
+        desc: String::from("Mastery of the Cursed Blade."),
+        value: 10,
+        abilities: vec![],
+    };
+
+    let _sorcery = Skill {
+        name: String::from("Sorcery"),
+        desc: String::from("Knowledge of the secrets of magic."),
+        value: 10,
+        abilities: vec![],
+    };
+
+    let _martial = Skill {
+        name: String::from("Martial"),
+        desc: String::from("Propensity for physical violence and tactics."),
+        value: 0,
+        abilities: vec![],
+    };
+
+    let _sovereignty = Skill {
+        name: String::from("Sovereignty"),
+        desc: String::from("Measure of kingly authority and charisma."),
+        value:10,
+        abilities:vec![],
+    };
+
+    let _customs = Skill {
+        name: String::from("Customs"),
+        desc: String::from("Ability to socialize with different strata of society."),
+        value: 0,
+        abilities:vec![],
+    };
+
+    let _subterfuge = Skill {
+        name: String::from("Subterfuge"),
+        desc: String::from("Familiarity with the shadows."),
+        value: 10,
+        abilities: vec![],
+    };
+
+    let _survival = Skill {
+        name: String::from("Survival"),
+        desc: String::from("Capacity to endure the wildnerness."),
+        value: 10,
+        abilities: vec![],
+    };
 }
