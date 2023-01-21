@@ -218,7 +218,7 @@ pub fn _skills() {
 
     let _martial = Skill {
         name: String::from("Martial"),
-        desc: String::from("Propensity for physical violence and tactics."),
+        desc: String::from("Propensity for physical violence and related tactics."),
         value: 0,
         abilities: vec![],
     };
@@ -232,21 +232,21 @@ pub fn _skills() {
 
     let _customs = Skill {
         name: String::from("Customs"),
-        desc: String::from("Ability to socialize with different strata of society."),
+        desc: String::from("Ability to socialize with different classes of society."),
         value: 0,
         abilities:vec![],
     };
 
     let _subterfuge = Skill {
-        name: String::from("Subterfuge"),
-        desc: String::from("Familiarity with the shadows."),
+        name: String::from("Intrigue"),
+        desc: String::from("Familiarity with the shadows, subterfuge, and trickery."),
         value: 10,
         abilities: vec![],
     };
 
     let _survival = Skill {
         name: String::from("Survival"),
-        desc: String::from("Capacity to endure the wildnerness."),
+        desc: String::from("Capacity to endure the harsh wildnerness and bowmanship."),
         value: 10,
         abilities: vec![],
     };
