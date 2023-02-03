@@ -101,21 +101,6 @@ impl Menu {
         }
     }
 
-    // pub fn draw(&self, ctx: &mut BTerm, current_id: NodeID) {
-    //     let mut y = 45;
-    //     for id in &self.items[current_id.index].children {
-    //         ctx.print_color(
-    //             1, y, 
-    //             RGB::named(WHITE), RGB::named(BLACK), 
-    //             self.items[id.index].name.to_string()
-    //         );
-    //         y += 1;
-        
-    //     }
-
-        
-    // }
-
     pub fn draw(&self, ctx: &mut BTerm) {
         let mut y = 45;
         let item = &self.items[self.current.index];
