@@ -9,7 +9,7 @@ pub enum RunMode {
     Prompting,
     Storytelling,
     Updating, 
-    NMenu,
+    Dialoging,
 }
 
 impl RunMode {

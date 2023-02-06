@@ -5,7 +5,7 @@ use crate::{Menu, MenuItem};
 use crate::Scene;
 use crate::Skill;
 use crate::NodeID;
-use crate::nmenu;
+use crate::dialogue;
 use crate::State;
 
 
@@ -162,38 +162,38 @@ pub fn nshir(gs: &mut State) {
     let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
 
-    let encounter_item_one = nmenu::MenuItem {
+    let encounter_item_one = dialogue::MenuItem {
         name: String::from("Where am I?"),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
     };
 
-    let encounter_item_two = nmenu::MenuItem {
+    let encounter_item_two = dialogue::MenuItem {
         name: String::from("Who are you?"),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
     };
 
-    let encounter_item_three = nmenu::MenuItem {
+    let encounter_item_three = dialogue::MenuItem {
         name: String::from("What happened?"),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
     };
 
-    let encounter_item_four = nmenu::MenuItem {
+    let encounter_item_four = dialogue::MenuItem {
         name: String::from("Farewell [END CONVERSATION]"),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
     };
 
-    gs.nmenu.add_item(encounter_item_one);
-    gs.nmenu.add_item(encounter_item_two);
-    gs.nmenu.add_item(encounter_item_three);
-    gs.nmenu.add_item(encounter_item_four);
+    gs.dialogue.add_item(encounter_item_one);
+    gs.dialogue.add_item(encounter_item_two);
+    gs.dialogue.add_item(encounter_item_three);
+    gs.dialogue.add_item(encounter_item_four);
     
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;

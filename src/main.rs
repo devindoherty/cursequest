@@ -16,8 +16,8 @@ use map::Map;
 mod menu;
 use menu::{Menu, MenuItem};
 
-mod nmenu;
-use nmenu::{NodeID};
+mod dialogue;
+use dialogue::{NodeID};
 
 mod mode;
 use mode::RunMode;
@@ -37,7 +37,7 @@ pub struct State {
     map: Map,
     run_mode: RunMode,
     menu: Menu,
-    nmenu: nmenu::Menu,
+    dialogue: dialogue::Menu,
     scene: Scene,
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
@@ -114,11 +114,11 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         gs.menu.draw(ctx);
     }
-    else if gs.run_mode == RunMode::NMenu {
+    else if gs.run_mode == RunMode::Dialoging {
         ctx.cls();
         gs.scene.draw_halfscreen(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-        gs.nmenu.draw(ctx);
+        gs.dialogue.draw(ctx);
     }
 }
 
@@ -148,36 +148,36 @@ fn main() -> BError {
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
 
-    let mut nmenu = nmenu::Menu::new();
-    let ntest1 = nmenu::MenuItem {
+    let mut dialogue = dialogue::Menu::new();
+    let ntest1 = dialogue::MenuItem {
         name: String::from("Foo"),
-        id: nmenu::NodeID {index: 10},
+        id: dialogue::NodeID {index: 10},
         children: vec![],
         selected: 0,
     };
-    let ntest2 = nmenu::MenuItem {
+    let ntest2 = dialogue::MenuItem {
         name: String::from("Bar"),
-        id: nmenu::NodeID {index: 10},
+        id: dialogue::NodeID {index: 10},
         children: vec![],
         selected: 0,
     };
-    let ntest3 = nmenu::MenuItem {
+    let ntest3 = dialogue::MenuItem {
         name: String::from("Yar"),
-        id: nmenu::NodeID {index: 10},
+        id: dialogue::NodeID {index: 10},
         children: vec![],
         selected: 0,
     };
 
-    let foo_id = nmenu.add_item(ntest1);
-    let bar_id = nmenu.add_item(ntest2);
-    let yar_id = nmenu.add_item(ntest3);
-    nmenu.add_child(foo_id, bar_id);
-    nmenu.add_child(foo_id, yar_id);
-    nmenu.add_child(bar_id, yar_id);
-    nmenu.add_child(yar_id, foo_id);
-    // nmenu.list_children(foo_id);
-    // nmenu.terminal_draw_children(foo_id);
-    // nmenu.terminal_draw_children(bar_id);
+    let foo_id = dialogue.add_item(ntest1);
+    let bar_id = dialogue.add_item(ntest2);
+    let yar_id = dialogue.add_item(ntest3);
+    dialogue.add_child(foo_id, bar_id);
+    dialogue.add_child(foo_id, yar_id);
+    dialogue.add_child(bar_id, yar_id);
+    dialogue.add_child(yar_id, foo_id);
+    // dialogue.list_children(foo_id);
+    // dialogue.terminal_draw_children(foo_id);
+    // dialogue.terminal_draw_children(bar_id);
 
     let mut gs: State = State {
         player,
@@ -186,7 +186,7 @@ fn main() -> BError {
         // encounters: act1,
         // current_encounter: introduction,
         menu: start_menu,
-        nmenu: nmenu, 
+        dialogue: dialogue, 
         scene: prologue,
         startart: title,
         log: game_log,
