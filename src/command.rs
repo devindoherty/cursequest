@@ -33,13 +33,23 @@ impl Command for VirtualKeyCode {
             match self {
                 Self::Up | Self::Numpad8 | 
                 Self::Down | Self::Numpad2 | 
+                Self::Return => gs.dialogue.manage(*self),
+                _ => (),
+            }
+        }
+
+        // Main In-Game Menu
+        if gs.run_mode == RunMode::Prompting {
+            match self {
+                Self::Up | Self::Numpad8 |
+                Self::Down | Self::Numpad2 |
                 Self::Return => gs.menu.manage(*self),
                 _ => (),
             }
         }
 
         // TRAVELLING ON WORLD MAP
-        if gs.run_mode == RunMode::Prompting {
+        if gs.run_mode == RunMode::Travelling {
             match self {
                 // ARROW AND NUMPAD DIRECTIONAL KEYS
                 Self::Up | Self::Numpad8 => {
