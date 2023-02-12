@@ -1,7 +1,8 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
-// use crate::State;
+use crate::State;
+use crate::Mode;
 // use crate::Player;
 // use crate::Map;
 // use crate::map::Biome;
@@ -66,15 +67,15 @@ impl Menu {
         }
     }
 
-    fn select(&self) {
+    fn select(&self, gs: &mut State) {
         let item = &self.items[self.selected].display_name;
         println!("{}", item);
-        if item.contains("[END CONVERSATION]") {
-            println!("YOoooooOOOo GET ME OUTA HERE!");
+        if item.contains("Start") {
+            gs.run_mode.new(&mut gs, `RunMode::Prologue);
         }
     }
 
-    pub fn manage(&mut self, key: VirtualKeyCode) {
+    pub fn manage(&mut self, key: VirtualKeyCode, gs: &mut State) {
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if self.selected == 0 {} else {
                 self.selected -= 1;
@@ -84,28 +85,10 @@ impl Menu {
                 self.selected += 1;
                 // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
             },
-            VirtualKeyCode::Return => self.select(),
+            VirtualKeyCode::Return => self.select(gs: &mut State),
             _ => {}
         }
     }
-
-    // Stack ops
-    // pub fn push_menu(&mut self, previous: Menu) {
-    //     self.last.push(previous);
-    // }
-
-    // pub fn pop_menu(&mut self,) -> Option<Menu> {
-    //     self.last.pop()
-    // }
-
-    // pub fn push_item(&mut self, item: MenuItem) {
-    //     self.items.push(item)
-    // }
-
-    // pub fn pop_item(&mut self) -> Option<MenuItem>{
-    //     self.items.pop()
-    // }
-
 }
 
 
