@@ -38,7 +38,7 @@ impl Command for VirtualKeyCode {
             }
         }
 
-        // Main In-Game Menu
+        // PROMPTING Main In-Game Menu
         if gs.run_mode == RunMode::Prompting {
             match self {
                 Self::Up | Self::Numpad8 |

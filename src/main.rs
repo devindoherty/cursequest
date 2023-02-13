@@ -112,12 +112,6 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.cls();
         gs.scene.draw_halfscreen(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-        gs.menu.draw(ctx);
-    }
-    else if gs.run_mode == RunMode::Dialoging {
-        ctx.cls();
-        gs.scene.draw_halfscreen(ctx);
-        ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
         gs.dialogue.draw(ctx);
     }
 }

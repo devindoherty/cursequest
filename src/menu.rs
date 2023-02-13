@@ -5,7 +5,7 @@ use bracket::prelude::*;
 // use crate::Player;
 // use crate::Map;
 // use crate::map::Biome;
-
+use crate::RunMode;
 
 #[derive(Clone)]
 pub struct Menu {
@@ -67,10 +67,10 @@ impl Menu {
     }
 
     fn select(&self) {
-        let item = &self.items[self.selected].display_name;
-        println!("{}", item);
-        if item.contains("[END CONVERSATION]") {
-            println!("YOoooooOOOo GET ME OUTA HERE!");
+        let item = &self.items[self.selected];
+        println!("{}", item.display_name);
+        if item.display_name.contains("Start") {
+            item.change_runmode(RunMode::Prologue);
         }
     }
 
@@ -88,24 +88,16 @@ impl Menu {
             _ => {}
         }
     }
+}
 
-    // Stack ops
-    // pub fn push_menu(&mut self, previous: Menu) {
-    //     self.last.push(previous);
-    // }
+impl MenuItem {
+    pub fn new() {
+        todo!();
+    }
 
-    // pub fn pop_menu(&mut self,) -> Option<Menu> {
-    //     self.last.pop()
-    // }
+    pub fn change_runmode(&self, Mode: RunMode) {
 
-    // pub fn push_item(&mut self, item: MenuItem) {
-    //     self.items.push(item)
-    // }
-
-    // pub fn pop_item(&mut self) -> Option<MenuItem>{
-    //     self.items.pop()
-    // }
-
+    }
 }
 
 
