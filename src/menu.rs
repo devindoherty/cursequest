@@ -71,7 +71,7 @@ impl Menu {
         let item = &self.items[self.selected].display_name;
         println!("{}", item);
         if item.contains("Start") {
-            gs.run_mode.new(&mut gs, `RunMode::Prologue);
+            gs.run_mode = RunMode::Prologue;
         }
     }
 

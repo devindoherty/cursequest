@@ -24,7 +24,7 @@ impl Command for VirtualKeyCode {
         // PROLOGUE
         if gs.run_mode == RunMode::Prologue {
             match self {
-                _ => gs.run_mode.new(RunMode::Storytelling),
+                _ => gs.run_mode = RunMode::Storytelling,
             }
         }
 

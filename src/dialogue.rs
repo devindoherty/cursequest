@@ -1,6 +1,8 @@
 use bracket_lib as bracket;
 use bracket::prelude::*;
 
+use crate::State;
+
 #[derive(Copy, Clone, Debug)]
 pub struct NodeID {
     pub index: usize,

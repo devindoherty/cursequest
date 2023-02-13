@@ -12,8 +12,5 @@ pub enum RunMode {
 }
 
 impl RunMode {
-    pub fn change(&mut self, mode: RunMode){
-        self.run_mode = mode;
-    }
 
 }
