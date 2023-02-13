@@ -12,8 +12,8 @@ pub enum RunMode {
 }
 
 impl RunMode {
-    pub fn new(gs: &mut State, mode: RunMode){
-        gs.run_mode = mode;
+    pub fn change(&mut self, mode: RunMode){
+        self.run_mode = mode;
     }
 
 }
