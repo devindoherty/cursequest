@@ -20,17 +20,13 @@ pub fn start_menu() -> Menu {
         display_name: String::from("Continue"),
         display_char: '2',
     };
-    let start_item_three = MenuItem {
-        display_name: String::from("New Menu Test"),
-        display_char: '3',
-    };
-    let start_item_four = MenuItem{
+    let start_item_three = MenuItem{
         display_name: String::from("Quit"),
         display_char: '3'
     };
 
     Menu {
-        items: vec![start_item_one, start_item_two, start_item_three, start_item_four],
+        items: vec![start_item_one, start_item_two, start_item_three],
         selected: 0,
         last: Vec::new(),
     }

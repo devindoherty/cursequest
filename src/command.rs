@@ -12,19 +12,27 @@ pub trait Command {
 
 impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> (){
+        let menu = &mut gs.menu;
+        let run_mode = &mut gs.run_mode;
+        let dialogue = &mut gs.dialogue;
         // START
         if gs.run_mode == RunMode::Start {
             match self {
                 Self::Up | Self::Numpad8 | 
-                Self::Down | Self::Numpad2 | 
-                Self::Return => gs.menu.manage(*self, gs),
+                Self::Down | Self::Numpad2 => menu.manage(*self),
+                Self::Return => {
+                    menu.manage(*self); 
+                    if menu.selected == 0 {
+                        gs.run_mode = RunMode::Prologue;
+                    }
+                    if menu.selected == 1 {
+                        menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();
+                    }
+                    if menu.selected == 2 {
+                        ctx.quit();
+                    } 
+                },
                 _ => (),
-            }
-        }
-        // PROLOGUE
-        if gs.run_mode == RunMode::Prologue {
-            match self {
-                _ => gs.run_mode = RunMode::Storytelling,
             }
         }
 
@@ -33,20 +41,20 @@ impl Command for VirtualKeyCode {
             match self {
                 Self::Up | Self::Numpad8 | 
                 Self::Down | Self::Numpad2 | 
-                Self::Return => gs.dialogue.manage(*self, gs),
+                Self::Return => dialogue.manage(*self),
                 _ => (),
             }
         }
 
         // PROMPTING Main In-Game Menu
-        if gs.run_mode == RunMode::Prompting {
-            match self {
-                Self::Up | Self::Numpad8 |
-                Self::Down | Self::Numpad2 |
-                Self::Return => gs.menu.manage(*self, gs),
-                _ => (),
-            }
-        }
+        // if gs.run_mode == RunMode::Prompting {
+        //     match self {
+        //         Self::Up | Self::Numpad8 |
+        //         Self::Down | Self::Numpad2 |
+        //         Self::Return => menu.manage(*self),
+        //         _ => (),
+        //     }
+        // }
 
         // TRAVELLING ON WORLD MAP
         if gs.run_mode == RunMode::Travelling {
@@ -77,6 +85,7 @@ impl Command for VirtualKeyCode {
                 Self::Numpad9 => {
                     gs.player.map_move(1, -1);
                 },
+                // Enter
                 Self::Return => todo!(),
                 _ => (),
             }

@@ -2,7 +2,7 @@ use bracket_lib as bracket;
 use bracket::prelude::*;
 
 use crate::State;
-use crate::Mode;
+use crate::mode;
 // use crate::Player;
 // use crate::Map;
 // use crate::map::Biome;
@@ -67,26 +67,26 @@ impl Menu {
         }
     }
 
-    fn select(&self, gs: &mut State) {
-        let item = &self.items[self.selected].display_name;
-        println!("{}", item);
-        if item.contains("Start") {
-            gs.run_mode = RunMode::Prologue;
+    pub fn manage(&mut self, key: VirtualKeyCode) {
+        match key {
+            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if self.selected == 0 {} 
+            else {
+                self.selected -= 1;
+            },
+            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if self.selected >= self.items.len() - 1 {} 
+            else {
+                self.selected += 1;
+            },
+            VirtualKeyCode::Return => self.select(),
+            _ => {}
         }
     }
 
-    pub fn manage(&mut self, key: VirtualKeyCode, gs: &mut State) {
-        match key {
-            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if self.selected == 0 {} else {
-                self.selected -= 1;
-                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
-            },
-            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if self.selected >= self.items.len() - 1 {} else {
-                self.selected += 1;
-                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
-            },
-            VirtualKeyCode::Return => self.select(gs: &mut State),
-            _ => {}
+    fn select(&self) {
+        let item = &self.items[self.selected].display_name;
+        println!("{}", item);
+        if item.contains("Start") {
+            // gs.run_mode = RunMode::Prologue;
         }
     }
 }

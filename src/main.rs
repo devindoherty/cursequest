@@ -42,6 +42,7 @@ pub struct State {
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
     log: Vec<String>,
+    redraw: bool,
 }
 
 // Bracket required implementation for the Gamestate
@@ -81,13 +82,11 @@ fn update(_gs: &mut State) {
 // Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
     if gs.run_mode == RunMode::Start {
-        // ctx.cls();
         gs.startart.draw(ctx, 16, 8);
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
         gs.menu.draw(ctx);
     }
     else if gs.run_mode == RunMode::Prologue {
-        // println!("{:#?}", ctx.get_char_size());
         ctx.cls();
         gs.scene.draw_fullscreen(ctx);
     }
@@ -184,6 +183,7 @@ fn main() -> BError {
         scene: prologue,
         startart: title,
         log: game_log,
+        redraw: false,
     };
 
     //Scene test

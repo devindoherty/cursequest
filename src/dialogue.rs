@@ -85,7 +85,7 @@ impl Menu {
         self.terminal_draw_children(item_id);
     }
     
-    pub fn manage(&mut self, key: VirtualKeyCode, gs: State) {
+    pub fn manage(&mut self, key: VirtualKeyCode) {
         let item = &mut self.items[self.current.index];
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if item.selected == 0 {} else {

@@ -4,13 +4,9 @@ use crate::State;
 #[derive(Debug, PartialEq)]
 pub enum RunMode {
     Start,
-    Prologue,
+    Prologue, // slated for elim
     Travelling, 
     Prompting,
     Storytelling,
     Updating, 
-}
-
-impl RunMode {
-
 }
