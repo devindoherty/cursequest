@@ -220,7 +220,7 @@ pub fn _skills() {
     };
 
     let _sovereignty = Skill {
-        name: String::from("Sovereignty"),
+        name: String::from("Stewardship"),
         desc: String::from("Measure of kingly authority and charisma."),
         value:10,
         abilities:vec![],

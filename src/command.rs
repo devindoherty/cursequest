@@ -13,8 +13,8 @@ pub trait Command {
 impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> (){
         let menu = &mut gs.menu;
-        let _run_mode = &mut gs.run_mode;
         let dialogue = &mut gs.dialogue;
+        
         // START
         if gs.run_mode == RunMode::Start {
             match self {
@@ -38,23 +38,31 @@ impl Command for VirtualKeyCode {
 
         // STORYTELLING
         if gs.run_mode == RunMode::Storytelling {
-            match self {
-                Self::Up | Self::Numpad8 | 
-                Self::Down | Self::Numpad2 | 
-                Self::Return => dialogue.manage(*self),
-                _ => (),
+            if gs.scene.fullscreen == true {
+                match self {
+                    Self::Return => gs.run_mode = RunMode::Prompting,
+                    _ => (),
+                }
+            } 
+            else if gs.scene.fullscreen == false {
+                match self {
+                    Self::Up | Self::Numpad8 | 
+                    Self::Down | Self::Numpad2 | 
+                    Self::Return => dialogue.manage(*self),
+                    _ => (),
+                }
             }
         }
 
         // PROMPTING Main In-Game Menu
-        // if gs.run_mode == RunMode::Prompting {
-        //     match self {
-        //         Self::Up | Self::Numpad8 |
-        //         Self::Down | Self::Numpad2 |
-        //         Self::Return => menu.manage(*self),
-        //         _ => (),
-        //     }
-        // }
+        if gs.run_mode == RunMode::Prompting {
+            match self {
+                Self::Up | Self::Numpad8 |
+                Self::Down | Self::Numpad2 |
+                Self::Return => menu.manage(*self),
+                _ => (),
+            }
+        }
 
         // TRAVELLING ON WORLD MAP
         if gs.run_mode == RunMode::Travelling {
@@ -86,7 +94,7 @@ impl Command for VirtualKeyCode {
                     gs.player.map_move(1, -1);
                 },
                 // Enter
-                Self::Return => todo!(),
+                Self::Return => println!("Test"),
                 _ => (),
             }
         }
