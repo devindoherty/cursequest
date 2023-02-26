@@ -31,6 +31,7 @@ use scene::Scene;
 mod world;
 use world::Calendar;
 
+
 // Gamestate struct, contains all data to update for game
 pub struct State {
     player: Player,
@@ -86,10 +87,6 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
         gs.menu.draw(ctx);
     }
-    else if gs.run_mode == RunMode::Prologue {
-        ctx.cls();
-        gs.scene.draw_fullscreen(ctx);
-    }
     else if gs.run_mode == RunMode::Travelling {
         ctx.cls();
         Map::draw(&gs.map.atlas, ctx);
@@ -109,9 +106,13 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     }
     else if gs.run_mode == RunMode::Storytelling {
         ctx.cls();
-        gs.scene.draw_halfscreen(ctx);
-        ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-        gs.dialogue.draw(ctx);
+        if gs.scene.fullscreen == true {
+            gs.scene.draw_fullscreen(ctx);
+        } else {
+            gs.scene.draw_halfscreen(ctx);
+            ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
+            gs.dialogue.draw(ctx);
+        }
     }
 }
 

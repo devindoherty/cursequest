@@ -38,11 +38,13 @@ impl Menu {
         }
     }
 
+    /// Returns the restore of this [`Menu`].
     pub fn restore(&mut self) -> Menu {
         let last = self.last.pop();
-        match last {
-            None => Menu {items: Vec::new(), selected: 0, last: Vec::new()},
-            Some(menu) => menu
+        if let Some(menu) = last {
+            menu
+        } else {
+            Menu {items: Vec::new(), selected: 0, last: Vec::new()}
         }
     }
 

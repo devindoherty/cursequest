@@ -106,7 +106,7 @@ pub fn prologue() -> Scene {
     let art = Art::new("assets/king.txt", String::from("king"));
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter)
+    Scene::new(title, main, art, encounter, nencounter, true)
 }
 
 pub fn shir() -> Scene {
@@ -149,7 +149,7 @@ pub fn shir() -> Scene {
 
     let nencounter: Option<NodeID> = None;
 
-    Scene::new(title, main, art, Some(encounter), nencounter)
+    Scene::new(title, main, art, Some(encounter), nencounter, false)
 }
 
 pub fn nshir(gs: &mut State) {
@@ -193,7 +193,7 @@ pub fn nshir(gs: &mut State) {
     
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter); 
+    Scene::new(title, main, art, encounter, nencounter, false); 
 }
 
 pub fn _skills() {

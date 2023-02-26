@@ -13,7 +13,7 @@ pub trait Command {
 impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> (){
         let menu = &mut gs.menu;
-        let run_mode = &mut gs.run_mode;
+        let _run_mode = &mut gs.run_mode;
         let dialogue = &mut gs.dialogue;
         // START
         if gs.run_mode == RunMode::Start {
@@ -23,7 +23,7 @@ impl Command for VirtualKeyCode {
                 Self::Return => {
                     menu.manage(*self); 
                     if menu.selected == 0 {
-                        gs.run_mode = RunMode::Prologue;
+                        gs.run_mode = RunMode::Storytelling;
                     }
                     if menu.selected == 1 {
                         menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();

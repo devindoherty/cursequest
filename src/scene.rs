@@ -27,6 +27,7 @@ pub struct Scene {
     pub art: Art,
     pub encounter: Option<Menu>,
     pub nencounter: Option<NodeID>,
+    pub fullscreen: bool,
 }
 
 pub struct Mob {}
@@ -39,8 +40,15 @@ impl StageManager {
 
 
 impl Scene {
-    pub fn new(title: String, main: String, art: Art, encounter: Option<Menu>, nencounter: Option<NodeID>) -> Self {
-        Scene {title, main, art, encounter, nencounter}
+    pub fn new(
+        title: String, 
+        main: String, 
+        art: Art, 
+        encounter: Option<Menu>, 
+        nencounter: Option<NodeID>,
+        fullscreen: bool,
+    ) -> Self {
+        Scene {title, main, art, encounter, nencounter, fullscreen}
     }
 
     // Full Screen cinematic style
