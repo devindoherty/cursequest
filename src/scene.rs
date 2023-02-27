@@ -25,8 +25,8 @@ pub struct Scene {
     pub title: String,
     pub main: String,
     pub art: Art,
-    pub encounter: Option<Menu>,
-    pub nencounter: Option<NodeID>,
+    pub menu: Option<Menu>,
+    pub dialogue: Option<NodeID>,
     pub fullscreen: bool,
 }
 
@@ -44,11 +44,11 @@ impl Scene {
         title: String, 
         main: String, 
         art: Art, 
-        encounter: Option<Menu>, 
-        nencounter: Option<NodeID>,
+        menu: Option<Menu>, 
+        dialogue: Option<NodeID>,
         fullscreen: bool,
     ) -> Self {
-        Scene {title, main, art, encounter, nencounter, fullscreen}
+        Scene {title, main, art, menu, dialogue, fullscreen}
     }
 
     // Full Screen cinematic style
@@ -96,8 +96,5 @@ impl Scene {
         block.render_to_draw_batch(&mut draw_batch);
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
-    }
-
-    pub fn _begin_combat() {
     }
 }
