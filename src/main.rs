@@ -55,7 +55,7 @@ impl GameState for State {
     }
 }
 
-// Reads input from the terminal construct and handles the input for updating
+// Reads input from the terminal construct and handles input via command.execute.
 fn input(gs: &mut State, ctx: &mut BTerm) {
     match ctx.key {
         None => {}

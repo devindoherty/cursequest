@@ -21,9 +21,8 @@ impl Command for VirtualKeyCode {
                 Self::Up | Self::Numpad8 | 
                 Self::Down | Self::Numpad2 => menu.manage(*self),
                 Self::Return => {
-                    menu.manage(*self); 
                     if menu.selected == 0 {
-                        gs.run_mode = RunMode::Storytelling;
+                        return gs.run_mode = RunMode::Storytelling;
                     }
                     if menu.selected == 1 {
                         menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();
@@ -40,8 +39,7 @@ impl Command for VirtualKeyCode {
         if gs.run_mode == RunMode::Storytelling {
             if gs.scene.fullscreen == true {
                 match self {
-                    Self::Return => gs.run_mode = RunMode::Prompting,
-                    _ => (),
+                    _ => gs.run_mode = RunMode::Prompting,
                 }
             } 
             else if gs.scene.fullscreen == false {
