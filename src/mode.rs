@@ -5,8 +5,8 @@ use crate::State;
 pub enum RunMode {
     Start,
     Prologue, // slated for elim
-    Travelling, 
+    Travelling,
     Prompting,
     Storytelling,
-    Updating, 
+    Updating,
 }

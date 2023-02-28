@@ -8,42 +8,43 @@ pub struct Calendar<'a> {
     days: [&'a str; 7],
     months: [&'a str; 7],
     years: i32,
-    era: String
+    era: String,
 }
 
 impl Calendar<'_> {
-
     fn new() -> Calendar<'static> {
         Calendar {
             hours: 1,
-            days: ["First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh"],
-            months: ["Sprout", "Harvest", "Solstice", "Wilts", "Wending", "Void", "Thaw"],
+            days: [
+                "First", "Second", "Third", "Fourth", "Fifth", "Sixth", "Seventh",
+            ],
+            months: [
+                "Sprout", "Harvest", "Solstice", "Wilts", "Wending", "Void", "Thaw",
+            ],
             years: 1,
             era: String::from("Era of the Uncrowned King"),
         }
     }
-    
-    fn set_date(){
 
-    }
+    fn set_date() {}
 }
 
 enum Days {
-    First, 
-    Second, 
-    Third, 
+    First,
+    Second,
+    Third,
     Fourth,
-    Fifth, 
-    Sixth, 
+    Fifth,
+    Sixth,
     Seventh,
 }
 
 enum Months {
-    Sprout, 
-    Harvest, 
-    Solstice, 
+    Sprout,
+    Harvest,
+    Solstice,
     Wilts,
-    Wending, 
+    Wending,
     Void,
     Thaw,
 }

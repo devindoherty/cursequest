@@ -1,8 +1,8 @@
-use bracket_lib as bracket;
 use bracket::prelude::*;
+use bracket_lib as bracket;
 
-use crate::State;
 use crate::mode;
+use crate::State;
 // use crate::Player;
 // use crate::Map;
 // use crate::map::Biome;
@@ -25,9 +25,13 @@ pub struct MenuItem {
 
 impl Menu {
     pub fn new(items: Vec<MenuItem>, selected: usize, last: Vec<Self>) -> Menu {
-        Menu {items, selected, last}
+        Menu {
+            items,
+            selected,
+            last,
+        }
     }
-    
+
     pub fn switch(&mut self, items: Vec<MenuItem>) -> Menu {
         self.last.push(self.clone());
         let tmp_last = self.last.clone();
@@ -44,25 +48,33 @@ impl Menu {
         if let Some(menu) = last {
             menu
         } else {
-            Menu {items: Vec::new(), selected: 0, last: Vec::new()}
+            Menu {
+                items: Vec::new(),
+                selected: 0,
+                last: Vec::new(),
+            }
         }
     }
 
     pub fn draw(&mut self, ctx: &mut BTerm) {
         let mut y = 45;
         for (pos, item) in self.items.iter().enumerate() {
-             if pos == self.selected {
+            if pos == self.selected {
                 ctx.print_color(
-                    1, y,
-                    RGB::named(BLACK), RGB::named(WHITE),
-                    item.display_name.to_string()
+                    1,
+                    y,
+                    RGB::named(BLACK),
+                    RGB::named(WHITE),
+                    item.display_name.to_string(),
                 );
                 y += 1;
             } else {
                 ctx.print_color(
-                    1, y, 
-                    RGB::named(WHITE), RGB::named(BLACK), 
-                    item.display_name.to_string()
+                    1,
+                    y,
+                    RGB::named(WHITE),
+                    RGB::named(BLACK),
+                    item.display_name.to_string(),
                 );
                 y += 1;
             }
@@ -71,14 +83,18 @@ impl Menu {
 
     pub fn manage(&mut self, key: VirtualKeyCode) {
         match key {
-            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if self.selected == 0 {} 
-            else {
-                self.selected -= 1;
-            },
-            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if self.selected >= self.items.len() - 1 {} 
-            else {
-                self.selected += 1;
-            },
+            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
+                if self.selected == 0 {
+                } else {
+                    self.selected -= 1;
+                }
+            }
+            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
+                if self.selected >= self.items.len() - 1 {
+                } else {
+                    self.selected += 1;
+                }
+            }
             VirtualKeyCode::Return => self.select(),
             _ => {}
         }
@@ -92,5 +108,3 @@ impl Menu {
         }
     }
 }
-
-

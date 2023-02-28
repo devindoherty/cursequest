@@ -1,5 +1,5 @@
-use bracket_lib as bracket;
 use bracket::prelude::*;
+use bracket_lib as bracket;
 
 use crate::State;
 
@@ -17,14 +17,14 @@ pub struct MenuItem {
 
 pub struct Menu {
     items: Vec<MenuItem>,
-    current: NodeID
+    current: NodeID,
 }
 
 impl Menu {
     pub fn new() -> Menu {
         Menu {
             items: Vec::new(),
-            current: NodeID {index: 0},
+            current: NodeID { index: 0 },
         }
     }
 
@@ -33,19 +33,15 @@ impl Menu {
         item.id.index = next_index;
         println!("The index of {} is now: {}", item.name, next_index);
         self.items.push(item);
-        NodeID {
-            index: next_index,
-        }
+        NodeID { index: next_index }
     }
 
-    pub fn add_child(&mut self, item_id: NodeID, child_id: NodeID) { 
+    pub fn add_child(&mut self, item_id: NodeID, child_id: NodeID) {
         let mut item = &mut self.items[item_id.index];
         item.children.push(child_id);
     }
 
-    pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {
-
-    }
+    pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {}
 
     pub fn find_child(&self, item_id: NodeID, child_id: NodeID, search: &str) {
         let item = &self.items[item_id.index];
@@ -58,7 +54,10 @@ impl Menu {
     pub fn list_children(&self, item_id: NodeID) {
         let item = &self.items[item_id.index];
         for child in &item.children {
-            println!("{} is a child of {}", self.items[child.index].name, item.name);
+            println!(
+                "{} is a child of {}",
+                self.items[child.index].name, item.name
+            );
         }
     }
 
@@ -84,20 +83,26 @@ impl Menu {
         println!("Traversed to: {}", item.name);
         self.terminal_draw_children(item_id);
     }
-    
+
     pub fn manage(&mut self, key: VirtualKeyCode) {
         let item = &mut self.items[self.current.index];
         match key {
-            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => if item.selected == 0 {} else {
-                item.selected -= 1;
-                println!("{} selected: {}", item.name, item.selected);
-                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
-            },
-            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => if item.selected >= item.children.len() - 1 {} else {
-                item.selected += 1;
-                println!("{} selected: {}", item.name, item.selected);
-                // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
-            },
+            VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
+                if item.selected == 0 {
+                } else {
+                    item.selected -= 1;
+                    println!("{} selected: {}", item.name, item.selected);
+                    // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                }
+            }
+            VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
+                if item.selected >= item.children.len() - 1 {
+                } else {
+                    item.selected += 1;
+                    println!("{} selected: {}", item.name, item.selected);
+                    // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                }
+            }
             VirtualKeyCode::Return => self.select_child(),
             _ => {}
         }
@@ -107,18 +112,22 @@ impl Menu {
         let mut y = 45;
         let item = &self.items[self.current.index];
         for (pos, child) in item.children.iter().enumerate() {
-             if pos == item.selected {
+            if pos == item.selected {
                 ctx.print_color(
-                    1, y,
-                    RGB::named(BLACK), RGB::named(WHITE),
-                    self.items[child.index].name.to_string()
+                    1,
+                    y,
+                    RGB::named(BLACK),
+                    RGB::named(WHITE),
+                    self.items[child.index].name.to_string(),
                 );
                 y += 1;
             } else {
                 ctx.print_color(
-                    1, y, 
-                    RGB::named(WHITE), RGB::named(BLACK), 
-                    self.items[child.index].name.to_string()
+                    1,
+                    y,
+                    RGB::named(WHITE),
+                    RGB::named(BLACK),
+                    self.items[child.index].name.to_string(),
                 );
                 y += 1;
             }

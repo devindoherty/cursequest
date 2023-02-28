@@ -1,28 +1,26 @@
 // use crate::Encounter;
 use crate::Art;
 // use crate::Map;
-use crate::{Menu, MenuItem};
+use crate::dialogue;
+use crate::NodeID;
 use crate::Scene;
 use crate::Skill;
-use crate::NodeID;
-use crate::dialogue;
 use crate::State;
-
+use crate::{Menu, MenuItem};
 
 pub fn start_menu() -> Menu {
-    
     // Start Menu
-    let start_item_one = MenuItem{
+    let start_item_one = MenuItem {
         display_name: String::from("Start"),
         display_char: '1',
     };
-    let start_item_two = MenuItem{
+    let start_item_two = MenuItem {
         display_name: String::from("Continue"),
         display_char: '2',
     };
-    let start_item_three = MenuItem{
+    let start_item_three = MenuItem {
         display_name: String::from("Quit"),
-        display_char: '3'
+        display_char: '3',
     };
 
     Menu {
@@ -36,26 +34,30 @@ pub fn main_menu() -> Vec<MenuItem> {
     // Running Menu
     let menu_item_one = MenuItem {
         display_name: String::from("Travel"),
-        display_char: '1'
+        display_char: '1',
     };
 
     let menu_item_two = MenuItem {
         display_name: String::from("Character"),
-        display_char: '2'
+        display_char: '2',
     };
 
     let menu_item_three = MenuItem {
         display_name: String::from("Inventory"),
-        display_char: '3'
+        display_char: '3',
     };
 
     let menu_item_four = MenuItem {
         display_name: String::from("Journal"),
-        display_char: '4'
+        display_char: '4',
     };
 
-    vec![menu_item_one, menu_item_two, menu_item_three, menu_item_four]
-
+    vec![
+        menu_item_one,
+        menu_item_two,
+        menu_item_three,
+        menu_item_four,
+    ]
 }
 
 pub fn travel_menu() -> Vec<MenuItem> {
@@ -91,12 +93,12 @@ pub fn travel_menu() -> Vec<MenuItem> {
     };
 
     vec![
-        travel_item_one, 
-        travel_item_two, 
-        travel_item_three, 
-        travel_item_four, 
+        travel_item_one,
+        travel_item_two,
+        travel_item_three,
+        travel_item_four,
         travel_item_five,
-        travel_item_six
+        travel_item_six,
     ]
 }
 
@@ -111,7 +113,9 @@ pub fn prologue() -> Scene {
 
 pub fn shir() -> Scene {
     let title = String::from("Roseberry the Healer");
-    let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
+    let main = String::from(
+        "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
+    );
     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
 
     let encounter_item_one = MenuItem {
@@ -135,10 +139,10 @@ pub fn shir() -> Scene {
     };
 
     let encounter_items = vec![
-        encounter_item_one, 
-        encounter_item_two, 
-        encounter_item_three, 
-        encounter_item_four
+        encounter_item_one,
+        encounter_item_two,
+        encounter_item_three,
+        encounter_item_four,
     ];
 
     let encounter = Menu {
@@ -153,35 +157,36 @@ pub fn shir() -> Scene {
 }
 
 pub fn nshir(gs: &mut State) {
- 
     let title = String::from("Rosebery the Healer");
-    let main = String::from("You have stirred. Good. You were half dead when we found you. Rest now. You are safe.");
+    let main = String::from(
+        "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
+    );
     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
 
     let encounter_item_one = dialogue::MenuItem {
         name: String::from("Where am I?"),
-        id: NodeID {index: 0},
+        id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
     let encounter_item_two = dialogue::MenuItem {
         name: String::from("Who are you?"),
-        id: NodeID {index: 0},
+        id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
     let encounter_item_three = dialogue::MenuItem {
         name: String::from("What happened?"),
-        id: NodeID {index: 0},
+        id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
     let encounter_item_four = dialogue::MenuItem {
         name: String::from("Farewell [END CONVERSATION]"),
-        id: NodeID {index: 0},
+        id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
@@ -190,14 +195,13 @@ pub fn nshir(gs: &mut State) {
     gs.dialogue.add_item(encounter_item_two);
     gs.dialogue.add_item(encounter_item_three);
     gs.dialogue.add_item(encounter_item_four);
-    
+
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter, false); 
+    Scene::new(title, main, art, encounter, nencounter, false);
 }
 
 pub fn _skills() {
-    
     let _sword = Skill {
         name: String::from("Sword"),
         desc: String::from("Mastery of the Cursed Blade."),
@@ -222,15 +226,15 @@ pub fn _skills() {
     let _sovereignty = Skill {
         name: String::from("Stewardship"),
         desc: String::from("Measure of kingly authority and charisma."),
-        value:10,
-        abilities:vec![],
+        value: 10,
+        abilities: vec![],
     };
 
     let _customs = Skill {
         name: String::from("Customs"),
         desc: String::from("Ability to socialize with different classes of society."),
         value: 0,
-        abilities:vec![],
+        abilities: vec![],
     };
 
     let _subterfuge = Skill {

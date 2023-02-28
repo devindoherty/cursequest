@@ -3,8 +3,8 @@ use crate::Art;
 use crate::Menu;
 use crate::NodeID;
 
-use bracket_lib as bracket;
 use bracket::prelude::*;
+use bracket_lib as bracket;
 
 pub struct StageManager {
     act: u8,
@@ -28,29 +28,30 @@ pub struct Scene {
     pub menu: Option<Menu>,
     pub dialogue: Option<NodeID>,
     pub fullscreen: bool,
-    pub id: SceneID,
-    
+    id: SceneID,
 }
 
-pub struct Mob {}
-
-pub struct Item {}
-
-impl StageManager {
-
-}
-
+impl StageManager {}
 
 impl Scene {
     pub fn new(
-        title: String, 
-        main: String, 
-        art: Art, 
-        menu: Option<Menu>, 
+        title: String,
+        main: String,
+        art: Art,
+        menu: Option<Menu>,
         dialogue: Option<NodeID>,
         fullscreen: bool,
+        id: SceneID,
     ) -> Self {
-        Scene {title, main, art, menu, dialogue, fullscreen}
+        Scene {
+            title,
+            main,
+            art,
+            menu,
+            dialogue,
+            fullscreen,
+            id,
+        }
     }
 
     // Full Screen cinematic style
@@ -66,7 +67,8 @@ impl Scene {
             .centered(&self.title)
             .fg(RGB::named(WHITE))
             .bg(RGB::named(BLACK))
-            .ln().ln()
+            .ln()
+            .ln()
             .line_wrap(&self.main)
             .reset();
         block.print(&buf).expect("Line too long!");
@@ -91,7 +93,8 @@ impl Scene {
             .centered(&self.title)
             .fg(RGB::named(WHITE))
             .bg(RGB::named(BLACK))
-            .ln().ln()
+            .ln()
+            .ln()
             .line_wrap(&self.main)
             .reset();
         block.print(&buf).expect("Line too long!");

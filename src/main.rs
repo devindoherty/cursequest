@@ -1,5 +1,5 @@
-use bracket_lib as bracket;
 use bracket::prelude::*;
+use bracket_lib as bracket;
 use std::collections::HashMap;
 
 mod art;
@@ -17,7 +17,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{NodeID};
+use dialogue::NodeID;
 
 mod mode;
 use mode::RunMode;
@@ -30,7 +30,6 @@ use scene::Scene;
 
 mod world;
 use world::Calendar;
-
 
 // Gamestate struct, contains all data to update for game
 pub struct State {
@@ -62,7 +61,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
         Some(key) => match key {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
             _ => key.execute(gs, ctx),
-        }
+        },
     }
 }
 
@@ -84,29 +83,44 @@ fn update(_gs: &mut State) {
 fn render(gs: &mut State, ctx: &mut BTerm) {
     if gs.run_mode == RunMode::Start {
         gs.startart.draw(ctx, 16, 8);
-        ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Choose Thy Fate");
+        ctx.print_color(
+            1,
+            41,
+            RGB::named(WHITE),
+            RGB::named(BLACK),
+            "Choose Thy Fate",
+        );
         gs.menu.draw(ctx);
-    }
-    else if gs.run_mode == RunMode::Travelling {
+    } else if gs.run_mode == RunMode::Travelling {
         ctx.cls();
         Map::draw(&gs.map.atlas, ctx);
         gs.player.draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-        ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move. ENTER to use Menu.");
+        ctx.print_color(
+            1,
+            41,
+            RGB::named(WHITE),
+            RGB::named(BLACK),
+            "Arrow Keys to Move. ENTER to use Menu.",
+        );
         gs.menu.draw(ctx);
-    }
-    else if gs.run_mode == RunMode::Prompting {
+    } else if gs.run_mode == RunMode::Prompting {
         ctx.cls();
         // gs.scene.draw_halfscreen(ctx);
         Map::draw(&gs.map.atlas, ctx);
         gs.player.draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-        ctx.print_color(1, 41, RGB::named(WHITE), RGB::named(BLACK), "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.");
+        ctx.print_color(
+            1,
+            41,
+            RGB::named(WHITE),
+            RGB::named(BLACK),
+            "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.",
+        );
         gs.menu.draw(ctx);
-    }
-    else if gs.run_mode == RunMode::Storytelling {
+    } else if gs.run_mode == RunMode::Storytelling {
         ctx.cls();
-        if gs.scene.fullscreen == true {
+        if gs.scene.5 == true {
             gs.scene.draw_fullscreen(ctx);
         } else {
             gs.scene.draw_halfscreen(ctx);
@@ -123,13 +137,18 @@ fn main() -> BError {
         .with_automatic_console_resize(false)
         .with_fps_cap(30.0)
         .build()?;
-    
+
     let player: Player = Player {
         x: 12,
         y: 38,
         health: 100,
         magic: 100,
-        stats: Statistics {grace: 50, might: 50, mind: 50, soul: 50},
+        stats: Statistics {
+            grace: 50,
+            might: 50,
+            mind: 50,
+            soul: 50,
+        },
     };
 
     let start_menu = init::start_menu();
@@ -145,19 +164,19 @@ fn main() -> BError {
     let mut dialogue = dialogue::Menu::new();
     let ntest1 = dialogue::MenuItem {
         name: String::from("Foo"),
-        id: dialogue::NodeID {index: 10},
+        id: dialogue::NodeID { index: 10 },
         children: vec![],
         selected: 0,
     };
     let ntest2 = dialogue::MenuItem {
         name: String::from("Bar"),
-        id: dialogue::NodeID {index: 10},
+        id: dialogue::NodeID { index: 10 },
         children: vec![],
         selected: 0,
     };
     let ntest3 = dialogue::MenuItem {
         name: String::from("Yar"),
-        id: dialogue::NodeID {index: 10},
+        id: dialogue::NodeID { index: 10 },
         children: vec![],
         selected: 0,
     };
@@ -177,10 +196,8 @@ fn main() -> BError {
         player,
         map,
         run_mode: RunMode::Start,
-        // encounters: act1,
-        // current_encounter: introduction,
         menu: start_menu,
-        dialogue: dialogue, 
+        dialogue: dialogue,
         scene: prologue,
         startart: title,
         log: game_log,
@@ -192,4 +209,3 @@ fn main() -> BError {
 
     main_loop(context, gs)
 }
-

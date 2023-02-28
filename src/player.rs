@@ -1,5 +1,5 @@
-use bracket_lib as bracket;
 use bracket::prelude::*;
+use bracket_lib as bracket;
 
 use crate::State;
 
@@ -13,19 +13,15 @@ pub struct Player {
     // pub journal: Journal,
 }
 
-pub struct Journal {
-    
-}
+pub struct Journal {}
 
-pub struct Inventory {
-
-}
+pub struct Inventory {}
 
 pub struct Statistics {
     pub grace: i32, // Agility and dexterity; change to hit with all attacks
     pub might: i32, // Constitution and strength; damage for all attacks
-    pub mind: i32, // Wisdom and Intellect; magical aptitude and potency
-    pub soul: i32, // Force of personality and ego; interpersonal skills, regen, and divine luck
+    pub mind: i32,  // Wisdom and Intellect; magical aptitude and potency
+    pub soul: i32,  // Force of personality and ego; interpersonal skills, regen, and divine luck
 }
 
 pub struct Skill {
@@ -47,9 +43,14 @@ pub struct Talen {
 }
 
 impl Player {
-
     pub fn draw(&self, ctx: &mut BTerm) {
-        ctx.set(self.x, self.y, RGB::named(GREEN), RGB::named(BLACK), to_cp437('@'))
+        ctx.set(
+            self.x,
+            self.y,
+            RGB::named(GREEN),
+            RGB::named(BLACK),
+            to_cp437('@'),
+        )
     }
 
     pub fn map_move(&mut self, xmv: i32, ymv: i32) {
@@ -57,16 +58,14 @@ impl Player {
             self.x += xmv;
             self.y += ymv;
             println!("px: {}, py: {}", self.x, self.y);
-        }
-        else {
+        } else {
             println!("You cannot travel there.");
         }
-        
     }
 
     fn check_valid_move(&mut self, xmv: i32, ymv: i32) -> bool {
         let mut valid: bool = true;
-        if self.x + xmv > 127  || self.x + xmv < 0 || self. y + ymv > 39 || self. y + ymv < 0 {
+        if self.x + xmv > 127 || self.x + xmv < 0 || self.y + ymv > 39 || self.y + ymv < 0 {
             valid = false;
         }
         valid
@@ -80,12 +79,7 @@ impl Player {
         }
     }
 
-    fn _take_inventory(&mut self) {
+    fn _take_inventory(&mut self) {}
 
-    }
-
-    fn _status(&mut self) {
-        
-    }
+    fn _status(&mut self) {}
 }
-

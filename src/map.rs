@@ -1,9 +1,9 @@
-use bracket_lib as bracket;
 use bracket::prelude::*;
+use bracket_lib as bracket;
 
 use std::collections::HashMap;
-use std::io::{BufRead, BufReader};
 use std::fs::File;
+use std::io::{BufRead, BufReader};
 
 pub struct Map {
     pub atlas: Vec<MapTile>,
@@ -45,9 +45,7 @@ pub enum Biome {
 
 impl Map {
     pub fn new(raw_map: Vec<char>) -> Map {
-        let mut new_map = Map {
-            atlas: Vec::new(),
-        };
+        let mut new_map = Map { atlas: Vec::new() };
         let mut x = 0;
         let mut y = 0;
         let mut i = 0;
@@ -65,7 +63,7 @@ impl Map {
                     'M' => String::from("A dwarven mountain hall."),
                     'E' => String::from("An elven forest enclave."),
                     'x' => String::from("Blasted wasteland."),
-                    'y' | 'Y' => String::from("Cursed jungle."), 
+                    'y' | 'Y' => String::from("Cursed jungle."),
                     'o' | ';' => String::from("Marshy swamps."),
                     'V' | 'H' => String::from("A provincial village"),
                     '#' => String::from("Fertile farmland."),
@@ -75,7 +73,7 @@ impl Map {
                     '%' => String::from("Sandy desert."),
                     'T' => String::from("Temple of the Magi"),
                     _ => String::from("Klathian wilderness."),
-                }, 
+                },
                 x: x,
                 y: y,
                 _id: i,
@@ -101,7 +99,7 @@ impl Map {
                     'T' => Biome::Temple,
                     '!' => Biome::Poi,
                     _ => Biome::Other,
-                } 
+                },
             };
             new_map.atlas.push(tile);
             i += 1;
@@ -126,7 +124,7 @@ impl Map {
         raw_map
     }
 
-    pub fn draw(map: &[MapTile], ctx: &mut BTerm){
+    pub fn draw(map: &[MapTile], ctx: &mut BTerm) {
         let colormap = HashMap::from([
             (Biome::City, RGB::named(YELLOW)),
             (Biome::Desert, RGB::named(SANDYBROWN)),
@@ -152,7 +150,13 @@ impl Map {
         ]);
 
         for tile in map {
-            ctx.set(tile.x, tile.y, colormap[&tile.biome], RGB::named(BLACK), to_cp437(tile.icon));
+            ctx.set(
+                tile.x,
+                tile.y,
+                colormap[&tile.biome],
+                RGB::named(BLACK),
+                to_cp437(tile.icon),
+            );
         }
     }
 }
@@ -170,6 +174,6 @@ impl MapTile {
     // }
 
     // fn alter() {
-        
+
     // }
 }
