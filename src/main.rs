@@ -97,7 +97,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     }
     else if gs.run_mode == RunMode::Prompting {
         ctx.cls();
-        gs.scene.draw_halfscreen(ctx);
+        // gs.scene.draw_halfscreen(ctx);
         Map::draw(&gs.map.atlas, ctx);
         gs.player.draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));

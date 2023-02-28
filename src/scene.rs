@@ -28,6 +28,8 @@ pub struct Scene {
     pub encounter: Option<Menu>,
     pub nencounter: Option<NodeID>,
     pub fullscreen: bool,
+    pub id: SceneID,
+    
 }
 
 pub struct Mob {}

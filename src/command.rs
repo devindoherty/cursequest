@@ -39,7 +39,11 @@ impl Command for VirtualKeyCode {
         if gs.run_mode == RunMode::Storytelling {
             if gs.scene.fullscreen == true {
                 match self {
-                    _ => gs.run_mode = RunMode::Prompting,
+                    _ => {
+                        let mm = init::main_menu();
+                        *menu = menu.switch(mm);
+                        gs.run_mode = RunMode::Prompting;
+                    },
                 }
             } 
             else if gs.scene.fullscreen == false {
