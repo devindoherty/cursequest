@@ -18,7 +18,7 @@ pub struct Flag {
 }
 
 pub struct SceneID {
-    index: usize,
+    pub index: usize,
 }
 
 pub struct Scene {
@@ -28,7 +28,7 @@ pub struct Scene {
     pub menu: Option<Menu>,
     pub dialogue: Option<NodeID>,
     pub fullscreen: bool,
-    id: SceneID,
+    pub id: SceneID,
 }
 
 impl StageManager {}

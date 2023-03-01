@@ -120,7 +120,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Storytelling {
         ctx.cls();
-        if gs.scene.5 == true {
+        if gs.scene.fullscreen == true {
             gs.scene.draw_fullscreen(ctx);
         } else {
             gs.scene.draw_halfscreen(ctx);
@@ -181,13 +181,13 @@ fn main() -> BError {
         selected: 0,
     };
 
-    let foo_id = dialogue.add_item(ntest1);
-    let bar_id = dialogue.add_item(ntest2);
-    let yar_id = dialogue.add_item(ntest3);
-    dialogue.add_child(foo_id, bar_id);
-    dialogue.add_child(foo_id, yar_id);
-    dialogue.add_child(bar_id, yar_id);
-    dialogue.add_child(yar_id, foo_id);
+    // let foo_id = dialogue.add_item(ntest1);
+    // let bar_id = dialogue.add_item(ntest2);
+    // let yar_id = dialogue.add_item(ntest3);
+    // dialogue.add_child(foo_id, bar_id);
+    // dialogue.add_child(foo_id, yar_id);
+    // dialogue.add_child(bar_id, yar_id);
+    // dialogue.add_child(yar_id, foo_id);
     // dialogue.list_children(foo_id);
     // dialogue.terminal_draw_children(foo_id);
     // dialogue.terminal_draw_children(bar_id);

@@ -3,7 +3,7 @@ use crate::Art;
 // use crate::Map;
 use crate::dialogue;
 use crate::NodeID;
-use crate::Scene;
+use crate::scene::{Scene, SceneID};
 use crate::Skill;
 use crate::State;
 use crate::{Menu, MenuItem};
@@ -108,7 +108,7 @@ pub fn prologue() -> Scene {
     let art = Art::new("assets/king.txt", String::from("king"));
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter, true)
+    Scene::new(title, main, art, encounter, nencounter, true, SceneID{index:0})
 }
 
 pub fn shir() -> Scene {
@@ -153,7 +153,7 @@ pub fn shir() -> Scene {
 
     let nencounter: Option<NodeID> = None;
 
-    Scene::new(title, main, art, Some(encounter), nencounter, false)
+    Scene::new(title, main, art, Some(encounter), nencounter, false, SceneID{index:0})
 }
 
 pub fn nshir(gs: &mut State) {
@@ -198,7 +198,7 @@ pub fn nshir(gs: &mut State) {
 
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter, false);
+    Scene::new(title, main, art, encounter, nencounter, false, SceneID{index:0});
 }
 
 pub fn _skills() {
