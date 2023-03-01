@@ -8,27 +8,27 @@ pub struct NodeID {
     pub index: usize,
 }
 
-pub struct MenuItem {
+pub struct DialogueItem {
     pub name: String,
     pub id: NodeID,
     pub children: Vec<NodeID>,
     pub selected: usize,
 }
 
-pub struct Menu {
-    items: Vec<MenuItem>,
+pub struct Dialogue {
+    items: Vec<DialogueItem>,
     current: NodeID,
 }
 
-impl Menu {
-    pub fn new() -> Menu {
-        Menu {
+impl Dialogue {
+    pub fn new() -> Dialogue {
+        Dialogue {
             items: Vec::new(),
             current: NodeID { index: 0 },
         }
     }
 
-    pub fn add_item(&mut self, mut item: MenuItem) -> NodeID {
+    pub fn add_item(&mut self, mut item: DialogueItem) -> NodeID {
         let next_index = self.items.len();
         item.id.index = next_index;
         println!("The index of {} is now: {}", item.name, next_index);

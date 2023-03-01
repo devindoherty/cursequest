@@ -31,7 +31,10 @@ pub struct Scene {
     pub id: SceneID,
 }
 
-impl StageManager {}
+impl StageManager {
+
+
+}
 
 impl Scene {
     pub fn new(

@@ -37,7 +37,7 @@ pub struct State {
     map: Map,
     run_mode: RunMode,
     menu: Menu,
-    dialogue: dialogue::Menu,
+    dialogue: dialogue::Dialogue,
     scene: Scene,
     // sm: StageManager // scene_manager: StageManager,
     startart: Art,
@@ -161,20 +161,20 @@ fn main() -> BError {
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
 
-    let mut dialogue = dialogue::Menu::new();
-    let ntest1 = dialogue::MenuItem {
+    let mut dialogue = dialogue::Dialogue::new();
+    let ntest1 = dialogue::DialogueItem {
         name: String::from("Foo"),
         id: dialogue::NodeID { index: 10 },
         children: vec![],
         selected: 0,
     };
-    let ntest2 = dialogue::MenuItem {
+    let ntest2 = dialogue::DialogueItem {
         name: String::from("Bar"),
         id: dialogue::NodeID { index: 10 },
         children: vec![],
         selected: 0,
     };
-    let ntest3 = dialogue::MenuItem {
+    let ntest3 = dialogue::DialogueItem {
         name: String::from("Yar"),
         id: dialogue::NodeID { index: 10 },
         children: vec![],
