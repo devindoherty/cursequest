@@ -2,8 +2,8 @@
 use crate::Art;
 // use crate::Map;
 use crate::dialogue;
-use crate::NodeID;
 use crate::scene::{Scene, SceneID};
+use crate::NodeID;
 use crate::Skill;
 use crate::State;
 use crate::{Menu, MenuItem};
@@ -108,54 +108,17 @@ pub fn prologue() -> Scene {
     let art = Art::new("assets/king.txt", String::from("king"));
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter, true, SceneID{index:0})
+    Scene::new(
+        title,
+        main,
+        art,
+        true,
+        encounter,
+        nencounter,
+        None,
+        SceneID { index: 0 },
+    )
 }
-
-// Deprecated
-// pub fn shir() -> Scene {
-//     let title = String::from("Roseberry the Healer");
-//     let main = String::from(
-//         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
-//     );
-//     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
-
-//     let encounter_item_one = MenuItem {
-//         display_name: String::from("Where am I?"),
-//         display_char: '1',
-//     };
-
-//     let encounter_item_two = MenuItem {
-//         display_name: String::from("Who are you?"),
-//         display_char: '2',
-//     };
-
-//     let encounter_item_three = MenuItem {
-//         display_name: String::from("What happened?"),
-//         display_char: '3',
-//     };
-
-//     let encounter_item_four = MenuItem {
-//         display_name: String::from("Farewell [END CONVERSATION]"),
-//         display_char: '4',
-//     };
-
-//     let encounter_items = vec![
-//         encounter_item_one,
-//         encounter_item_two,
-//         encounter_item_three,
-//         encounter_item_four,
-//     ];
-
-//     let encounter = Menu {
-//         items: encounter_items,
-//         selected: 0,
-//         last: Vec::new(),
-//     };
-
-//     let nencounter: Option<NodeID> = None;
-
-//     Scene::new(title, main, art, Some(encounter), nencounter, false, SceneID{index:0})
-// }
 
 pub fn nshir(gs: &mut State) {
     let title = String::from("Rosebery the Healer");
@@ -199,7 +162,16 @@ pub fn nshir(gs: &mut State) {
 
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
-    Scene::new(title, main, art, encounter, nencounter, false, SceneID{index:0});
+    Scene::new(
+        title,
+        main,
+        art,
+        false,
+        encounter,
+        nencounter,
+        None,
+        SceneID { index: 0 },
+    );
 }
 
 pub fn _skills() {

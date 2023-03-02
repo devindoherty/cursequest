@@ -10,7 +10,6 @@ pub struct StageManager {
     act: u8,
     scenes: Vec<Scene>,
     onstage: SceneID,
-    flags: Vec<Flag>,
 }
 
 pub struct Flag {
@@ -29,27 +28,20 @@ pub struct Scene {
     pub menu: Option<Menu>,
     pub dialogue: Option<NodeID>,
     pub fullscreen: bool,
+    pub flags: Option<Vec<Flag>>,
     pub id: SceneID,
 }
 
 impl StageManager {
-    pub fn new(act: u8, scenes: Vec<SceneID>, flags: Vec<Flag>) -> Self {
+    pub fn new(act: u8, scenes: Vec<Scene>, onstage: SceneID) -> Self {
         StageManager {
             act,
             scenes,
-            flags,
+            onstage,
         }
     }
 
-    pub fn register_scene(&self, scene: Scene) {
-
-    }
-
-
-
-
-
-
+    pub fn register_scene(&self, scene: Scene) {}
 }
 
 impl Scene {
@@ -57,18 +49,20 @@ impl Scene {
         title: String,
         main: String,
         art: Art,
+        fullscreen: bool,
         menu: Option<Menu>,
         dialogue: Option<NodeID>,
-        fullscreen: bool,
+        flags: Option<Vec<Flag>>,
         id: SceneID,
     ) -> Self {
         Scene {
             title,
             main,
             art,
+            fullscreen,
             menu,
             dialogue,
-            fullscreen,
+            flags,
             id,
         }
     }

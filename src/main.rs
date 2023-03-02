@@ -26,7 +26,7 @@ mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::{Scene, StageManager};
+use scene::{Scene, SceneID, StageManager};
 
 mod world;
 use world::Calendar;
@@ -192,8 +192,7 @@ fn main() -> BError {
     // dialogue.terminal_draw_children(foo_id);
     // dialogue.terminal_draw_children(bar_id);
 
-    let sm = StageManager::new(1, vec![], vec![]);
-
+    let sm = StageManager::new(1, vec![], SceneID { index: 0 });
 
     let mut gs: State = State {
         player,
