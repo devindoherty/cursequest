@@ -32,6 +32,21 @@ pub struct Scene {
 }
 
 impl StageManager {
+    pub fn new(act: u8, scenes: Vec<SceneID>, flags: Vec<Flag>) -> Self {
+        StageManager {
+            act,
+            scenes,
+            flags,
+        }
+    }
+
+    pub fn register_scene(&self, scene: Scene) {
+
+    }
+
+
+
+
 
 
 }

@@ -26,7 +26,7 @@ mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::Scene;
+use scene::{Scene, StageManager};
 
 mod world;
 use world::Calendar;
@@ -39,7 +39,7 @@ pub struct State {
     menu: Menu,
     dialogue: dialogue::Dialogue,
     scene: Scene,
-    // sm: StageManager // scene_manager: StageManager,
+    sm: StageManager, // scene_manager: StageManager,
     startart: Art,
     log: Vec<String>,
     redraw: bool,
@@ -192,6 +192,9 @@ fn main() -> BError {
     // dialogue.terminal_draw_children(foo_id);
     // dialogue.terminal_draw_children(bar_id);
 
+    let sm = StageManager::new(1, vec![], vec![]);
+
+
     let mut gs: State = State {
         player,
         map,
@@ -199,6 +202,7 @@ fn main() -> BError {
         menu: start_menu,
         dialogue: dialogue,
         scene: prologue,
+        sm,
         startart: title,
         log: game_log,
         redraw: false,
