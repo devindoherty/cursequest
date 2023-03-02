@@ -8,7 +8,8 @@ use bracket_lib as bracket;
 
 pub struct StageManager {
     act: u8,
-    scenes: Vec<SceneID>,
+    scenes: Vec<Scene>,
+    onstage: SceneID,
     flags: Vec<Flag>,
 }
 
