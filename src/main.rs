@@ -142,18 +142,23 @@ fn main() -> BError {
         x: 12,
         y: 38,
         health: 100,
-        magic: 100,
-        stats: Statistics {
+         magic: 100,
+         stats: Statistics {
             grace: 50,
             might: 50,
-            mind: 50,
-            soul: 50,
+             mind: 50,
+             soul: 50,
         },
     };
 
+
     let start_menu = init::start_menu();
 
+    let mut sm = StageManager::new(1, vec![], SceneID { index: 0 });
     let prologue = init::prologue();
+    let prologue_clone = prologue.clone();
+    sm.register_scene(prologue_clone);
+
     let title = Art::new("assets/title.txt", String::from("Curse Quest"));
 
     let game_log = Vec::new();
@@ -191,8 +196,6 @@ fn main() -> BError {
     // dialogue.list_children(foo_id);
     // dialogue.terminal_draw_children(foo_id);
     // dialogue.terminal_draw_children(bar_id);
-
-    let sm = StageManager::new(1, vec![], SceneID { index: 0 });
 
     let mut gs: State = State {
         player,

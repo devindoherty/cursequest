@@ -12,15 +12,18 @@ pub struct StageManager {
     onstage: SceneID,
 }
 
+#[derive(Clone)]
 pub struct Flag {
     name: String,
     flagged: bool,
 }
 
+#[derive(Clone)]
 pub struct SceneID {
     pub index: usize,
 }
 
+#[derive(Clone)]
 pub struct Scene {
     pub title: String,
     pub main: String,
@@ -41,7 +44,11 @@ impl StageManager {
         }
     }
 
-    pub fn register_scene(&self, scene: Scene) {}
+    pub fn register_scene(&mut self, mut scene: Scene) {
+        let next_index = self.scenes.len();
+        scene.id.index = next_index;
+        self.scenes.push(scene);
+    }
 }
 
 impl Scene {

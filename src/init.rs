@@ -2,7 +2,7 @@
 use crate::Art;
 // use crate::Map;
 use crate::dialogue;
-use crate::scene::{Scene, SceneID};
+use crate::scene::{Scene, SceneID, StageManager};
 use crate::NodeID;
 use crate::Skill;
 use crate::State;
