@@ -11,21 +11,22 @@ pub trait Command {
 
 impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> () {
-        let menu = &mut gs.menu;
-        let dialogue = &mut gs.dialogue;
-
+        
         // START
         if gs.run_mode == RunMode::Start {
             match self {
-                Self::Up | Self::Numpad8 | Self::Down | Self::Numpad2 => menu.manage(*self),
-                Self::Return => {
-                    if menu.selected == 0 {
+                Self::Up      | 
+                Self::Numpad8 | 
+                Self::Down    | 
+                Self::Numpad2 => gs.menu.manage(*self),
+                Self::Return  => {
+                    if gs.menu.selected == 0 {
                         return gs.run_mode = RunMode::Storytelling;
                     }
-                    if menu.selected == 1 {
-                        menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();
+                    if gs.menu.selected == 1 {
+                        gs.menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();
                     }
-                    if menu.selected == 2 {
+                    if gs.menu.selected == 2 {
                         ctx.quit();
                     }
                 }
@@ -39,14 +40,14 @@ impl Command for VirtualKeyCode {
                 match self {
                     _ => {
                         let mm = init::main_menu();
-                        *menu = menu.switch(mm);
+                        gs.menu = gs.menu.switch(mm);
                         gs.run_mode = RunMode::Prompting;
                     }
                 }
             } else if gs.scene.fullscreen == false {
                 match self {
                     Self::Up | Self::Numpad8 | Self::Down | Self::Numpad2 | Self::Return => {
-                        dialogue.manage(*self)
+                        gs.dialogue.manage(*self)
                     }
                     _ => (),
                 }
@@ -56,9 +57,13 @@ impl Command for VirtualKeyCode {
         // PROMPTING Main In-Game Menu
         if gs.run_mode == RunMode::Prompting {
             match self {
-                Self::Up | Self::Numpad8 | Self::Down | Self::Numpad2 | Self::Return => {
-                    menu.manage(*self)
-                }
+                Self::Up      | 
+                Self::Numpad8 | 
+                Self::Down    | 
+                Self::Numpad2 | 
+                Self::Return  => {
+                    gs.menu.manage(*self)
+                },
                 _ => (),
             }
         }

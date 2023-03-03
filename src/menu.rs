@@ -1,6 +1,10 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
+
+
+
+use crate::Command;
 use crate::mode;
 use crate::State;
 // use crate::Player;
@@ -17,8 +21,6 @@ pub struct Menu {
 
 #[derive(Clone, PartialEq)]
 pub struct MenuItem {
-    // parent: Option<ItemID>,
-    // child: Option<ItemID>,
     pub display_name: String,
     pub display_char: char,
 }
@@ -103,8 +105,9 @@ impl Menu {
     fn select(&self) {
         let item = &self.items[self.selected].display_name;
         println!("{}", item);
-        if item.contains("Start") {
-            // gs.run_mode = RunMode::Prologue;
-        }
     }
+}
+
+impl MenuItem {
+
 }

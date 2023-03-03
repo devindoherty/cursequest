@@ -142,15 +142,14 @@ fn main() -> BError {
         x: 12,
         y: 38,
         health: 100,
-         magic: 100,
-         stats: Statistics {
+        magic: 100,
+        stats: Statistics {
             grace: 50,
             might: 50,
-             mind: 50,
-             soul: 50,
+            mind: 50,
+            soul: 50,
         },
     };
-
 
     let start_menu = init::start_menu();
 
