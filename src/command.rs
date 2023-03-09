@@ -11,7 +11,8 @@ pub trait Command {
 
 impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> () {
-        
+        let menu_item = &gs.menu.items[gs.menu.selected];
+
         // START
         if gs.run_mode == RunMode::Start {
             match self {

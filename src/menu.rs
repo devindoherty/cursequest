@@ -1,9 +1,6 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
-
-
-
 use crate::Command;
 use crate::mode;
 use crate::State;
@@ -109,5 +106,9 @@ impl Menu {
 }
 
 impl MenuItem {
-
+    pub fn test_print(&self, gs: &mut State) {
+        if self.display_name.contains("Start") {
+            println!("Test Print Success");
+        }
+    }
 }

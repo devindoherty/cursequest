@@ -37,7 +37,7 @@ impl Dialogue {
     }
 
     pub fn add_child(&mut self, item_id: NodeID, child_id: NodeID) {
-        let mut item = &mut self.items[item_id.index];
+        let item = &mut self.items[item_id.index];
         item.children.push(child_id);
     }
 
