@@ -31,7 +31,7 @@ impl Dialogue {
     pub fn add_item(&mut self, mut item: DialogueItem) -> NodeID {
         let next_index = self.items.len();
         item.id.index = next_index;
-        println!("The index of {} is now: {}", item.name, next_index);
+        println!("Diaglogue: The index of {} is now: {}", item.name, next_index);
         self.items.push(item);
         NodeID { index: next_index }
     }

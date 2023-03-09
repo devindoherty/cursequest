@@ -38,7 +38,7 @@ pub struct State {
     run_mode: RunMode,
     menu: Menu,
     dialogue: dialogue::Dialogue,
-    sm: StageManager, // scene_manager: StageManager,
+    sm: StageManager,
     startart: Art,
     log: Vec<String>,
     redraw: bool,
@@ -155,8 +155,6 @@ fn main() -> BError {
     let start_menu = init::start_menu();
 
     let mut sm = StageManager::new(1, vec![], SceneID { index: 0 });
-    let prologue = init::prologue();
-    let shir = init::nshir();
 
     let title = Art::new("assets/title.txt", String::from("Curse Quest"));
 
@@ -166,36 +164,7 @@ fn main() -> BError {
     let map = Map::new(raw_world_map);
 
     let mut dialogue = dialogue::Dialogue::new();
-    // let ntest1 = dialogue::DialogueItem {
-    //     name: String::from("Foo"),
-    //     id: dialogue::NodeID { index: 10 },
-    //     children: vec![],
-    //     selected: 0,
-    // };
-    // let ntest2 = dialogue::DialogueItem {
-    //     name: String::from("Bar"),
-    //     id: dialogue::NodeID { index: 10 },
-    //     children: vec![],
-    //     selected: 0,
-    // };
-    // let ntest3 = dialogue::DialogueItem {
-    //     name: String::from("Yar"),
-    //     id: dialogue::NodeID { index: 10 },
-    //     children: vec![],
-    //     selected: 0,
-    // };
-
-    // let foo_id = dialogue.add_item(ntest1);
-    // let bar_id = dialogue.add_item(ntest2);
-    // let yar_id = dialogue.add_item(ntest3);
-    // dialogue.add_child(foo_id, bar_id);
-    // dialogue.add_child(foo_id, yar_id);
-    // dialogue.add_child(bar_id, yar_id);
-    // dialogue.add_child(yar_id, foo_id);
-    // dialogue.list_children(foo_id);
-    // dialogue.terminal_draw_children(foo_id);
-    // dialogue.terminal_draw_children(bar_id);
-
+  
     let mut gs: State = State {
         player,
         map,
@@ -208,41 +177,11 @@ fn main() -> BError {
         redraw: false,
     };
 
+    let prologue = init::prologue();
+    let shir = init::nshir(&mut gs);
+
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
-    
-    let encounter_item_one = dialogue::DialogueItem {
-        name: String::from("Where am I?"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_two = dialogue::DialogueItem {
-        name: String::from("Who are you?"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_three = dialogue::DialogueItem {
-        name: String::from("What happened?"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_four = dialogue::DialogueItem {
-        name: String::from("Farewell [END CONVERSATION]"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    gs.dialogue.add_item(encounter_item_one);
-    gs.dialogue.add_item(encounter_item_two);
-    gs.dialogue.add_item(encounter_item_three);
-    gs.dialogue.add_item(encounter_item_four);
 
     main_loop(context, gs)
 }

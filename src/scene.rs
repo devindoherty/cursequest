@@ -14,8 +14,8 @@ pub struct StageManager {
 
 #[derive(Clone)]
 pub struct Flag {
-    name: String,
-    flagged: bool,
+    pub name: String,
+    pub flagged: bool,
 }
 
 #[derive(Clone)]

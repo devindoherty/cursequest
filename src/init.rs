@@ -2,7 +2,7 @@
 use crate::Art;
 // use crate::Map;
 use crate::dialogue;
-use crate::scene::{Scene, SceneID, StageManager};
+use crate::scene::{Flag, Scene, SceneID, StageManager};
 use crate::NodeID;
 use crate::Skill;
 use crate::State;
@@ -106,21 +106,23 @@ pub fn prologue() -> Scene {
     let title = String::from("Prologue");
     let main = String::from("A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control...");
     let art = Art::new("assets/king.txt", String::from("king"));
-    let encounter: Option<Menu> = None;
-    let nencounter: Option<NodeID> = None;
+    let menu: Option<Menu> = None;
+    let dialogue: Option<NodeID> = None;
+    let flags = vec![Flag {name: "press_any_key".to_string(), flagged: true}]; 
+
     Scene::new(
         title,
         main,
         art,
         true,
-        encounter,
-        nencounter,
-        None,
+        menu,
+        dialogue,
+        Some(flags),
         SceneID { index: 0 },
     )
 }
 
-pub fn nshir() -> Scene {
+pub fn nshir(gs: &mut State) -> Scene {
     let title = String::from("Rosebery the Healer");
     let main = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
@@ -129,6 +131,41 @@ pub fn nshir() -> Scene {
 
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
+    
+    let encounter_item_one = dialogue::DialogueItem {
+        name: String::from("Where am I?"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_two = dialogue::DialogueItem {
+        name: String::from("Who are you?"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_three = dialogue::DialogueItem {
+        name: String::from("What happened?"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_four = dialogue::DialogueItem {
+        name: String::from("Farewell [END CONVERSATION]"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    gs.dialogue.add_item(encounter_item_one);
+    gs.dialogue.add_item(encounter_item_two);
+    gs.dialogue.add_item(encounter_item_three);
+    gs.dialogue.add_item(encounter_item_four);
+    
+    
     Scene::new(
         title,
         main,
