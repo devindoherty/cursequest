@@ -38,7 +38,6 @@ pub struct State {
     run_mode: RunMode,
     menu: Menu,
     dialogue: dialogue::Dialogue,
-    scene: Scene,
     sm: StageManager, // scene_manager: StageManager,
     startart: Art,
     log: Vec<String>,
@@ -120,10 +119,12 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Storytelling {
         ctx.cls();
-        if gs.scene.fullscreen == true {
-            gs.scene.draw_fullscreen(ctx);
+        let scene = &gs.sm.scenes[gs.sm.onstage.index];
+
+        if scene.fullscreen == true {
+            scene.draw_fullscreen(ctx);
         } else {
-            gs.scene.draw_halfscreen(ctx);
+            scene.draw_halfscreen(ctx);
             ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
             gs.dialogue.draw(ctx);
         }
@@ -202,7 +203,6 @@ fn main() -> BError {
         run_mode: RunMode::Start,
         menu: start_menu,
         dialogue: dialogue,
-        scene: prologue,
         sm,
         startart: title,
         log: game_log,

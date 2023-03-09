@@ -1,5 +1,5 @@
 use crate::Art;
-// use crate::State;
+use crate::State;
 use crate::Menu;
 use crate::NodeID;
 
@@ -8,8 +8,8 @@ use bracket_lib as bracket;
 
 pub struct StageManager {
     act: u8,
-    scenes: Vec<Scene>,
-    onstage: SceneID,
+    pub scenes: Vec<Scene>,
+    pub onstage: SceneID,
 }
 
 #[derive(Clone)]
@@ -48,6 +48,16 @@ impl StageManager {
         let next_index = self.scenes.len();
         scene.id.index = next_index;
         self.scenes.push(scene);
+    }
+
+    pub fn next_scene(&mut self) {
+
+    }
+    
+    
+    pub fn stage_scene(&mut self, gs: &mut State, onstage_scene: SceneID) {
+
+
     }
 }
 

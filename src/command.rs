@@ -37,7 +37,8 @@ impl Command for VirtualKeyCode {
 
         // STORYTELLING
         if gs.run_mode == RunMode::Storytelling {
-            if gs.scene.fullscreen == true {
+            let scene = &gs.sm.scenes[gs.sm.onstage.index];
+            if scene.fullscreen == true {
                 match self {
                     _ => {
                         let mm = init::main_menu();
@@ -45,7 +46,7 @@ impl Command for VirtualKeyCode {
                         gs.run_mode = RunMode::Prompting;
                     }
                 }
-            } else if gs.scene.fullscreen == false {
+            } else if scene.fullscreen == false {
                 match self {
                     Self::Up | Self::Numpad8 | Self::Down | Self::Numpad2 | Self::Return => {
                         gs.dialogue.manage(*self)
