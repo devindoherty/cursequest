@@ -47,11 +47,12 @@ impl StageManager {
     pub fn register_scene(&mut self, mut scene: Scene) {
         let next_index = self.scenes.len();
         scene.id.index = next_index;
+        println!("StageManager: {} is index {}", scene.title, next_index);
         self.scenes.push(scene);
     }
 
     pub fn next_scene(&mut self) {
-
+        self.onstage.index += 1;
     }
     
     

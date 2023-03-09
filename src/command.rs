@@ -41,9 +41,10 @@ impl Command for VirtualKeyCode {
             if scene.fullscreen == true {
                 match self {
                     _ => {
-                        let mm = init::main_menu();
-                        gs.menu = gs.menu.switch(mm);
-                        gs.run_mode = RunMode::Prompting;
+                        // let mm = init::main_menu();
+                        // gs.menu = gs.menu.switch(mm);
+                        // gs.run_mode = RunMode::Prompting;
+                        gs.sm.next_scene();
                     }
                 }
             } else if scene.fullscreen == false {

@@ -120,45 +120,12 @@ pub fn prologue() -> Scene {
     )
 }
 
-pub fn nshir(gs: &mut State) {
+pub fn nshir() -> Scene {
     let title = String::from("Rosebery the Healer");
     let main = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
     );
     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
-
-    let encounter_item_one = dialogue::DialogueItem {
-        name: String::from("Where am I?"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_two = dialogue::DialogueItem {
-        name: String::from("Who are you?"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_three = dialogue::DialogueItem {
-        name: String::from("What happened?"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_four = dialogue::DialogueItem {
-        name: String::from("Farewell [END CONVERSATION]"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    gs.dialogue.add_item(encounter_item_one);
-    gs.dialogue.add_item(encounter_item_two);
-    gs.dialogue.add_item(encounter_item_three);
-    gs.dialogue.add_item(encounter_item_four);
 
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
@@ -171,7 +138,7 @@ pub fn nshir(gs: &mut State) {
         nencounter,
         None,
         SceneID { index: 0 },
-    );
+    )
 }
 
 pub fn _skills() {
