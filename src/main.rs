@@ -37,7 +37,7 @@ pub struct State {
     map: Map,
     run_mode: RunMode,
     menu: Menu,
-    dialogue: dialogue::Dialogue,
+    // dialogue: dialogue::Dialogue,
     sm: StageManager,
     startart: Art,
     log: Vec<String>,
@@ -120,13 +120,12 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     } else if gs.run_mode == RunMode::Storytelling {
         ctx.cls();
         let scene = &gs.sm.scenes[gs.sm.onstage.index];
-
         if scene.fullscreen == true {
             scene.draw_fullscreen(ctx);
         } else {
             scene.draw_halfscreen(ctx);
             ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-            gs.dialogue.draw(ctx);
+            scene.dialogue.draw(ctx);
         }
     }
 }
@@ -170,7 +169,7 @@ fn main() -> BError {
         map,
         run_mode: RunMode::Start,
         menu: start_menu,
-        dialogue: dialogue,
+        // dialogue: dialogue,
         sm,
         startart: title,
         log: game_log,

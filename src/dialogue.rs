@@ -8,6 +8,7 @@ pub struct NodeID {
     pub index: usize,
 }
 
+#[derive(Debug)]
 pub struct DialogueItem {
     pub name: String,
     pub id: NodeID,
@@ -15,14 +16,15 @@ pub struct DialogueItem {
     pub selected: usize,
 }
 
-pub struct Dialogue {
-    items: Vec<DialogueItem>,
+#[derive(Debug)]
+pub struct Dialoguer {
+    pub items: Vec<DialogueItem>,
     current: NodeID,
 }
 
-impl Dialogue {
-    pub fn new() -> Dialogue {
-        Dialogue {
+impl Dialoguer {
+    pub fn new() -> Dialoguer {
+        Dialoguer {
             items: Vec::new(),
             current: NodeID { index: 0 },
         }
@@ -41,7 +43,11 @@ impl Dialogue {
         item.children.push(child_id);
     }
 
-    pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {}
+    pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {
+        let item = &mut self.items[item_id.index];
+        let child = &mut self.items[child_id.index];
+        // item.children.remove(child); // TODO! Rework remove
+    }
 
     pub fn find_child(&self, item_id: NodeID, child_id: NodeID, search: &str) {
         let item = &self.items[item_id.index];
@@ -97,6 +103,7 @@ impl Dialogue {
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
                 if item.selected >= item.children.len() - 1 {
+                    () // Do Nothing
                 } else {
                     item.selected += 1;
                     println!("{} selected: {}", item.name, item.selected);

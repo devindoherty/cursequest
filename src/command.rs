@@ -47,10 +47,19 @@ impl Command for VirtualKeyCode {
                         gs.sm.next_scene();
                     }
                 }
-            } else if scene.fullscreen == false {
+            } else { // Fullscreen = false
                 match self {
-                    Self::Up | Self::Numpad8 | Self::Down | Self::Numpad2 | Self::Return => {
+                    Self::Up      | 
+                    Self::Numpad8 | 
+                    Self::Down    | 
+                    Self::Numpad2 | 
+                    Self::Return  => {
                         gs.dialogue.manage(*self)
+                    },
+                    Self::D => {
+                        for item in &gs.dialogue.items {
+                            println!("Dialogue: {:?}", item);
+                        }
                     }
                     _ => (),
                 }
