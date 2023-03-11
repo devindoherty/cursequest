@@ -9,14 +9,14 @@ use crate::State;
 // use crate::map::Biome;
 use crate::RunMode;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Menu {
     pub items: Vec<MenuItem>,
     pub selected: usize,
     pub last: Vec<Self>,
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, Debug, PartialEq)]
 pub struct MenuItem {
     pub display_name: String,
     pub display_char: char,

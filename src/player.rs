@@ -36,7 +36,7 @@ pub struct Ability {
     pub desc: String,
 }
 
-pub struct Talen {
+pub struct Talent {
     pub name: String,
     pub desc: String,
     pub value: i32,

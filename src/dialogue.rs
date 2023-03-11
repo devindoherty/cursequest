@@ -8,7 +8,7 @@ pub struct NodeID {
     pub index: usize,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct DialogueItem {
     pub name: String,
     pub id: NodeID,
@@ -16,15 +16,15 @@ pub struct DialogueItem {
     pub selected: usize,
 }
 
-#[derive(Debug)]
-pub struct Dialoguer {
+#[derive(Clone, Debug)]
+pub struct Dialogue {
     pub items: Vec<DialogueItem>,
     current: NodeID,
 }
 
-impl Dialoguer {
-    pub fn new() -> Dialoguer {
-        Dialoguer {
+impl Dialogue {
+    pub fn new() -> Dialogue {
+        Dialogue {
             items: Vec::new(),
             current: NodeID { index: 0 },
         }
@@ -95,6 +95,7 @@ impl Dialoguer {
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
                 if item.selected == 0 {
+                    () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
                     println!("{} selected: {}", item.name, item.selected);
@@ -102,11 +103,11 @@ impl Dialoguer {
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
-                if item.selected >= item.children.len() - 1 {
-                    () // Do Nothing
+                if item.selected >= item.children.len() {
+                    (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
-                    println!("{} selected: {}", item.name, item.selected);
+                    // println!("{} selected: {}", item.name, item.selected);
                     // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
                 }
             }
@@ -115,10 +116,12 @@ impl Dialoguer {
         }
     }
 
+    // Rendering dialogue options to choice selection
     pub fn draw(&self, ctx: &mut BTerm) {
         let mut y = 45;
         let item = &self.items[self.current.index];
         for (pos, child) in item.children.iter().enumerate() {
+            // 
             if pos == item.selected {
                 ctx.print_color(
                     1,

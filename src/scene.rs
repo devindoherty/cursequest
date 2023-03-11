@@ -1,7 +1,7 @@
 use crate::Art;
 use crate::State;
 use crate::Menu;
-use crate::NodeID;
+use crate::Dialogue;
 
 use bracket::prelude::*;
 use bracket_lib as bracket;
@@ -12,24 +12,24 @@ pub struct StageManager {
     pub onstage: SceneID,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Flag {
     pub name: String,
     pub flagged: bool,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct SceneID {
     pub index: usize,
 }
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct Scene {
     pub title: String,
     pub main: String,
     pub art: Art,
     pub menu: Option<Menu>,
-    pub dialogue: Option<NodeID>,
+    pub dialogue: Option<Dialogue>,
     pub fullscreen: bool,
     pub flags: Option<Vec<Flag>>,
     pub id: SceneID,
@@ -56,9 +56,8 @@ impl StageManager {
     }
     
     
-    pub fn stage_scene(&mut self, gs: &mut State, onstage_scene: SceneID) {
-
-
+    pub fn _stage_scene(&mut self, gs: &mut State, onstage_scene: SceneID) {
+        ()
     }
 }
 
@@ -69,7 +68,7 @@ impl Scene {
         art: Art,
         fullscreen: bool,
         menu: Option<Menu>,
-        dialogue: Option<NodeID>,
+        dialogue: Option<Dialogue>,
         flags: Option<Vec<Flag>>,
         id: SceneID,
     ) -> Self {
@@ -110,7 +109,7 @@ impl Scene {
     }
 
     // Half screen within
-    pub fn draw_halfscreen(&self, ctx: &mut BTerm) {
+    pub fn draw_halfscreen(&mut self, ctx: &mut BTerm) {
         ctx.cls();
         self.art.draw(ctx, 32, 1);
         let mut draw_batch = DrawBatch::new();
@@ -132,5 +131,7 @@ impl Scene {
         block.render_to_draw_batch(&mut draw_batch);
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
+        self.dialogue.as_mut().expect("Missing Dialogue for Scene Error").draw(ctx);
+        ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
 }

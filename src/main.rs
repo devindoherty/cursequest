@@ -1,6 +1,5 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
-use std::collections::HashMap;
 
 mod art;
 use art::*;
@@ -17,7 +16,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::NodeID;
+use dialogue::{Dialogue, NodeID};
 
 mod mode;
 use mode::RunMode;
@@ -37,7 +36,6 @@ pub struct State {
     map: Map,
     run_mode: RunMode,
     menu: Menu,
-    // dialogue: dialogue::Dialogue,
     sm: StageManager,
     startart: Art,
     log: Vec<String>,
@@ -118,14 +116,12 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         );
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Storytelling {
-        ctx.cls();
-        let scene = &gs.sm.scenes[gs.sm.onstage.index];
+        // ctx.cls();
+        let scene = &mut gs.sm.scenes[gs.sm.onstage.index];
         if scene.fullscreen == true {
             scene.draw_fullscreen(ctx);
         } else {
             scene.draw_halfscreen(ctx);
-            ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
-            scene.dialogue.draw(ctx);
         }
     }
 }
@@ -161,15 +157,12 @@ fn main() -> BError {
 
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
-
-    let mut dialogue = dialogue::Dialogue::new();
   
     let mut gs: State = State {
         player,
         map,
         run_mode: RunMode::Start,
         menu: start_menu,
-        // dialogue: dialogue,
         sm,
         startart: title,
         log: game_log,
@@ -177,7 +170,7 @@ fn main() -> BError {
     };
 
     let prologue = init::prologue();
-    let shir = init::nshir(&mut gs);
+    let shir = init::nshir();
 
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);

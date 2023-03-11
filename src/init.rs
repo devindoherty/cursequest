@@ -1,7 +1,8 @@
 // use crate::Encounter;
 use crate::Art;
 // use crate::Map;
-use crate::dialogue;
+use crate::Dialogue;
+use crate::dialogue::DialogueItem;
 use crate::scene::{Flag, Scene, SceneID, StageManager};
 use crate::NodeID;
 use crate::Skill;
@@ -104,10 +105,14 @@ pub fn travel_menu() -> Vec<MenuItem> {
 
 pub fn prologue() -> Scene {
     let title = String::from("Prologue");
-    let main = String::from("A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control...");
+    let main = String::from(
+        "A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control.
+        
+        Press any key to continue..."
+    );
     let art = Art::new("assets/king.txt", String::from("king"));
     let menu: Option<Menu> = None;
-    let dialogue: Option<NodeID> = None;
+    let dialogue: Option<Dialogue> = None;
     let flags = vec![Flag {name: "press_any_key".to_string(), flagged: true}]; 
 
     Scene::new(
@@ -122,48 +127,46 @@ pub fn prologue() -> Scene {
     )
 }
 
-pub fn nshir(gs: &mut State) -> Scene {
+pub fn nshir() -> Scene {
     let title = String::from("Rosebery the Healer");
     let main = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
     );
     let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
 
-    let encounter: Option<Menu> = None;
-    let nencounter: Option<NodeID> = None;
-    
-    let encounter_item_one = dialogue::DialogueItem {
+    let encounter_item_one = DialogueItem {
         name: String::from("Where am I?"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
-    let encounter_item_two = dialogue::DialogueItem {
+    let encounter_item_two = DialogueItem {
         name: String::from("Who are you?"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
-    let encounter_item_three = dialogue::DialogueItem {
+    let encounter_item_three = DialogueItem {
         name: String::from("What happened?"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
-    let encounter_item_four = dialogue::DialogueItem {
+    let encounter_item_four = DialogueItem {
         name: String::from("Farewell [END CONVERSATION]"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
-    gs.dialogue.add_item(encounter_item_one);
-    gs.dialogue.add_item(encounter_item_two);
-    gs.dialogue.add_item(encounter_item_three);
-    gs.dialogue.add_item(encounter_item_four);
+    let mut dialogue = Dialogue::new();
+    dialogue.add_item(encounter_item_one);
+    dialogue.add_item(encounter_item_two);
+    dialogue.add_item(encounter_item_three);
+    dialogue.add_item(encounter_item_four);
     
     
     Scene::new(
@@ -171,8 +174,8 @@ pub fn nshir(gs: &mut State) -> Scene {
         main,
         art,
         false,
-        encounter,
-        nencounter,
+        None,
+        Some(dialogue),
         None,
         SceneID { index: 0 },
     )
