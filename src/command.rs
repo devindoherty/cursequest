@@ -53,7 +53,6 @@ impl Command for VirtualKeyCode {
                     Self::Numpad8 |
                     Self::Down    |
                     Self::Numpad2 |
-                    Self::C       |
                     Self::Return  => {
                         scene.dialogue.as_mut().unwrap().manage(*self);
                     },

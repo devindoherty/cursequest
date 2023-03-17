@@ -78,9 +78,9 @@ impl Dialogue {
 
     pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        // let child = item.children[item.selected];
-        println!("Selected: {}", item.name);
-        // self.traverse(child);
+        let child = &self.items[item.selected + 1];
+        println!("Selected: {}", child.name);
+        // self.traverse(child.id); // Work in progress
     }
 
     pub fn traverse(&mut self, item_id: NodeID) {
@@ -95,7 +95,6 @@ impl Dialogue {
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
                 if item.selected == 0 {
-                    println!("Up Pressed in Scene Dialogue");
                     () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
@@ -103,20 +102,13 @@ impl Dialogue {
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
-                if item.selected >= item.children.len() {
-                    println!("Down Pressed in Scene Dialogue");
-                    println!("Item Children: {}", item.children.len());
+                if item.selected >= item.children.len() - 1 {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
                     // println!("{} selected: {}", item.name, item.selected);
                     // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
-                    println!("Down Pressed");
                 }
-            }
-            VirtualKeyCode::C => {
-                println!("{}", item.name);
-                println!("{}", item.selected);
             }
             VirtualKeyCode::Return => self.select_child(),
             _ => {}
@@ -125,13 +117,13 @@ impl Dialogue {
 
     // Rendering dialogue options to choice selection
     pub fn draw(&self, ctx: &mut BTerm) {
-        let mut y = 47;
+        let mut y = 50;
         let item = &self.items[self.current.index];
         for (pos, child) in item.children.iter().enumerate() {
             // 
             if pos == item.selected {
                 ctx.print_color(
-                    32,
+                    3,
                     y,
                     RGB::named(BLACK),
                     RGB::named(WHITE),
@@ -140,7 +132,7 @@ impl Dialogue {
                 y += 1;
             } else {
                 ctx.print_color(
-                    32,
+                    3,
                     y,
                     RGB::named(WHITE),
                     RGB::named(BLACK),

@@ -111,11 +111,8 @@ impl Scene {
     // Half screen within
     pub fn draw_halfscreen(&mut self, ctx: &mut BTerm) {
         ctx.cls();
-        self.art.draw(ctx, 32, 1);
         let mut draw_batch = DrawBatch::new();
-        // ctx.cls();
-        // draw_batch.cls();
-        let mut block = TextBlock::new(32, 41, 96, 21);
+        let mut block = TextBlock::new(3, 41, 125, 25);
         let mut buf = TextBuilder::empty();
         buf.ln()
             .fg(RGB::named(YELLOW))
@@ -131,6 +128,7 @@ impl Scene {
         block.render_to_draw_batch(&mut draw_batch);
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
+        self.art.draw(ctx, 32, 1);
         self.dialogue.as_mut().expect("Scene Dialogue Missing Error").draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
