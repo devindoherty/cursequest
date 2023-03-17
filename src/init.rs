@@ -167,6 +167,7 @@ pub fn nshir() -> Scene {
     dialogue.add_item(encounter_item_two);
     dialogue.add_item(encounter_item_three);
     dialogue.add_item(encounter_item_four);
+    println!("{:?}", dialogue);
     
     
     Scene::new(

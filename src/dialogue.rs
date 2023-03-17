@@ -95,20 +95,22 @@ impl Dialogue {
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
                 if item.selected == 0 {
+                    println!("Up Pressed in Scene Dialogue");
                     () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
-                    println!("{} selected: {}", item.name, item.selected);
-                    // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                    // println!("{} selected: {}", item.name, item.selected);
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
                 if item.selected >= item.children.len() {
+                    println!("Down Pressed in Scene Dialogue");
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
                     // println!("{} selected: {}", item.name, item.selected);
                     // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                    println!("Down Pressed");
                 }
             }
             VirtualKeyCode::Return => self.select_child(),
