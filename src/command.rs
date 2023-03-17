@@ -49,10 +49,11 @@ impl Command for VirtualKeyCode {
                 }
             } else { // Fullscreen = false
                 match self {
-                    Self::Up      | 
-                    Self::Numpad8 | 
-                    Self::Down    | 
-                    Self::Numpad2 | 
+                    Self::Up      |
+                    Self::Numpad8 |
+                    Self::Down    |
+                    Self::Numpad2 |
+                    Self::C       |
                     Self::Return  => {
                         scene.dialogue.as_mut().unwrap().manage(*self);
                     },

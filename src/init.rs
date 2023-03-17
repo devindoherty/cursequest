@@ -128,11 +128,18 @@ pub fn prologue() -> Scene {
 }
 
 pub fn nshir() -> Scene {
-    let title = String::from("Rosebery the Healer");
+    let title = String::from("Awakening");
     let main = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
     );
-    let art = Art::new("assets/rose.txt", String::from("Roseberry the Healer"));
+    let art = Art::new("assets/rose.txt", String::from("Roseberry the Wisewoman"));
+
+    let encounter_item_zero = DialogueItem {
+        name: String::from("ROOT"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
 
     let encounter_item_one = DialogueItem {
         name: String::from("Where am I?"),
@@ -163,11 +170,16 @@ pub fn nshir() -> Scene {
     };
 
     let mut dialogue = Dialogue::new();
-    dialogue.add_item(encounter_item_one);
-    dialogue.add_item(encounter_item_two);
-    dialogue.add_item(encounter_item_three);
-    dialogue.add_item(encounter_item_four);
-    println!("{:?}", dialogue);
+    let c0 = dialogue.add_item(encounter_item_zero);
+    let c1 = dialogue.add_item(encounter_item_one);
+    let c2 = dialogue.add_item(encounter_item_two);
+    let c3 = dialogue.add_item(encounter_item_three);
+    let c4 = dialogue.add_item(encounter_item_four);
+
+    dialogue.add_child(c0, c1);
+    dialogue.add_child(c0, c2);
+    dialogue.add_child(c0, c3);
+    dialogue.add_child(c0, c4);
     
     
     Scene::new(

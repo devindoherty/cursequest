@@ -78,9 +78,9 @@ impl Dialogue {
 
     pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        let child = item.children[item.selected];
-        println!("Selected: {}", self.items[child.index].name);
-        self.traverse(child);
+        // let child = item.children[item.selected];
+        println!("Selected: {}", item.name);
+        // self.traverse(child);
     }
 
     pub fn traverse(&mut self, item_id: NodeID) {
@@ -105,6 +105,7 @@ impl Dialogue {
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
                 if item.selected >= item.children.len() {
                     println!("Down Pressed in Scene Dialogue");
+                    println!("Item Children: {}", item.children.len());
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
@@ -113,6 +114,10 @@ impl Dialogue {
                     println!("Down Pressed");
                 }
             }
+            VirtualKeyCode::C => {
+                println!("{}", item.name);
+                println!("{}", item.selected);
+            }
             VirtualKeyCode::Return => self.select_child(),
             _ => {}
         }
@@ -120,13 +125,13 @@ impl Dialogue {
 
     // Rendering dialogue options to choice selection
     pub fn draw(&self, ctx: &mut BTerm) {
-        let mut y = 45;
+        let mut y = 47;
         let item = &self.items[self.current.index];
         for (pos, child) in item.children.iter().enumerate() {
             // 
             if pos == item.selected {
                 ctx.print_color(
-                    1,
+                    32,
                     y,
                     RGB::named(BLACK),
                     RGB::named(WHITE),
@@ -135,7 +140,7 @@ impl Dialogue {
                 y += 1;
             } else {
                 ctx.print_color(
-                    1,
+                    32,
                     y,
                     RGB::named(WHITE),
                     RGB::named(BLACK),
