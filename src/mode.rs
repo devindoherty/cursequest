@@ -4,9 +4,12 @@ use crate::State;
 #[derive(Debug, PartialEq)]
 pub enum RunMode {
     Start,
-    Travelling,
-    Prompting,
     Storytelling,
+    Prompting,
+    Travelling,
+    Fighting {combat: Combat},
     Updating,
-    Combat,
 }
+
+#[derive(Debug, PartialEq)]
+pub enum Combat {PlayerTurn, MobTurn}
