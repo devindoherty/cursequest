@@ -175,11 +175,24 @@ pub fn nshir() -> Scene {
     let c2 = dialogue.add_item(encounter_item_two);
     let c3 = dialogue.add_item(encounter_item_three);
     let c4 = dialogue.add_item(encounter_item_four);
+    
 
     dialogue.add_child(c0, c1);
     dialogue.add_child(c0, c2);
     dialogue.add_child(c0, c3);
     dialogue.add_child(c0, c4);
+
+    dialogue.add_child(c1, c2);
+    dialogue.add_child(c1, c3);
+    dialogue.add_child(c1, c4);
+
+    dialogue.add_child(c2, c1);
+    dialogue.add_child(c2, c3);
+    dialogue.add_child(c2, c4);
+
+    dialogue.add_child(c3, c1);
+    dialogue.add_child(c3, c2);
+    dialogue.add_child(c3, c4);
     
     
     Scene::new(

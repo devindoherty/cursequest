@@ -78,16 +78,29 @@ impl Dialogue {
 
     pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        let child = &self.items[item.selected + 1];
+        let child = &self.items[item.selected];
         println!("Selected: {}", child.name);
-        // self.traverse(child.id); // Work in progress
+        self.traverse(child.id); // Work in progress
     }
 
     pub fn traverse(&mut self, item_id: NodeID) {
         self.current = item_id;
         let item = &self.items[item_id.index];
+        self.change_text();
         println!("Traversed to: {}", item.name);
+
         self.terminal_draw_children(item_id);
+    }
+
+    pub fn change_text(&self) -> String {
+        let item = &self.items[self.current.index];
+        let mut new_main = String::new();
+        if item.name == "Who are you?" {
+            println!("Change Text Triggered");
+            new_main = String::from("I am Rosebery the Wisewoman.");
+            return new_main;
+        }
+        new_main
     }
 
     pub fn manage(&mut self, key: VirtualKeyCode) {

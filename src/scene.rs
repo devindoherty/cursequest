@@ -12,18 +12,18 @@ pub struct StageManager {
     pub onstage: SceneID,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct Flag {
     pub name: String,
     pub flagged: bool,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct SceneID {
     pub index: usize,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct Scene {
     pub title: String,
     pub main: String,
