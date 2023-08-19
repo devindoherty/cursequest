@@ -133,6 +133,8 @@ fn main() -> BError {
         .unwrap()
         .with_title("Curse Quest")
         .with_automatic_console_resize(false)
+        .with_fullscreen(true)
+        .with_fitscreen(true)
         .with_fps_cap(30.0)
         .build()?;
 
