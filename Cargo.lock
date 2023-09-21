@@ -406,6 +406,7 @@ name = "cursequest"
 version = "0.1.0"
 dependencies = [
  "bracket-lib",
+ "winit",
 ]
 
 [[package]]

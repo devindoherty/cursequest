@@ -105,6 +105,10 @@ impl Dialogue {
         new_main
     }
 
+    pub fn end_dialogue(&self) {
+
+    }
+
     pub fn manage(&mut self, key: VirtualKeyCode) {
         let item = &mut self.items[self.current.index];
         match key {
@@ -134,8 +138,15 @@ impl Dialogue {
     pub fn draw(&self, ctx: &mut BTerm) {
         let mut y = 50;
         let item = &self.items[self.current.index];
+        let item_with_name = String::from("Kryll:") + &item.name;
+        ctx.print_color(
+            3,
+            49,
+            RGB::named(BLACK),
+            RGB::named(WHITE),
+            item_with_name,
+        );
         for (pos, child) in item.children.iter().enumerate() {
-            // 
             if pos == item.selected {
                 ctx.print_color(
                     3,

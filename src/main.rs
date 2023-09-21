@@ -1,6 +1,6 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
-// use winit::window::Icon;
+// use winit::window::Icon; Trying to set an icon TODO
 
 mod art;
 use art::*;
@@ -65,20 +65,21 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 
 // Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
-fn update(_gs: &mut State) {
-    // Game Log - Unused for now
-    // let mut i = 41;
-    // for entry in &gs.log {
-    //     ctx.print_color(64, i, RGB::named(WHITE), RGB::named(BLACK), entry);
-    //     i += 1;
-    //     if i == 62 {
-    //         i = 41;
-    //     }
-    // }
+fn update(gs: &mut State) {
+    if gs.redraw == false {
+        println!("Update: Redraw Not Needed");
+    }
+    if gs.run_mode == RunMode::Storytelling {
+
+    }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
+    if gs.redraw == false {
+        return (); // Do Nothing
+    }
+    
     if gs.run_mode == RunMode::Start {
         gs.startart.draw(ctx, 16, 8);
         ctx.print_color(
@@ -167,14 +168,16 @@ fn main() -> BError {
         sm,
         startart: title,
         log: game_log,
-        redraw: false,
+        redraw: true,
     };
 
     let prologue = init::prologue();
     let shir = init::nshir();
+    let tomb = init::tomb();
 
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
+    gs.sm.register_scene(tomb);
 
     main_loop(context, gs)
 }

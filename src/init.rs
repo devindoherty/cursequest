@@ -204,7 +204,6 @@ pub fn nshir() -> Scene {
     dialogue.add_child(c3, c2);
     dialogue.add_child(c3, c4);
     
-    
     Scene::new(
         title,
         main,
@@ -216,6 +215,59 @@ pub fn nshir() -> Scene {
         SceneID { index: 0 },
     )
 }
+
+
+
+pub fn tomb() -> Scene {
+    let title = String::from("Your Father's Tomb");
+    let main = String::from(
+        "Before you stands the entrance to your father's tomb. This is your father's
+        resting place, he who was King of Klathia before you; before the Uncrowned King.",
+    );
+    let art = Art::new("assets/rose.txt", String::from("Roseberry the Wisewoman"));
+
+    let encounter_item_zero = DialogueItem {
+        name: String::from("ROOT"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_one = DialogueItem {
+        name: String::from("Open the Doorway"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_two = DialogueItem {
+        name: String::from("Inspect the Doorway"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_three = DialogueItem {
+        name: String::from("Leave [END ENCOUNTER]"),
+        id: NodeID { index: 0 },
+        children: vec![],
+        selected: 0,
+    };
+
+    let mut dialogue = Dialogue::new();
+
+    Scene::new(
+        title,
+        main,
+        art,
+        false,
+        None,
+        Some(dialogue),
+        None,
+        SceneID { index: 0 },
+    )
+}
+
 
 pub fn _skills() {
     let _sword = Skill {
