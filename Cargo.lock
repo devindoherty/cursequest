@@ -104,9 +104,9 @@ dependencies = [
 
 [[package]]
 name = "bracket-lib"
-version = "0.8.1"
+version = "0.8.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a0fb005e908ce2e553277e554c32ab06d8b12bea38660da98f2e77e662dea617"
+checksum = "43bbe13e39628e7f73673737c825001494dee7329cee8ee79dfeaa7cfd136dbf"
 dependencies = [
  "bracket-algorithm-traits",
  "bracket-color",

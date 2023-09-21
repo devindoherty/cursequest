@@ -132,41 +132,51 @@ pub fn nshir() -> Scene {
     let main = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
     );
-    let art = Art::new("assets/rose.txt", String::from("Roseberry the Wisewoman"));
+    let art = Art::new("assets/rose.txt", String::from("Roseberry"));
 
     let encounter_item_zero = DialogueItem {
-        name: String::from("ROOT"),
+        choice: String::from("ROOT"),
+        response: String::from("Test"),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
+        root: true
     };
 
     let encounter_item_one = DialogueItem {
-        name: String::from("Where am I?"),
+        choice: String::from("Where am I?"),
+        response: String::from("Test"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        root: false,
     };
 
     let encounter_item_two = DialogueItem {
-        name: String::from("Who are you?"),
+        choice: String::from("Who are you?"),
+        response: String::from("Test"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        root: false
     };
 
     let encounter_item_three = DialogueItem {
-        name: String::from("What happened?"),
+        choice: String::from("What happened?"),
+        response: String::from("Test"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        root: false
     };
 
     let encounter_item_four = DialogueItem {
-        name: String::from("Farewell [END CONVERSATION]"),
+        choice: String::from("Farewell [END CONVERSATION]"),
+        response: String::from("Test"),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        root: false
     };
 
     let mut dialogue = Dialogue::new();

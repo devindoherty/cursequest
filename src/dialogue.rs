@@ -10,10 +10,12 @@ pub struct NodeID {
 
 #[derive(Clone, Debug)]
 pub struct DialogueItem {
-    pub name: String,
+    pub choice: String,
+    pub response: String,
     pub id: NodeID,
     pub children: Vec<NodeID>,
     pub selected: usize,
+    pub root: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -33,7 +35,7 @@ impl Dialogue {
     pub fn add_item(&mut self, mut item: DialogueItem) -> NodeID {
         let next_index = self.items.len();
         item.id.index = next_index;
-        println!("Diaglogue: The index of {} is now: {}", item.name, next_index);
+        println!("Diaglogue: The index of {} is now: {}", item.choice, next_index);
         self.items.push(item);
         NodeID { index: next_index }
     }
@@ -53,7 +55,7 @@ impl Dialogue {
         let item = &self.items[item_id.index];
         let child = &self.items[child_id.index];
         for child in &item.children {
-            println!("{} is a child of {}", child.index, item.name);
+            println!("{} is a child of {}", child.index, item.choice);
         }
     }
 
@@ -62,7 +64,7 @@ impl Dialogue {
         for child in &item.children {
             println!(
                 "{} is a child of {}",
-                self.items[child.index].name, item.name
+                self.items[child.index].choice, item.choice
             );
         }
     }
@@ -70,16 +72,16 @@ impl Dialogue {
     pub fn terminal_draw_children(&self, item_id: NodeID) {
         let item = &self.items[item_id.index];
         println!("-------------------");
-        println!("{}", item.name);
+        println!("{}", item.choice);
         for child in &item.children {
-            println!("|-{}", self.items[child.index].name);
+            println!("|-{}", self.items[child.index].choice);
         }
     }
 
     pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
         let child = &self.items[item.selected];
-        println!("Selected: {}", child.name);
+        println!("Selected: {}", child.choice);
         self.traverse(child.id); // Work in progress
     }
 
@@ -87,7 +89,7 @@ impl Dialogue {
         self.current = item_id;
         let item = &self.items[item_id.index];
         self.change_text();
-        println!("Traversed to: {}", item.name);
+        println!("Traversed to: {}", item.choice);
 
         self.terminal_draw_children(item_id);
     }
@@ -95,7 +97,7 @@ impl Dialogue {
     pub fn change_text(&self) -> String {
         let item = &self.items[self.current.index];
         let mut new_main = String::new();
-        if item.name == "Who are you?" {
+        if item.choice == "Who are you?" {
             println!("Change Text Triggered");
             new_main = String::from("I am Rosebery the Wisewoman.");
             return new_main;
@@ -140,7 +142,7 @@ impl Dialogue {
                     y,
                     RGB::named(BLACK),
                     RGB::named(WHITE),
-                    self.items[child.index].name.to_string(),
+                    self.items[child.index].choice.to_string(),
                 );
                 y += 1;
             } else {
@@ -149,7 +151,7 @@ impl Dialogue {
                     y,
                     RGB::named(WHITE),
                     RGB::named(BLACK),
-                    self.items[child.index].name.to_string(),
+                    self.items[child.index].choice.to_string(),
                 );
                 y += 1;
             }
