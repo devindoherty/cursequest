@@ -8,14 +8,19 @@ pub struct NodeID {
     pub index: usize,
 }
 
+impl NodeID {
+    pub fn new() -> NodeID {
+        NodeID {index: 0}
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct DialogueItem {
-    pub choice: String,
-    pub response: String,
     pub id: NodeID,
+    pub response: String,
+    pub choice: String,
     pub children: Vec<NodeID>,
     pub selected: usize,
-    pub root: bool,
 }
 
 #[derive(Clone, Debug)]
@@ -138,13 +143,13 @@ impl Dialogue {
     pub fn draw(&self, ctx: &mut BTerm) {
         let mut y = 50;
         let item = &self.items[self.current.index];
-        let item_with_name = String::from("Kryll:") + &item.name;
+        let display = &item.response;
         ctx.print_color(
             3,
             49,
             RGB::named(BLACK),
             RGB::named(WHITE),
-            item_with_name,
+            display.to_string(),
         );
         for (pos, child) in item.children.iter().enumerate() {
             if pos == item.selected {

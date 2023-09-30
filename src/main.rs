@@ -172,12 +172,10 @@ fn main() -> BError {
     };
 
     let prologue = init::prologue();
-    let shir = init::nshir();
-    let tomb = init::tomb();
+    let shir = init::shir();
 
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
-    gs.sm.register_scene(tomb);
 
     main_loop(context, gs)
 }

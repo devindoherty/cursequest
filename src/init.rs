@@ -127,7 +127,7 @@ pub fn prologue() -> Scene {
     )
 }
 
-pub fn nshir() -> Scene {
+pub fn shir() -> Scene {
     let title = String::from("Awakening");
     let main = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
@@ -136,38 +136,38 @@ pub fn nshir() -> Scene {
 
     let encounter_item_zero = DialogueItem {
         choice: String::from("ROOT"),
-        response: String::from("Test"),
-        id: NodeID {index: 0},
+        response: String::from("ROOT"),
+        id: NodeID::new(),
         children: vec![],
         selected: 0,
-        root: true
     };
 
     let encounter_item_one = DialogueItem {
         choice: String::from("Where am I?"),
-        response: String::from("Test"),
+        response: String::from("\"You are in the Shir Valley, in the illage of Finn's Glenn.\""),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
-        root: false,
     };
 
     let encounter_item_two = DialogueItem {
         choice: String::from("Who are you?"),
-        response: String::from("Test"),
+        response: String::from("\"Why, I'm Roseberry, of course. This is my humble home.\""),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
-        root: false
     };
 
     let encounter_item_three = DialogueItem {
         choice: String::from("What happened?"),
-        response: String::from("Test"),
+        response: String::from(
+            "\"A group of farmers found you collapsed in the wilderness. 
+            You were holding this...\" She points out an ancient blade among your belongings. 
+            \"I had you brought here and have nursed you back to health.\""
+        ),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
-        root: false
     };
 
     let encounter_item_four = DialogueItem {
@@ -176,7 +176,6 @@ pub fn nshir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
-        root: false
     };
 
     let mut dialogue = Dialogue::new();
@@ -216,57 +215,6 @@ pub fn nshir() -> Scene {
     )
 }
 
-
-
-pub fn tomb() -> Scene {
-    let title = String::from("Your Father's Tomb");
-    let main = String::from(
-        "Before you stands the entrance to your father's tomb. This is your father's
-        resting place, he who was King of Klathia before you; before the Uncrowned King.",
-    );
-    let art = Art::new("assets/rose.txt", String::from("Roseberry the Wisewoman"));
-
-    let encounter_item_zero = DialogueItem {
-        name: String::from("ROOT"),
-        id: NodeID {index: 0},
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_one = DialogueItem {
-        name: String::from("Open the Doorway"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_two = DialogueItem {
-        name: String::from("Inspect the Doorway"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let encounter_item_three = DialogueItem {
-        name: String::from("Leave [END ENCOUNTER]"),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-    };
-
-    let mut dialogue = Dialogue::new();
-
-    Scene::new(
-        title,
-        main,
-        art,
-        false,
-        None,
-        Some(dialogue),
-        None,
-        SceneID { index: 0 },
-    )
-}
 
 
 pub fn _skills() {
