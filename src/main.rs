@@ -2,6 +2,8 @@ use bracket::prelude::*;
 use bracket_lib as bracket;
 use std::collections::HashMap;
 
+mod audio;
+
 mod art;
 use art::*;
 
