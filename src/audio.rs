@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::BufReader;
 use rodio::{Decoder, OutputStream, source::Source};
 
-fn play_audio() {
+pub fn play_audio() {
     // Get a output stream handle to the default physical sound device
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
     // Load a sound from a file, using a path relative to Cargo.toml

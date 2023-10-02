@@ -3,6 +3,7 @@ use bracket_lib as bracket;
 use std::collections::HashMap;
 
 mod audio;
+use audio::*;
 
 mod art;
 use art::*;
@@ -79,6 +80,7 @@ fn update(_gs: &mut State) {
     //         i = 41;
     //     }
     // }
+    audio::play_audio();
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
