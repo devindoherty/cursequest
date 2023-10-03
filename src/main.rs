@@ -1,6 +1,8 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 use std::collections::HashMap;
+use rodio::{Decoder, OutputStream, Sink};
+use rodio::source::{SineWave, Source};
 
 mod audio;
 use audio::*;
@@ -46,6 +48,8 @@ pub struct State {
     startart: Art,
     log: Vec<String>,
     redraw: bool,
+    playing: bool,
+    audio: Audio,
 }
 
 // Bracket required implementation for the Gamestate
@@ -70,7 +74,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
 
 // Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
-fn update(_gs: &mut State) {
+fn update(gs: &mut State) {
     // Game Log - Unused for now
     // let mut i = 41;
     // for entry in &gs.log {
@@ -80,7 +84,10 @@ fn update(_gs: &mut State) {
     //         i = 41;
     //     }
     // }
-    audio::play_audio();
+    // if gs.playing == false {
+    //     gs.playing = audio::play_audio();
+    //     println!("Playing {}", gs.playing);
+    // }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -200,6 +207,13 @@ fn main() -> BError {
     // dialogue.terminal_draw_children(foo_id);
     // dialogue.terminal_draw_children(bar_id);
 
+    let (stream, stream_handle) = OutputStream::try_default().unwrap();
+
+    let audio = Audio {
+        sink: Sink::try_new(&stream_handle).unwrap(),
+        stream
+    };
+
     let mut gs: State = State {
         player,
         map,
@@ -211,6 +225,8 @@ fn main() -> BError {
         startart: title,
         log: game_log,
         redraw: false,
+        playing: false,
+        audio,
     };
 
     //Scene test
