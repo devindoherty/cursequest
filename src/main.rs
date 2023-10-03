@@ -1,8 +1,10 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 use std::collections::HashMap;
-use rodio::{Decoder, OutputStream, Sink};
-use rodio::source::{SineWave, Source};
+use std::fs::File;
+use std::io::BufReader;
+use rodio::{Decoder, OutputStream, source::Source};
+
 
 mod audio;
 use audio::*;
@@ -49,7 +51,7 @@ pub struct State {
     log: Vec<String>,
     redraw: bool,
     playing: bool,
-    audio: Audio,
+    // audio: Audio,
 }
 
 // Bracket required implementation for the Gamestate
@@ -207,12 +209,14 @@ fn main() -> BError {
     // dialogue.terminal_draw_children(foo_id);
     // dialogue.terminal_draw_children(bar_id);
 
-    let (stream, stream_handle) = OutputStream::try_default().unwrap();
-
-    let audio = Audio {
-        sink: Sink::try_new(&stream_handle).unwrap(),
-        stream
-    };
+    // Get a output stream handle to the default physical sound device
+    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+    // Load a sound from a file, using a path relative to Cargo.toml
+    let file = BufReader::new(File::open("assets/title_theme.wav").unwrap());
+    // Decode that sound file into a source
+    let source = Decoder::new(file).unwrap();
+    // Play the sound directly on the device
+    stream_handle.play_raw(source.convert_samples()).expect("Failed to play background music");
 
     let mut gs: State = State {
         player,
@@ -226,7 +230,7 @@ fn main() -> BError {
         log: game_log,
         redraw: false,
         playing: false,
-        audio,
+        // audio,
     };
 
     //Scene test
