@@ -56,7 +56,7 @@ impl StageManager {
     }
     
     
-    pub fn _stage_scene(&mut self, gs: &mut State, onstage_scene: SceneID) {
+    pub fn _stage_scene(&mut self, _gs: &mut State, _onstage_scene: SceneID) {
         ()
     }
 }

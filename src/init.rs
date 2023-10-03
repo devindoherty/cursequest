@@ -3,10 +3,10 @@ use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
 use crate::dialogue::DialogueItem;
-use crate::scene::{Flag, Scene, SceneID, StageManager};
+use crate::scene::{Flag, Scene, SceneID};
 use crate::NodeID;
 use crate::Skill;
-use crate::State;
+
 use crate::{Menu, MenuItem};
 
 pub fn start_menu() -> Menu {
@@ -136,7 +136,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_zero = DialogueItem {
         choice: String::from("ROOT"),
-        response: String::from("ROOT"),
+        response: String::from(""),
         id: NodeID::new(),
         children: vec![],
         selected: 0,
@@ -191,17 +191,17 @@ pub fn shir() -> Scene {
     dialogue.add_child(c0, c3);
     dialogue.add_child(c0, c4);
 
-    dialogue.add_child(c1, c2);
-    dialogue.add_child(c1, c3);
-    dialogue.add_child(c1, c4);
+    // dialogue.add_child(c1, c2);
+    // dialogue.add_child(c1, c3);
+    // dialogue.add_child(c1, c4);
 
-    dialogue.add_child(c2, c1);
-    dialogue.add_child(c2, c3);
-    dialogue.add_child(c2, c4);
+    // dialogue.add_child(c2, c1);
+    // dialogue.add_child(c2, c3);
+    // dialogue.add_child(c2, c4);
 
-    dialogue.add_child(c3, c1);
-    dialogue.add_child(c3, c2);
-    dialogue.add_child(c3, c4);
+    // dialogue.add_child(c3, c1);
+    // dialogue.add_child(c3, c2);
+    // dialogue.add_child(c3, c4);
     
     Scene::new(
         title,

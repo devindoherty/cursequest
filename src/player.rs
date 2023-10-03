@@ -71,7 +71,7 @@ impl Player {
         valid
     }
 
-    fn _check_location(&mut self, gs: &mut State, ctx: &mut BTerm, xmv: i32, ymv: i32) {
+    fn _check_location(&mut self, gs: &mut State, ctx: &mut BTerm, _xmv: i32, _ymv: i32) {
         for tile in &gs.map.atlas {
             if gs.player.x == tile.x && gs.player.y == tile.y {
                 ctx.print_color(1, 42, RGB::named(WHITE), RGB::named(BLACK), &tile.desc);

@@ -1,3 +1,5 @@
+#![allow(warnings)] // turning off comp warnings for now REMEMBER TO REMOVE
+
 use bracket::prelude::*;
 use bracket_lib as bracket;
 // use winit::window::Icon; Trying to set an icon TODO
@@ -26,10 +28,10 @@ mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::{Scene, SceneID, StageManager};
+use scene::{SceneID, StageManager};
 
 mod world;
-use world::Calendar;
+
 
 // Gamestate struct, contains all data to update for game
 pub struct State {
@@ -151,7 +153,7 @@ fn main() -> BError {
 
     let start_menu = init::start_menu();
 
-    let mut sm = StageManager::new(1, vec![], SceneID { index: 0 });
+    let sm = StageManager::new(1, vec![], SceneID { index: 0 });
 
     let title = Art::new("assets/title.txt", String::from("Curse Quest"));
 

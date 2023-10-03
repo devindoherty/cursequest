@@ -1,7 +1,7 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
-use crate::State;
+
 
 #[derive(Copy, Clone, Debug)]
 pub struct NodeID {
@@ -51,14 +51,14 @@ impl Dialogue {
     }
 
     pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {
-        let item = &mut self.items[item_id.index];
-        let child = &mut self.items[child_id.index];
+        let _item = &mut self.items[item_id.index];
+        let _child = &mut self.items[child_id.index];
         // item.children.remove(child); // TODO! Rework remove
     }
 
-    pub fn find_child(&self, item_id: NodeID, child_id: NodeID, search: &str) {
+    pub fn find_child(&self, item_id: NodeID, child_id: NodeID, _search: &str) {
         let item = &self.items[item_id.index];
-        let child = &self.items[child_id.index];
+        let _child = &self.items[child_id.index];
         for child in &item.children {
             println!("{} is a child of {}", child.index, item.choice);
         }
@@ -122,7 +122,6 @@ impl Dialogue {
                     () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
-                    // println!("{} selected: {}", item.name, item.selected);
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
