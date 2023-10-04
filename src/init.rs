@@ -162,6 +162,7 @@ pub fn nshir(gs: &mut State) {
 
     let encounter: Option<Menu> = None;
     let nencounter: Option<NodeID> = None;
+ 
     Scene::new(
         title,
         main,

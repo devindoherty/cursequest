@@ -1,37 +1,42 @@
 use std::fs::File;
 use std::io::BufReader;
 use std::time::Duration;
-use rodio::{Decoder, OutputStream, Sink};
+use rodio::{Decoder, OutputStream, OutputStreamHandle, Sink};
 use rodio::source::{SineWave, Source};
 
-pub struct Audio {
+pub struct MusicManager {
+    _stream: OutputStream,
+    stream_handle: OutputStreamHandle,
     pub sink: Sink,
-    pub stream: OutputStream,
+    pub playing: bool,
 }
 
-impl Audio {
-    fn new(sink: Sink, stream: OutputStream) -> Audio {
-        Audio {
+impl MusicManager {
+    pub fn new() -> MusicManager {
+        let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+        let sink = Sink::try_new(&stream_handle).unwrap();
+        MusicManager {
+            _stream,
+            stream_handle,
             sink,
-            stream,
+            playing: true,
         }
     }
 }
 
+pub struct Audio {
+    pub name: String,
+    pub sound: Decoder<BufReader<File>>,
+}
 
-pub fn play_audio() -> bool {
-    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
-    let sink = Sink::try_new(&stream_handle).unwrap();
-    
-    // Load a sound from a file, using a path relative to Cargo.toml
-    let file = BufReader::new(File::open("assets/title_theme.wav").unwrap());
-    // Decode that sound file into a source
-    let source = Decoder::new(file).unwrap();
-    // Play the sound directly on the device
-    sink.append(source);
-    // The sound plays in a separate audio thread,
-    // so we need to keep the main thread alive while it's playing.
-    sink.sleep_until_end();
+impl Audio {
+    pub fn new(name: String, path: &str) -> Audio {
+        let file = BufReader::new(File::open(path).unwrap());
+        let sound = Decoder::new(file).unwrap();
 
-    true
+        Audio {
+            name,
+            sound,
+        }
+    }
 }

@@ -47,11 +47,10 @@ pub struct State {
     dialogue: dialogue::Dialogue,
     scene: Scene,
     sm: StageManager, // scene_manager: StageManager,
+    mm: MusicManager,
     startart: Art,
     log: Vec<String>,
     redraw: bool,
-    playing: bool,
-    // audio: Audio,
 }
 
 // Bracket required implementation for the Gamestate
@@ -69,6 +68,9 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
         None => {}
         Some(key) => match key {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
+            VirtualKeyCode::M => if gs.mm.playing == true {
+                gs.mm.playing = false;
+            },
             _ => key.execute(gs, ctx),
         },
     }
@@ -86,10 +88,12 @@ fn update(gs: &mut State) {
     //         i = 41;
     //     }
     // }
-    // if gs.playing == false {
-    //     gs.playing = audio::play_audio();
-    //     println!("Playing {}", gs.playing);
-    // }
+    if gs.mm.playing == false {
+        gs.mm.sink.pause();
+        println!("Playing {}", gs.mm.playing);
+    } else {
+        println!("Playing {}", gs.mm.playing);
+    }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -210,13 +214,16 @@ fn main() -> BError {
     // dialogue.terminal_draw_children(bar_id);
 
     // Get a output stream handle to the default physical sound device
-    let (_stream, stream_handle) = OutputStream::try_default().unwrap();
-    // Load a sound from a file, using a path relative to Cargo.toml
-    let file = BufReader::new(File::open("assets/title_theme.wav").unwrap());
-    // Decode that sound file into a source
-    let source = Decoder::new(file).unwrap();
-    // Play the sound directly on the device
-    stream_handle.play_raw(source.convert_samples()).expect("Failed to play background music");
+    // let (_stream, stream_handle) = OutputStream::try_default().unwrap();
+    // // Load a sound from a file, using a path relative to Cargo.toml
+    // let file = BufReader::new(File::open("assets/title_theme.wav").unwrap());
+    // // Decode that sound file into a source
+    // let source = Decoder::new(file).unwrap();
+    // // Play the sound directly on the device
+    // stream_handle.play_raw(source.convert_samples()).expect("Failed to play background music");
+
+    let mm = audio::MusicManager::new();
+    let title_theme = audio::Audio::new(String::from("Title Theme"), "assets/title_theme.wav");
 
     let mut gs: State = State {
         player,
@@ -229,9 +236,10 @@ fn main() -> BError {
         startart: title,
         log: game_log,
         redraw: false,
-        playing: false,
-        // audio,
+        mm,
     };
+
+    gs.mm.sink.append(title_theme.sound);
 
     //Scene test
     init::nshir(&mut gs);
