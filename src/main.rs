@@ -150,7 +150,7 @@ fn main() -> BError {
             soul: 50,
         },
     };
-
+    
     let start_menu = init::start_menu();
 
     let sm = StageManager::new(1, vec![], SceneID { index: 0 });
@@ -173,11 +173,15 @@ fn main() -> BError {
         redraw: true,
     };
 
+    
+
     let prologue = init::prologue();
     let shir = init::shir();
 
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
+    println!("Scene Manager: Loaded");
 
     main_loop(context, gs)
+
 }

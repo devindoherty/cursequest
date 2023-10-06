@@ -136,7 +136,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_zero = DialogueItem {
         choice: String::from("ROOT"),
-        response: String::from(""),
+        response: String::from("Choose thy response..."),
         id: NodeID::new(),
         children: vec![],
         selected: 0,
@@ -178,18 +178,33 @@ pub fn shir() -> Scene {
         selected: 0,
     };
 
+    let encounter_item_cont = DialogueItem {
+        choice: String::from("Continue..."),
+        response: String::from("Continued"),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    
+
     let mut dialogue = Dialogue::new();
     let c0 = dialogue.add_item(encounter_item_zero);
     let c1 = dialogue.add_item(encounter_item_one);
     let c2 = dialogue.add_item(encounter_item_two);
     let c3 = dialogue.add_item(encounter_item_three);
     let c4 = dialogue.add_item(encounter_item_four);
+    let cc = dialogue.add_item(encounter_item_cont);
     
 
     dialogue.add_child(c0, c1);
     dialogue.add_child(c0, c2);
     dialogue.add_child(c0, c3);
     dialogue.add_child(c0, c4);
+    dialogue.add_child(c1, cc);
+    dialogue.add_child(c2, cc);
+    dialogue.add_child(c3, cc);
+    dialogue.add_child(c4, cc);
 
     // dialogue.add_child(c1, c2);
     // dialogue.add_child(c1, c3);
