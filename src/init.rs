@@ -255,8 +255,8 @@ pub fn _skills() {
     };
 
     let _sovereignty = Skill {
-        name: String::from("Stewardship"),
-        desc: String::from("Measure of kingly authority and charisma."),
+        name: String::from("Sovereignty"),
+        desc: String::from("Measure of kingly authority and right-to-rule."),
         value: 10,
         abilities: vec![],
     };
@@ -268,7 +268,7 @@ pub fn _skills() {
         abilities: vec![],
     };
 
-    let _subterfuge = Skill {
+    let _shadowplay = Skill {
         name: String::from("Intrigue"),
         desc: String::from("Familiarity with the shadows, subterfuge, and trickery."),
         value: 10,
@@ -277,7 +277,7 @@ pub fn _skills() {
 
     let _survival = Skill {
         name: String::from("Survival"),
-        desc: String::from("Capacity to endure the harsh wildnerness and bowmanship."),
+        desc: String::from("Capacity to endure the harsh wildnerness."),
         value: 10,
         abilities: vec![],
     };

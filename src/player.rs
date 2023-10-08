@@ -24,16 +24,16 @@ pub struct Statistics {
     pub soul: i32,  // Force of personality and ego; interpersonal skills, regen, and divine luck
 }
 
+pub struct Ability {
+    pub name: String,
+    pub desc: String,
+}
+
 pub struct Skill {
     pub name: String,
     pub desc: String,
     pub value: i32,
     pub abilities: Vec<Ability>,
-}
-
-pub struct Ability {
-    pub name: String,
-    pub desc: String,
 }
 
 pub struct Talent {
