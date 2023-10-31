@@ -23,6 +23,7 @@ impl Command for VirtualKeyCode {
                 Self::Return  => {
                     if gs.menu.selected == 0 {
                         return gs.run_mode = RunMode::Storytelling;
+                        
                     }
                     if gs.menu.selected == 1 {
                         gs.menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();

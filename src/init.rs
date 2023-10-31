@@ -136,7 +136,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_zero = DialogueItem {
         choice: String::from("ROOT"),
-        response: String::from("Choose thy response..."),
+        response: String::from("Root"),
         id: NodeID::new(),
         children: vec![],
         selected: 0,

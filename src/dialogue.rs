@@ -125,12 +125,10 @@ impl Dialogue {
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
-                if item.selected >= item.children.len() - 1 {
+                if item.selected >= item.children.len() -1 {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
-                    // println!("{} selected: {}", item.name, item.selected);
-                    // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
                 }
             }
             VirtualKeyCode::Return => self.select_child(),
@@ -143,13 +141,13 @@ impl Dialogue {
         let mut y = 50;
         let item = &self.items[self.current.index];
         let display = &item.response;
-        ctx.print_color(
-            3,
-            49,
-            RGB::named(BLACK),
-            RGB::named(WHITE),
-            display.to_string(),
-        );
+        // ctx.print_color(
+        //     3,
+        //     49,
+        //     RGB::named(BLACK),
+        //     RGB::named(WHITE),
+        //     display.to_string(),
+        // );
         for (pos, child) in item.children.iter().enumerate() {
             if pos == item.selected {
                 ctx.print_color(
