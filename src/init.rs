@@ -196,7 +196,7 @@ pub fn shir() -> Scene {
     let c4 = dialogue.add_item(encounter_item_four);
     let cc = dialogue.add_item(encounter_item_cont);
     
-
+    dialogue.add_child(c0, c0);
     dialogue.add_child(c0, c1);
     dialogue.add_child(c0, c2);
     dialogue.add_child(c0, c3);
@@ -205,18 +205,6 @@ pub fn shir() -> Scene {
     dialogue.add_child(c2, cc);
     dialogue.add_child(c3, cc);
     dialogue.add_child(c4, cc);
-
-    // dialogue.add_child(c1, c2);
-    // dialogue.add_child(c1, c3);
-    // dialogue.add_child(c1, c4);
-
-    // dialogue.add_child(c2, c1);
-    // dialogue.add_child(c2, c3);
-    // dialogue.add_child(c2, c4);
-
-    // dialogue.add_child(c3, c1);
-    // dialogue.add_child(c3, c2);
-    // dialogue.add_child(c3, c4);
     
     Scene::new(
         title,

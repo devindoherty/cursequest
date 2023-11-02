@@ -87,13 +87,14 @@ impl Dialogue {
         let item = &self.items[self.current.index];
         let child = &self.items[item.selected];
         println!("Selected: {}", child.choice);
+        println!("Item Selected Value: {}", item.selected);
         self.traverse(child.id); // Work in progress
     }
 
     pub fn traverse(&mut self, item_id: NodeID) {
         self.current = item_id;
         let item = &self.items[item_id.index];
-        self.change_text();
+        // self.change_text();
         println!("Traversed to: {}", item.choice);
 
         self.terminal_draw_children(item_id);
@@ -122,6 +123,10 @@ impl Dialogue {
                     () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
+                    println!(
+                        "Selection Number: {}", 
+                        item.selected
+                    );
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
@@ -129,6 +134,10 @@ impl Dialogue {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
+                    println!(
+                        "Selection Number: {}", 
+                        item.selected
+                    );
                 }
             }
             VirtualKeyCode::Return => self.select_child(),
@@ -141,13 +150,6 @@ impl Dialogue {
         let mut y = 50;
         let item = &self.items[self.current.index];
         let display = &item.response;
-        // ctx.print_color(
-        //     3,
-        //     49,
-        //     RGB::named(BLACK),
-        //     RGB::named(WHITE),
-        //     display.to_string(),
-        // );
         for (pos, child) in item.children.iter().enumerate() {
             if pos == item.selected {
                 ctx.print_color(
