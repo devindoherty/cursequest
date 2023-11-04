@@ -72,7 +72,6 @@ fn update(gs: &mut State) {
         println!("Update: Redraw Not Needed");
     }
     if gs.run_mode == RunMode::Storytelling {
-
     }
 }
 

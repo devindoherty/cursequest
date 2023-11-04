@@ -2,7 +2,6 @@ use crate::Art;
 use crate::State;
 use crate::Menu;
 use crate::Dialogue;
-
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
@@ -132,4 +131,9 @@ impl Scene {
         self.dialogue.as_mut().expect("Scene Dialogue Missing Error").draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
+
+    pub fn update_main(&mut self, updated_main: &str, gs: &mut State) {
+        self.main = updated_main.to_string();
+    }
+
 }
