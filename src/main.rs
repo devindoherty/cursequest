@@ -43,6 +43,7 @@ pub struct State {
     startart: Art,
     log: Vec<String>,
     redraw: bool,
+    update: bool,
 }
 
 // Bracket required implementation for the Gamestate
@@ -71,8 +72,12 @@ fn update(gs: &mut State) {
     if gs.redraw == false {
         println!("Update: Redraw Not Needed");
     }
-    if gs.run_mode == RunMode::Storytelling {
-    }
+    // if gs.run_mode == RunMode::Storytelling && gs.update = true {
+    //     for id in gs.sm.scenes {
+    //         if id == 
+    //     }
+        
+    // }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -170,6 +175,7 @@ fn main() -> BError {
         startart: title,
         log: game_log,
         redraw: true,
+        update: false,
     };
 
     let prologue = init::prologue();

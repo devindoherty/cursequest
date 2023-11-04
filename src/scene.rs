@@ -134,6 +134,7 @@ impl Scene {
 
     pub fn update_main(&mut self, updated_main: &str, gs: &mut State) {
         self.main = updated_main.to_string();
+        gs.update = true;
     }
 
 }

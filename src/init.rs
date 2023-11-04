@@ -166,6 +166,14 @@ pub fn shir() -> Scene {
         selected: 0,
     };
 
+    let encounter_item_one_gamma = DialogueItem {
+        choice: String::from("Test"),
+        response: String::from("Test."),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    }; 
+
 
     let encounter_item_two = DialogueItem {
         choice: String::from("Who are you?"),
@@ -213,9 +221,10 @@ pub fn shir() -> Scene {
 
     let c1a = dialogue.add_item(encounter_item_one_alpha);
     let c1b = dialogue.add_item(encounter_item_one_beta);
-
+    let c1c = dialogue.add_item(encounter_item_one_gamma);
 
     let cc = dialogue.add_item(encounter_item_cont);
+    
     
     dialogue.add_child(c0, c0);
     dialogue.add_child(c0, c1);
@@ -231,7 +240,8 @@ pub fn shir() -> Scene {
 
     dialogue.add_child(c1, c1a);
     dialogue.add_child(c1, c1b);
-
+    dialogue.add_child(c1a, c1c);
+    dialogue.add_child(c1b, c1c);
 
     Scene::new(
         title,
@@ -270,7 +280,7 @@ pub fn _skills() {
     };
 
     let _sovereignty = Skill {
-        name: String::from("Sovereignty"),
+        name: String::from("Regality"),
         desc: String::from("Measure of kingly authority and right-to-rule."),
         value: 10,
         abilities: vec![],
@@ -283,7 +293,7 @@ pub fn _skills() {
         abilities: vec![],
     };
 
-    let _shadowplay = Skill {
+    let _intrigue = Skill {
         name: String::from("Intrigue"),
         desc: String::from("Familiarity with the shadows, subterfuge, and trickery."),
         value: 10,
@@ -293,6 +303,13 @@ pub fn _skills() {
     let _survival = Skill {
         name: String::from("Survival"),
         desc: String::from("Capacity to endure the harsh wildnerness."),
+        value: 10,
+        abilities: vec![],
+    };
+
+    let _lore = Skill {
+        name: String::from("Lore"),
+        desc: String::from("Knowledge of history, sciences, and other esoterica."),
         value: 10,
         abilities: vec![],
     };
