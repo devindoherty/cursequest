@@ -85,7 +85,9 @@ impl Dialogue {
 
     pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        let child = &self.items[item.selected];
+        let selection = &item.children[item.selected];
+        let child = &self.items[selection.index];
+        
         println!("Selected: {}", child.choice);
         println!("Item Selected Value: {}", item.selected);
         self.traverse(child.id); // Work in progress

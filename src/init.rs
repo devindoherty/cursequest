@@ -144,11 +144,28 @@ pub fn shir() -> Scene {
 
     let encounter_item_one = DialogueItem {
         choice: String::from("Where am I?"),
-        response: String::from("\"You are in the Shir Valley, in the illage of Finn's Glenn.\""),
+        response: String::from("\"You are in the Shir Valley, in the village of Finn's Glenn.\""),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
+
+    let encounter_item_one_alpha = DialogueItem {
+        choice: String::from("You are halfling?"),
+        response: String::from("Yes, one of the little people of the world."),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
+    let encounter_item_one_beta = DialogueItem {
+        choice: String::from("Shir Valley... Finn's Glen... [HISTORY 3]"),
+        response: String::from("You know the stories of my people. I am glad."),
+        id: NodeID {index: 0},
+        children: vec![],
+        selected: 0,
+    };
+
 
     let encounter_item_two = DialogueItem {
         choice: String::from("Who are you?"),
@@ -186,14 +203,18 @@ pub fn shir() -> Scene {
         selected: 0,
     };
 
-    
-
     let mut dialogue = Dialogue::new();
     let c0 = dialogue.add_item(encounter_item_zero);
     let c1 = dialogue.add_item(encounter_item_one);
+
     let c2 = dialogue.add_item(encounter_item_two);
     let c3 = dialogue.add_item(encounter_item_three);
     let c4 = dialogue.add_item(encounter_item_four);
+
+    let c1a = dialogue.add_item(encounter_item_one_alpha);
+    let c1b = dialogue.add_item(encounter_item_one_beta);
+
+
     let cc = dialogue.add_item(encounter_item_cont);
     
     dialogue.add_child(c0, c0);
@@ -201,11 +222,17 @@ pub fn shir() -> Scene {
     dialogue.add_child(c0, c2);
     dialogue.add_child(c0, c3);
     dialogue.add_child(c0, c4);
-    dialogue.add_child(c1, cc);
+
+    // dialogue.add_child(c1, cc);
     dialogue.add_child(c2, cc);
     dialogue.add_child(c3, cc);
     dialogue.add_child(c4, cc);
     
+
+    dialogue.add_child(c1, c1a);
+    dialogue.add_child(c1, c1b);
+
+
     Scene::new(
         title,
         main,
