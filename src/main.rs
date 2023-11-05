@@ -76,9 +76,17 @@ fn update(gs: &mut State) {
     if gs.redraw == false {
         println!("Update: Redraw Not Needed");
     }
-    if gs.run_mode == RunMode::Storytelling {
-        let updated_text = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().current.index].response.clone();
-        gs.sm.scenes[gs.sm.onstage.index].update_text(updated_text, gs);
+    if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
+        let updated_text = gs.sm.scenes[gs.sm.onstage.index]
+                            .dialogue.as_ref().unwrap()
+                            .items[
+                                gs.sm.scenes[gs.sm.onstage.index]
+                                .dialogue.as_ref().unwrap()
+                                .current.index
+                            ]
+                            .response.clone();
+        let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
+        scene.update_text(updated_text);
     }
 }
 

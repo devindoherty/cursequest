@@ -83,7 +83,7 @@ impl Scene {
         }
     }
 
-    pub fn update_text(&mut self, updated_text: String, gs: &mut State) {
+    pub fn update_text(&mut self, updated_text: String) {
         self.text = updated_text.to_string();
     }
 
