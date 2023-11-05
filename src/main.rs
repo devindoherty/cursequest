@@ -19,7 +19,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{Dialogue, NodeID};
+use dialogue::{Dialogue, NodeID, };
 
 mod mode;
 use mode::RunMode;
@@ -44,6 +44,10 @@ pub struct State {
     log: Vec<String>,
     redraw: bool,
     update: bool,
+}
+
+impl State {
+
 }
 
 // Bracket required implementation for the Gamestate
@@ -72,12 +76,10 @@ fn update(gs: &mut State) {
     if gs.redraw == false {
         println!("Update: Redraw Not Needed");
     }
-    // if gs.run_mode == RunMode::Storytelling && gs.update = true {
-    //     for id in gs.sm.scenes {
-    //         if id == 
-    //     }
-        
-    // }
+    if gs.run_mode == RunMode::Storytelling {
+        let updated_text = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().current.index].response.clone();
+        gs.sm.scenes[gs.sm.onstage.index].update_text(updated_text, gs);
+    }
 }
 
 // Updates the visuals of the map, menus, UI, and player icon

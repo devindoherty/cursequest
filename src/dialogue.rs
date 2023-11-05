@@ -1,6 +1,8 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
+use crate::State;
+
 
 
 #[derive(Copy, Clone, Debug)]
@@ -26,7 +28,7 @@ pub struct DialogueItem {
 #[derive(Clone, Debug)]
 pub struct Dialogue {
     pub items: Vec<DialogueItem>,
-    current: NodeID,
+    pub current: NodeID,
 }
 
 impl Dialogue {

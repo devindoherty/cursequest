@@ -105,7 +105,7 @@ pub fn travel_menu() -> Vec<MenuItem> {
 
 pub fn prologue() -> Scene {
     let title = String::from("Prologue");
-    let main = String::from(
+    let text = String::from(
         "A decade ago, the Uncrowned King usurped the title from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control.
         
         Press any key to continue..."
@@ -117,7 +117,7 @@ pub fn prologue() -> Scene {
 
     Scene::new(
         title,
-        main,
+        text,
         art,
         true,
         menu,
@@ -129,7 +129,7 @@ pub fn prologue() -> Scene {
 
 pub fn shir() -> Scene {
     let title = String::from("Awakening");
-    let main = String::from(
+    let text = String::from(
         "You have stirred. Good. You were half dead when we found you. Rest now. You are safe.",
     );
     let art = Art::new("assets/rose.txt", String::from("Roseberry"));
@@ -245,7 +245,7 @@ pub fn shir() -> Scene {
 
     Scene::new(
         title,
-        main,
+        text,
         art,
         false,
         None,

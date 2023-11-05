@@ -25,7 +25,7 @@ pub struct SceneID {
 #[derive(Debug)]
 pub struct Scene {
     pub title: String,
-    pub main: String,
+    pub text: String,
     pub art: Art,
     pub menu: Option<Menu>,
     pub dialogue: Option<Dialogue>,
@@ -63,7 +63,7 @@ impl StageManager {
 impl Scene {
     pub fn new(
         title: String,
-        main: String,
+        text: String,
         art: Art,
         fullscreen: bool,
         menu: Option<Menu>,
@@ -73,7 +73,7 @@ impl Scene {
     ) -> Self {
         Scene {
             title,
-            main,
+            text,
             art,
             fullscreen,
             menu,
@@ -81,6 +81,10 @@ impl Scene {
             flags,
             id,
         }
+    }
+
+    pub fn update_text(&mut self, updated_text: String, gs: &mut State) {
+        self.text = updated_text.to_string();
     }
 
     // Full Screen cinematic style
@@ -98,7 +102,7 @@ impl Scene {
             .bg(RGB::named(BLACK))
             .ln()
             .ln()
-            .line_wrap(&self.main)
+            .line_wrap(&self.text)
             .reset();
         block.print(&buf).expect("Line too long!");
         block.render_to_draw_batch(&mut draw_batch);
@@ -121,7 +125,7 @@ impl Scene {
             .bg(RGB::named(BLACK))
             .ln()
             .ln()
-            .line_wrap(&self.main)
+            .line_wrap(&self.text)
             .reset();
         block.print(&buf).expect("Line too long!");
         block.render_to_draw_batch(&mut draw_batch);
@@ -132,9 +136,6 @@ impl Scene {
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
 
-    pub fn update_main(&mut self, updated_main: &str, gs: &mut State) {
-        self.main = updated_main.to_string();
-        gs.update = true;
-    }
+
 
 }
