@@ -181,7 +181,7 @@ pub fn shir() -> Scene {
     };
 
     let encounter_item_two_alpha = DialogueItem {
-        choice: String::from("Well met, Roseberry. I am King Kryll, returned from exile to reclaim my rightful throne."),
+        choice: String::from("Well met, Roseberry. I am Kryll, the rightful king of Klathia."),
         response: String::from("Roseberry smiles, although her face is beset with sadness. She bows her head. \"I know. I recognize your face, my king. Were that these less grim times, the people of Finn's Glenn would honor your return with celebration.\""),
         id: NodeID::new(),
         children: vec![],
@@ -189,7 +189,7 @@ pub fn shir() -> Scene {
     };
 
     let encounter_item_two_beta = DialogueItem {
-        choice: String::from("Well met, Roseberry. I am merely a passerby."),
+        choice: String::from("Greetings, Roseberry. I am merely a passerby of little renown."),
         response: String::from("Roseberry smiles strangely but nods, \"But of course. You are welcome all the same.\""),
         id: NodeID::new(),
         children: vec![],
@@ -259,7 +259,7 @@ pub fn shir() -> Scene {
     let encounter_item_three_f = DialogueItem {
         choice: String::from("Study the blade. [LORE 1]"),
         response: String::from(
-            "You have read of such swords. They are forged with malevolent spirits. The tales often do not end kindly for their wielders. Roseberry says, \"And for good reason. The blade is evil.\""
+            "You have read of such swords. They are forged or enchanted with malevolent spirits. The tales often do not end kindly for the wielders of such weapons. Roseberry says, \"And for good reason. The blade is evil.\""
         ),
         id: NodeID { index: 0 },
         children: vec![],
@@ -268,7 +268,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_four = DialogueItem {
         choice: String::from("Die! [ATTACK]"),
-        response: String::from("Roseberry's mouth drops open shock and fear. \"But I saved your life!\""),
+        response: String::from("Roseberry's lips quiver in shock. \"Is this what I am owed for saving your life!\""),
         id: NodeID::new(),
         children: vec![],
         selected: 0,
