@@ -24,16 +24,16 @@ pub struct Statistics {
     pub soul: i32,  // Force of personality and ego; interpersonal skills, regen, and divine luck
 }
 
+pub struct Ability {
+    pub name: String,
+    pub desc: String,
+}
+
 pub struct Skill {
     pub name: String,
     pub desc: String,
     pub value: i32,
     pub abilities: Vec<Ability>,
-}
-
-pub struct Ability {
-    pub name: String,
-    pub desc: String,
 }
 
 pub struct Talent {
@@ -71,7 +71,7 @@ impl Player {
         valid
     }
 
-    fn _check_location(&mut self, gs: &mut State, ctx: &mut BTerm, xmv: i32, ymv: i32) {
+    fn _check_location(&mut self, gs: &mut State, ctx: &mut BTerm, _xmv: i32, _ymv: i32) {
         for tile in &gs.map.atlas {
             if gs.player.x == tile.x && gs.player.y == tile.y {
                 ctx.print_color(1, 42, RGB::named(WHITE), RGB::named(BLACK), &tile.desc);

@@ -2,7 +2,6 @@ use crate::Art;
 use crate::State;
 use crate::Menu;
 use crate::Dialogue;
-
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
@@ -26,7 +25,7 @@ pub struct SceneID {
 #[derive(Debug)]
 pub struct Scene {
     pub title: String,
-    pub main: String,
+    pub text: String,
     pub art: Art,
     pub menu: Option<Menu>,
     pub dialogue: Option<Dialogue>,
@@ -56,7 +55,7 @@ impl StageManager {
     }
     
     
-    pub fn _stage_scene(&mut self, gs: &mut State, onstage_scene: SceneID) {
+    pub fn _stage_scene(&mut self, _gs: &mut State, _onstage_scene: SceneID) {
         ()
     }
 }
@@ -64,7 +63,7 @@ impl StageManager {
 impl Scene {
     pub fn new(
         title: String,
-        main: String,
+        text: String,
         art: Art,
         fullscreen: bool,
         menu: Option<Menu>,
@@ -74,7 +73,7 @@ impl Scene {
     ) -> Self {
         Scene {
             title,
-            main,
+            text,
             art,
             fullscreen,
             menu,
@@ -82,6 +81,10 @@ impl Scene {
             flags,
             id,
         }
+    }
+
+    pub fn update_text(&mut self, updated_text: String) {
+        self.text = updated_text.to_string();
     }
 
     // Full Screen cinematic style
@@ -99,7 +102,7 @@ impl Scene {
             .bg(RGB::named(BLACK))
             .ln()
             .ln()
-            .line_wrap(&self.main)
+            .line_wrap(&self.text)
             .reset();
         block.print(&buf).expect("Line too long!");
         block.render_to_draw_batch(&mut draw_batch);
@@ -115,14 +118,14 @@ impl Scene {
         let mut block = TextBlock::new(3, 41, 125, 25);
         let mut buf = TextBuilder::empty();
         buf.ln()
-            .fg(RGB::named(YELLOW))
-            .bg(RGB::named(BLUE))
+            .fg(RGB::named(WHITE))
+            .bg(RGB::named(BLACK))
             .centered(&self.title)
             .fg(RGB::named(WHITE))
             .bg(RGB::named(BLACK))
             .ln()
             .ln()
-            .line_wrap(&self.main)
+            .line_wrap(&self.text)
             .reset();
         block.print(&buf).expect("Line too long!");
         block.render_to_draw_batch(&mut draw_batch);

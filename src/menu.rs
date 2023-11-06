@@ -1,13 +1,13 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
-use crate::Command;
-use crate::mode;
+
+
 use crate::State;
 // use crate::Player;
 // use crate::Map;
 // use crate::map::Biome;
-use crate::RunMode;
+
 
 #[derive(Clone, Debug)]
 pub struct Menu {
@@ -106,7 +106,7 @@ impl Menu {
 }
 
 impl MenuItem {
-    pub fn test_print(&self, gs: &mut State) {
+    pub fn test_print(&self, _gs: &mut State) {
         if self.display_name.contains("Start") {
             println!("Test Print Success");
         }

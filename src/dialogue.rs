@@ -3,23 +3,34 @@ use bracket_lib as bracket;
 
 use crate::State;
 
+
+
 #[derive(Copy, Clone, Debug)]
 pub struct NodeID {
     pub index: usize,
 }
 
+impl NodeID {
+    pub fn new() -> NodeID {
+        NodeID {index: 0}
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct DialogueItem {
-    pub name: String,
     pub id: NodeID,
+    pub response: String,
+    pub choice: String,
     pub children: Vec<NodeID>,
     pub selected: usize,
 }
 
+
+
 #[derive(Clone, Debug)]
 pub struct Dialogue {
     pub items: Vec<DialogueItem>,
-    current: NodeID,
+    pub current: NodeID,
 }
 
 impl Dialogue {
@@ -33,7 +44,7 @@ impl Dialogue {
     pub fn add_item(&mut self, mut item: DialogueItem) -> NodeID {
         let next_index = self.items.len();
         item.id.index = next_index;
-        println!("Diaglogue: The index of {} is now: {}", item.name, next_index);
+        println!("Diaglogue: The index of {} is now: {}", item.choice, next_index);
         self.items.push(item);
         NodeID { index: next_index }
     }
@@ -44,16 +55,16 @@ impl Dialogue {
     }
 
     pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {
-        let item = &mut self.items[item_id.index];
-        let child = &mut self.items[child_id.index];
+        let _item = &mut self.items[item_id.index];
+        let _child = &mut self.items[child_id.index];
         // item.children.remove(child); // TODO! Rework remove
     }
 
-    pub fn find_child(&self, item_id: NodeID, child_id: NodeID, search: &str) {
+    pub fn find_child(&self, item_id: NodeID, child_id: NodeID, _search: &str) {
         let item = &self.items[item_id.index];
-        let child = &self.items[child_id.index];
+        let _child = &self.items[child_id.index];
         for child in &item.children {
-            println!("{} is a child of {}", child.index, item.name);
+            println!("{} is a child of {}", child.index, item.choice);
         }
     }
 
@@ -62,7 +73,7 @@ impl Dialogue {
         for child in &item.children {
             println!(
                 "{} is a child of {}",
-                self.items[child.index].name, item.name
+                self.items[child.index].choice, item.choice
             );
         }
     }
@@ -70,24 +81,27 @@ impl Dialogue {
     pub fn terminal_draw_children(&self, item_id: NodeID) {
         let item = &self.items[item_id.index];
         println!("-------------------");
-        println!("{}", item.name);
+        println!("{}", item.choice);
         for child in &item.children {
-            println!("|-{}", self.items[child.index].name);
+            println!("|-{}", self.items[child.index].choice);
         }
     }
 
     pub fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        let child = &self.items[item.selected];
-        println!("Selected: {}", child.name);
+        let selection = &item.children[item.selected];
+        let child = &self.items[selection.index];
+        
+        println!("Selected: {}", child.choice);
+        println!("Item Selected Value: {}", item.selected);
         self.traverse(child.id); // Work in progress
     }
 
     pub fn traverse(&mut self, item_id: NodeID) {
         self.current = item_id;
         let item = &self.items[item_id.index];
-        self.change_text();
-        println!("Traversed to: {}", item.name);
+        // self.change_text();
+        println!("Traversed to: {}", item.choice);
 
         self.terminal_draw_children(item_id);
     }
@@ -95,7 +109,7 @@ impl Dialogue {
     pub fn change_text(&self) -> String {
         let item = &self.items[self.current.index];
         let mut new_main = String::new();
-        if item.name == "Who are you?" {
+        if item.choice == "Who are you?" {
             println!("Change Text Triggered");
             new_main = String::from("I am Rosebery the Wisewoman.");
             return new_main;
@@ -115,16 +129,21 @@ impl Dialogue {
                     () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
-                    // println!("{} selected: {}", item.name, item.selected);
+                    println!(
+                        "Selection Number: {}", 
+                        item.selected
+                    );
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
-                if item.selected >= item.children.len() - 1 {
+                if item.selected >= item.children.len() -1 {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
-                    // println!("{} selected: {}", item.name, item.selected);
-                    // println!("Selected Menu Item is: {}", self.items[self.selected].display_name);
+                    println!(
+                        "Selection Number: {}", 
+                        item.selected
+                    );
                 }
             }
             VirtualKeyCode::Return => self.select_child(),
@@ -136,14 +155,7 @@ impl Dialogue {
     pub fn draw(&self, ctx: &mut BTerm) {
         let mut y = 50;
         let item = &self.items[self.current.index];
-        let item_with_name = String::from("Kryll:") + &item.name;
-        ctx.print_color(
-            3,
-            49,
-            RGB::named(BLACK),
-            RGB::named(WHITE),
-            item_with_name,
-        );
+        let display = &item.response;
         for (pos, child) in item.children.iter().enumerate() {
             if pos == item.selected {
                 ctx.print_color(
@@ -151,7 +163,7 @@ impl Dialogue {
                     y,
                     RGB::named(BLACK),
                     RGB::named(WHITE),
-                    self.items[child.index].name.to_string(),
+                    self.items[child.index].choice.to_string(),
                 );
                 y += 1;
             } else {
@@ -160,7 +172,7 @@ impl Dialogue {
                     y,
                     RGB::named(WHITE),
                     RGB::named(BLACK),
-                    self.items[child.index].name.to_string(),
+                    self.items[child.index].choice.to_string(),
                 );
                 y += 1;
             }

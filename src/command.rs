@@ -1,5 +1,5 @@
-use crate::init;
-use crate::NodeID;
+
+
 use crate::RunMode;
 use crate::State;
 use bracket::prelude::*;
@@ -11,7 +11,7 @@ pub trait Command {
 
 impl Command for VirtualKeyCode {
     fn execute(&self, gs: &mut State, ctx: &mut BTerm) -> () {
-        let menu_item = &gs.menu.items[gs.menu.selected];
+        let _menu_item = &gs.menu.items[gs.menu.selected];
 
         // START
         if gs.run_mode == RunMode::Start {
@@ -23,6 +23,7 @@ impl Command for VirtualKeyCode {
                 Self::Return  => {
                     if gs.menu.selected == 0 {
                         return gs.run_mode = RunMode::Storytelling;
+                        
                     }
                     if gs.menu.selected == 1 {
                         gs.menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();
@@ -37,7 +38,7 @@ impl Command for VirtualKeyCode {
 
         // STORYTELLING
         if gs.run_mode == RunMode::Storytelling {
-            let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
+            let scene = &mut gs.sm.scenes[gs.sm.onstage.index];
             if scene.fullscreen == true {
                 match self {
                     _ => {

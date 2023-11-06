@@ -1,3 +1,5 @@
+#![allow(warnings)] // turning off comp warnings for now REMEMBER TO REMOVE
+
 use bracket::prelude::*;
 use bracket_lib as bracket;
 // use winit::window::Icon; Trying to set an icon TODO
@@ -17,19 +19,19 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{Dialogue, NodeID};
+use dialogue::{Dialogue, NodeID, };
 
 mod mode;
-use mode::RunMode;
+use mode::{RunMode};
 
 mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::{Scene, SceneID, StageManager};
+use scene::{SceneID, StageManager};
 
 mod world;
-use world::Calendar;
+
 
 // Gamestate struct, contains all data to update for game
 pub struct State {
@@ -41,6 +43,11 @@ pub struct State {
     startart: Art,
     log: Vec<String>,
     redraw: bool,
+    update: bool,
+}
+
+impl State {
+
 }
 
 // Bracket required implementation for the Gamestate
@@ -69,9 +76,26 @@ fn update(gs: &mut State) {
     if gs.redraw == false {
         println!("Update: Redraw Not Needed");
     }
-    if gs.run_mode == RunMode::Storytelling {
-
+    if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
+        let updated_text = gs.sm.scenes[gs.sm.onstage.index]
+                            .dialogue.as_ref().unwrap()
+                            .items[
+                                gs.sm.scenes[gs.sm.onstage.index]
+                                .dialogue.as_ref().unwrap()
+                                .current.index
+                            ]
+                            .response.clone();
+        let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
+        if updated_text == "END DIALOGUE"{
+            gs.run_mode = RunMode::Travelling;
+            // gs.menu = init::main_menu();
+        }
+        if updated_text == "START COMBAT" {
+            // gs.run_mode = RunMode::Combat::PlayerTurn;
+        }
+        scene.update_text(updated_text);
     }
+
 }
 
 // Updates the visuals of the map, menus, UI, and player icon
@@ -153,7 +177,7 @@ fn main() -> BError {
 
     let start_menu = init::start_menu();
 
-    let mut sm = StageManager::new(1, vec![], SceneID { index: 0 });
+    let sm = StageManager::new(1, vec![], SceneID { index: 0 });
 
     let title = Art::new("assets/title.txt", String::from("Curse Quest"));
 
@@ -171,15 +195,14 @@ fn main() -> BError {
         startart: title,
         log: game_log,
         redraw: true,
+        update: false,
     };
 
     let prologue = init::prologue();
-    let shir = init::nshir();
-    let tomb = init::tomb();
+    let shir = init::shir();
 
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
-    gs.sm.register_scene(tomb);
 
     main_loop(context, gs)
 }
