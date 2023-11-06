@@ -25,6 +25,8 @@ pub struct DialogueItem {
     pub selected: usize,
 }
 
+
+
 #[derive(Clone, Debug)]
 pub struct Dialogue {
     pub items: Vec<DialogueItem>,

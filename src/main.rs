@@ -22,7 +22,7 @@ mod dialogue;
 use dialogue::{Dialogue, NodeID, };
 
 mod mode;
-use mode::RunMode;
+use mode::{RunMode};
 
 mod player;
 use player::{Player, Skill, Statistics};
@@ -86,8 +86,16 @@ fn update(gs: &mut State) {
                             ]
                             .response.clone();
         let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
+        if updated_text == "END DIALOGUE"{
+            gs.run_mode = RunMode::Travelling;
+            // gs.menu = init::main_menu();
+        }
+        if updated_text == "START COMBAT" {
+            // gs.run_mode = RunMode::Combat::PlayerTurn;
+        }
         scene.update_text(updated_text);
     }
+
 }
 
 // Updates the visuals of the map, menus, UI, and player icon

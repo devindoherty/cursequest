@@ -118,8 +118,8 @@ impl Scene {
         let mut block = TextBlock::new(3, 41, 125, 25);
         let mut buf = TextBuilder::empty();
         buf.ln()
-            .fg(RGB::named(YELLOW))
-            .bg(RGB::named(BLUE))
+            .fg(RGB::named(WHITE))
+            .bg(RGB::named(BLACK))
             .centered(&self.title)
             .fg(RGB::named(WHITE))
             .bg(RGB::named(BLACK))
@@ -135,7 +135,4 @@ impl Scene {
         self.dialogue.as_mut().expect("Scene Dialogue Missing Error").draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
-
-
-
 }
