@@ -25,6 +25,16 @@ pub struct DialogueItem {
     pub selected: usize,
 }
 
+impl DialogueItem {
+    pub fn change_choice(&mut self, updated_choice: &str) {
+        self.choice = updated_choice.to_string();
+    }
+
+    pub fn change_response(&self, updated_response: &str) {
+
+    }
+}
+
 
 
 #[derive(Clone, Debug)]
@@ -104,17 +114,6 @@ impl Dialogue {
         println!("Traversed to: {}", item.choice);
 
         self.terminal_draw_children(item_id);
-    }
-
-    pub fn change_text(&self) -> String {
-        let item = &self.items[self.current.index];
-        let mut new_main = String::new();
-        if item.choice == "Who are you?" {
-            println!("Change Text Triggered");
-            new_main = String::from("I am Rosebery the Wisewoman.");
-            return new_main;
-        }
-        new_main
     }
 
     pub fn end_dialogue(&self) {
