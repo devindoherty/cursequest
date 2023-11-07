@@ -86,9 +86,10 @@ fn update(gs: &mut State) {
                             ]
                             .response.clone();
         let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
-        if updated_text == "END DIALOGUE"{
+        if updated_text == "END"{
+            gs.menu = gs.menu.switch(init::travel_menu());
             gs.run_mode = RunMode::Travelling;
-            // gs.menu = init::main_menu();
+            println!("Menu: {:?}", gs.menu);
         }
         if updated_text == "START COMBAT" {
             // gs.run_mode = RunMode::Combat::PlayerTurn;
@@ -124,7 +125,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
             41,
             RGB::named(WHITE),
             RGB::named(BLACK),
-            "Arrow Keys to Move. ENTER to use Menu.",
+            "Directional Keys to move. Enter to use the travel menu.",
         );
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Prompting {

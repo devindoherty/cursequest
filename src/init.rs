@@ -110,9 +110,7 @@ pub fn travel_menu() -> Vec<MenuItem> {
 pub fn prologue() -> Scene {
     let title = String::from("Prologue");
     let text = String::from(
-        "A decade ago, the Uncrowned King usurped the kingdom from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will fall under the evil sword's malicious control.
-        
-        Press any key to continue..."
+        "A decade ago, the Uncrowned King usurped the kingdom from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will surely perish, or worse. Returning to Klathia you feel your strength falter and you lose consciousness in the wilderness.                                                                                                                                                     Press any key to continue..."
     );
     let art = Art::new("assets/king.txt", String::from("king"));
     let menu: Option<Menu> = None;
@@ -137,8 +135,16 @@ pub fn shir() -> Scene {
     let art = Art::new("assets/rose.txt", String::from("Roseberry"));
 
     let encounter_item_zero = DialogueItem {
-        choice: String::from("Roseberry ROOT"),
-        response: String::from("You awaken in a small, rustic home. The woman seated beside you is perhaps three feet tall at most. \"You have stirred. Good. You were half dead when we found you. Rest now. You are safe.\""),
+        choice: String::from("Let us speak of other things."),
+        response: String::from("You awaken in a small, rustic home. The woman seated beside you is perhaps three feet tall at most. She looks relieved when you open your eyes. \"You have stirred. Good. You were half dead when we found you. Rest now. You are safe.\""),
+        id: NodeID::new(),
+        children: vec![],
+        selected: 0,
+    };
+
+    let c0_altered = DialogueItem {
+        choice: String::from("Let us speak of other things."),
+        response: String::from("Roseberry tends to your wounds quietly."),
         id: NodeID::new(),
         children: vec![],
         selected: 0,
@@ -153,8 +159,8 @@ pub fn shir() -> Scene {
     };
 
     let encounter_item_one_alpha = DialogueItem {
-        choice: String::from("You are a halfling?"),
-        response: String::from("\"I am. We are a humble folk, the Hobs of the Shir Valley. What some might say we lack in stature, we make up for in a myriad of other ways. I hope you remember our hospitality in the days ahead.\""),
+        choice: String::from("This is a halfling village?"),
+        response: String::from("\"It is. We are a humble folk, the Hobs of the Shir Valley. What some might say we lack in stature, we make up for in a myriad of other ways. I hope you remember our hospitality in the days ahead.\""),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
@@ -162,7 +168,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_one_beta = DialogueItem {
         choice: String::from("I know of this place, and your people. [LORE 1]"),
-        response: String::from("The halflings, or Hobs, of Shir Valley are an ancient people, related to both men and elves, known to be brave and loyal. Roseberry seems surprised. \"You know the stories of my people? I am glad. Few men nor dwarves or even elves venture here. Fewer still since the death of King Kull.\""),
+        response: String::from("The halflings, or Hobs, of Shir Valley are an ancient people, said to be related to faeries, known to be brave and loyal. Roseberry seems surprised. \"You know the stories of my people? I am glad. Few men or dwarves, nor even elves venture here. Fewer still since the death of the last king.\""),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
@@ -211,7 +217,7 @@ pub fn shir() -> Scene {
     let encounter_item_three = DialogueItem {
         choice: String::from("What happened?"),
         response: String::from(
-            "\"A group of hunters from my village found you collapsed in the wilderness. You were holding that.\" She points to an ancient blade among your belongings. \"I had you brought here and have nursed you back to health.\" You hear a faint whispering from the blade. It calls to you."
+            "\"A group of hunters from my village found you collapsed in the wilderness. You were holding that.\" She points to an ancient blade among your belongings. \"I had you brought here and have nursed you back to health.\" You hear a faint whispering from the blade, as if it... calls to you."
         ),
         id: NodeID { index: 0 },
         children: vec![],
@@ -237,8 +243,6 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
     };
-
-    
 
     let encounter_item_three_b = DialogueItem {
         choice: String::from("Grab the blade and flourish it skillfully. [SWORD 1]"),
@@ -292,7 +296,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_four = DialogueItem {
         choice: String::from("Die, witch! [ATTACK]"),
-        response: String::from("Roseberry's lips quiver in shock. \"Is this truly what I am owed for saving your life?\""),
+        response: String::from("Roseberry's lips quiver in shock. \"Is this truly what I am owed for saving your life?\" Grabbing the cursed blade, you strike her down with all your might. The sword laughs maliciously."),
         id: NodeID::new(),
         children: vec![],
         selected: 0,
@@ -309,7 +313,7 @@ pub fn shir() -> Scene {
 
     let encounter_item_cont = DialogueItem {
         choice: String::from("Continue..."),
-        response: String::from("END DIALOGUE"),
+        response: String::from("END"),
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
@@ -317,7 +321,7 @@ pub fn shir() -> Scene {
 
     let cattack = DialogueItem {
         choice: String::from("Continue..."),
-        response: String::from("COMBAT"),
+        response: String::from("END"),
         id: NodeID::new(),
         children: vec![],
         selected: 0,
@@ -325,6 +329,7 @@ pub fn shir() -> Scene {
 
     let mut dialogue = Dialogue::new();
     let c0 = dialogue.add_item(encounter_item_zero);
+    let c0_altered = dialogue.add_item(c0_altered);
     let c1 = dialogue.add_item(encounter_item_one);
     let c2 = dialogue.add_item(encounter_item_two);
     let c3 = dialogue.add_item(encounter_item_three);
@@ -367,7 +372,7 @@ pub fn shir() -> Scene {
     dialogue.add_child(c1, c1c);
     dialogue.add_child(c1a, c0);
     dialogue.add_child(c1b, c1b_king);
-    dialogue.add_child(c1b, c0);
+    dialogue.add_child(c1b_king, c0_altered);
     dialogue.add_child(c1c, c0);
 
     dialogue.add_child(c2, c2a);
@@ -388,7 +393,13 @@ pub fn shir() -> Scene {
     dialogue.add_child(c3_altered, c3d);
     dialogue.add_child(c3_altered, c3e);
     dialogue.add_child(c3_altered, c3f);
-    dialogue.add_child(c3_altered, cc);
+    dialogue.add_child(c3_altered, c0_altered);
+
+    dialogue.add_child(c0_altered, c1);
+    dialogue.add_child(c0_altered, c2);
+    dialogue.add_child(c0_altered, c3);
+    dialogue.add_child(c0_altered, c4);
+    dialogue.add_child(c0_altered, c5);
 
     dialogue.add_child(c4, cattack);
 

@@ -48,7 +48,7 @@ impl StageManager {
     pub fn register_scene(&mut self, mut scene: Scene) {
         let next_index = self.scenes.len();
         scene.id.index = next_index;
-        println!("StageManager: {} is index {}", scene.title, next_index);
+        // println!("StageManager: {} is index {}", scene.title, next_index);
         self.scenes.push(scene);
     }
 
@@ -97,8 +97,8 @@ impl Scene {
         let mut block = TextBlock::new(1, 0, 126, 21);
         let mut buf = TextBuilder::empty();
         buf.ln()
-            .fg(RGB::named(YELLOW))
-            .bg(RGB::named(BLUE))
+            .fg(RGB::named(WHITE))
+            .bg(RGB::named(BLACK))
             .centered(&self.title)
             .fg(RGB::named(WHITE))
             .bg(RGB::named(BLACK))
