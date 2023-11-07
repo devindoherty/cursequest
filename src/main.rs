@@ -177,7 +177,7 @@ fn main() -> BError {
 
     let start_menu = init::start_menu();
 
-    let sm = StageManager::new(1, vec![], SceneID { index: 0 });
+    let sm = StageManager::new(1, vec![], SceneID { index: 0 }, vec![]);
 
     let title = Art::new("assets/title.txt", String::from("Curse Quest"));
 

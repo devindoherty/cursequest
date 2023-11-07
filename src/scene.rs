@@ -9,6 +9,7 @@ pub struct StageManager {
     act: u8,
     pub scenes: Vec<Scene>,
     pub onstage: SceneID,
+    pub notes: Vec<Flag>,
 }
 
 #[derive(Debug)]
@@ -35,11 +36,12 @@ pub struct Scene {
 }
 
 impl StageManager {
-    pub fn new(act: u8, scenes: Vec<Scene>, onstage: SceneID) -> Self {
+    pub fn new(act: u8, scenes: Vec<Scene>, onstage: SceneID, notes: Vec<Flag>) -> Self {
         StageManager {
             act,
             scenes,
             onstage,
+            notes,
         }
     }
 

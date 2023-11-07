@@ -29,6 +29,9 @@ impl Command for VirtualKeyCode {
                         gs.menu.items[1].display_name = "Continue (Not Implemented Yet!)".to_string();
                     }
                     if gs.menu.selected == 2 {
+                        gs.menu.items[2].display_name = "Load (Not Implemented Yet!)".to_string();
+                    }
+                    if gs.menu.selected == 3 {
                         ctx.quit();
                     }
                 }
