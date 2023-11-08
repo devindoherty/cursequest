@@ -304,12 +304,27 @@ pub fn shir() -> Scene {
 
     let encounter_item_five = DialogueItem {
         choice: String::from("Farewell. [END CONVERSATION]"),
-        response: String::from("The little woman who nursed you back to health looks worried for a moment but then nods. \"If you feel you are ready to embark, I will not stop you. But know this: The Shir Valley is relatively safe, yet the realm beyond is dangerous. The Uncrowned King holds court upon the throne. His armies are vast, and his sorceries vile. Evil creatures are drawn to him in these dark times. The elven queen hides in her forest realm and the dwarven king cowers in his mountain hall. The Klathian dukes and lords have all bent the knee. Any who would openly defy him, especially one as weak as you, would be doomed to fail."),
+        response: String::from("\"Before you depart, may I ask a boon of you?\""),
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
     };
 
+    let bye_no = DialogueItem {
+        choice: String::from("No."),
+        response: String::from("The little woman who nursed you back to health looks taken aback but then nods. \"If you feel you are ready to embark, I will not stop you. But know this: The Shir Valley is relatively safe, yet the realm beyond is dangerous. The Uncrowned King holds court upon the throne. His armies are vast, and his sorceries vile. Evil creatures are drawn to him in these dark times. The elven queen hides in her forest realm and the dwarven king cowers in his mountain hall. The Klathian dukes and lords have all bent the knee. Any who would openly defy him, especially one as weak as you, would be doomed to fail.\""),
+        id: NodeID::new(),
+        children: vec![],
+        selected: 0,        
+    };
+
+    let bye_yes = DialogueItem {
+        choice: String::from("Yes."),
+        response: String::from("\"Several of the hunters who rescued have since gone missing near the same place they found you. If you could find it in your heart to look for them, their families would be much relieved to have an experienced adventurer on the search,\" Roseberry explains."),
+        id: NodeID::new(),
+        children: vec![],
+        selected: 0,
+    };
 
     let encounter_item_cont = DialogueItem {
         choice: String::from("Continue..."),
@@ -334,7 +349,10 @@ pub fn shir() -> Scene {
     let c2 = dialogue.add_item(encounter_item_two);
     let c3 = dialogue.add_item(encounter_item_three);
     let c4 = dialogue.add_item(encounter_item_four);
+    
     let c5 = dialogue.add_item(encounter_item_five);
+    let bye_no = dialogue.add_item(bye_no);
+    let bye_yes = dialogue.add_item(bye_yes);
 
     let c1a = dialogue.add_item(encounter_item_one_alpha);
     let c1b = dialogue.add_item(encounter_item_one_beta);
@@ -356,7 +374,6 @@ pub fn shir() -> Scene {
 
     
     let cc = dialogue.add_item(encounter_item_cont);
-    
     let cattack = dialogue.add_item(cattack);
 
     // dialogue.add_child(c0, c0);
@@ -403,7 +420,11 @@ pub fn shir() -> Scene {
 
     dialogue.add_child(c4, cattack);
 
-    dialogue.add_child(c5, cc);    
+    dialogue.add_child(c5, bye_yes);    
+    dialogue.add_child(c5, bye_no);
+    
+    dialogue.add_child(bye_yes, cc);
+    dialogue.add_child(bye_no, cc);
 
     Scene::new(
         title,

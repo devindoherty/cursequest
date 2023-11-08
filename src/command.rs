@@ -76,8 +76,9 @@ impl Command for VirtualKeyCode {
                 Self::Down    | 
                 Self::Numpad2 => gs.menu.manage(*self),
                 Self::Return  => {
-                        gs.run_mode = RunMode::Travelling;
-                        // gs.menu.manage(*self);
+                    if gs.menu.selected == 0 {
+                        return gs.run_mode = RunMode::Travelling;
+                    }
                 },
                 _ => (),
             }
@@ -89,6 +90,7 @@ impl Command for VirtualKeyCode {
                 // ARROW AND NUMPAD DIRECTIONAL KEYS
                 Self::Up | Self::Numpad8 => {
                     gs.player.map_move(0, -1);
+                    println!("Test");
                 }
                 Self::Down | Self::Numpad2 => {
                     gs.player.map_move(0, 1);
