@@ -3,8 +3,6 @@ use bracket_lib as bracket;
 
 use crate::State;
 
-
-
 #[derive(Copy, Clone, Debug)]
 pub struct NodeID {
     pub index: usize,
@@ -33,9 +31,12 @@ impl DialogueItem {
     pub fn change_response(&self, updated_response: &str) {
 
     }
+
+    pub fn skill_choice(&mut self) {
+        
+    }
+
 }
-
-
 
 #[derive(Clone, Debug)]
 pub struct Dialogue {
