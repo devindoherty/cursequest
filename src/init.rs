@@ -110,7 +110,7 @@ pub fn travel_menu() -> Vec<MenuItem> {
 pub fn prologue() -> Scene {
     let title = String::from("Prologue");
     let text = String::from(
-        "A decade ago, the Uncrowned King usurped the kingdom from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will surely perish, or worse. Returning to Klathia you feel your strength falter and you lose consciousness in the wilderness.                                                                                                                                                     Press any key to continue..."
+        "A decade ago, the Uncrowned King usurped the kingdom from your father and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will surely perish, or worse. Returning to Klathia you feel your strength falter and you lose consciousness in the wilderness.                                                                                                                                                     Press any key to continue..."
     );
     let art = Art::new("assets/king.txt", String::from("king"));
     let menu: Option<Menu> = None;

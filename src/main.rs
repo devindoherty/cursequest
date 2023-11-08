@@ -68,6 +68,10 @@ fn input(gs: &mut State, ctx: &mut BTerm) {
             _ => key.execute(gs, ctx),
         },
     }
+
+    println!("Mouse: {:?}", ctx.mouse_pos);
+
+
 }
 
 // Plan on reading the command stream from input
