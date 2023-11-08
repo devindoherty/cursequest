@@ -74,9 +74,10 @@ impl Command for VirtualKeyCode {
                 Self::Up      | 
                 Self::Numpad8 | 
                 Self::Down    | 
-                Self::Numpad2 | 
+                Self::Numpad2 => gs.menu.manage(*self),
                 Self::Return  => {
-                    gs.menu.manage(*self)
+                        gs.run_mode = RunMode::Travelling;
+                        // gs.menu.manage(*self);
                 },
                 _ => (),
             }
@@ -112,7 +113,7 @@ impl Command for VirtualKeyCode {
                     gs.player.map_move(1, -1);
                 }
                 // Enter
-                Self::Return => println!("Test"),
+                Self::Return => gs.run_mode = RunMode::Prompting,
                 _ => (),
             }
         }

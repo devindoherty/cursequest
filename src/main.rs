@@ -87,7 +87,7 @@ fn update(gs: &mut State) {
                             .response.clone();
         let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
         if updated_text == "END"{
-            gs.menu = gs.menu.switch(init::travel_menu());
+            gs.menu = gs.menu.switch(init::main_menu());
             gs.run_mode = RunMode::Travelling;
             println!("Menu: {:?}", gs.menu);
         }
@@ -139,7 +139,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
             41,
             RGB::named(WHITE),
             RGB::named(BLACK),
-            "Arrow Keys to Move Menu Selection. ENTER to return to Map Travel.",
+            "Select Travel to return to Map.",
         );
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Storytelling {
