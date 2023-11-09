@@ -1,9 +1,11 @@
+use bracket_lib as bracket;
+use bracket::prelude::*;
+use serde::{Deserialize, Serialize};
+
 use crate::Art;
 use crate::State;
 use crate::Menu;
 use crate::Dialogue;
-use bracket::prelude::*;
-use bracket_lib as bracket;
 
 pub struct StageManager {
     act: u8,
@@ -12,14 +14,16 @@ pub struct StageManager {
     pub notes: Vec<Flag>,
 }
 
-#[derive(Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Flag {
     pub name: String,
     pub flagged: bool,
+    pub stage: u32,
+    pub id: usize,
 }
 
-#[derive(Debug)]
-pub struct SceneID {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FlagID {
     pub index: usize,
 }
 
@@ -33,6 +37,11 @@ pub struct Scene {
     pub fullscreen: bool,
     pub flags: Option<Vec<Flag>>,
     pub id: SceneID,
+}
+
+#[derive(Debug)]
+pub struct SceneID {
+    pub index: usize,
 }
 
 impl StageManager {

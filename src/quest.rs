@@ -1,0 +1,4 @@
+struct Quest {}
+
+struct Journal {}
+

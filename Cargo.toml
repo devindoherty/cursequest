@@ -7,4 +7,6 @@ edition = "2021"
 
 [dependencies]
 bracket-lib = "0.8.7"
+serde = {version = "1.0.192", features = ["derive"] }
+serde_yaml = "0.8.26"
 

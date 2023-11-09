@@ -1,13 +1,21 @@
+use std::fs::File;
+use std::io::{BufRead, BufReader};
+
+use serde::{Deserialize, Serialize};
+
 // use crate::Encounter;
 use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
 use crate::dialogue::DialogueItem;
-use crate::scene::{Flag, Scene, SceneID};
+use crate::scene::{Flag, FlagID, Scene, SceneID};
+use crate::State;
 use crate::NodeID;
 use crate::Skill;
 
 use crate::{Menu, MenuItem};
+
+
 
 pub fn start_menu() -> Menu {
     // Start Menu
@@ -110,12 +118,11 @@ pub fn travel_menu() -> Vec<MenuItem> {
 pub fn prologue() -> Scene {
     let title = String::from("Prologue");
     let text = String::from(
-        "A decade ago, the Uncrowned King usurped the kingdom from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will surely perish, or worse. Returning to Klathia you feel your strength falter and you lose consciousness in the wilderness.                                                                                                                                                     Press any key to continue..."
+        "A decade ago, the Uncrowned King usurped the kingdom from you and banished you to a life of exile. In your wandering you have come across a legendary magical sword. But instead of granting you the power you need to slay the Uncrowned King and reclaim your throne, the sword has Cursed you. You must find a way to lift the Curse or you will surely perish, or worse. Returning to Klathia, you feel your strength falter and you lose consciousness in the wilderness.                                                                                                                                                     Press any key to continue..."
     );
     let art = Art::new("assets/king.txt", String::from("king"));
     let menu: Option<Menu> = None;
     let dialogue: Option<Dialogue> = None;
-    let flags = vec![Flag {name: "press_any_key".to_string(), flagged: true}]; 
 
     Scene::new(
         title,
@@ -124,7 +131,7 @@ pub fn prologue() -> Scene {
         true,
         menu,
         dialogue,
-        Some(flags),
+        None,
         SceneID { index: 0 },
     )
 }
@@ -426,6 +433,14 @@ pub fn shir() -> Scene {
     dialogue.add_child(bye_yes, cc);
     dialogue.add_child(bye_no, cc);
 
+
+    let king_truth = Flag {
+        name: "king_truth".to_string(),
+        flagged: false,
+        stage: 0,
+        id: 0, // FlagID {index: 0},
+    };
+
     Scene::new(
         title,
         text,
@@ -433,7 +448,7 @@ pub fn shir() -> Scene {
         false,
         None,
         Some(dialogue),
-        None,
+        Some(vec![king_truth]),
         SceneID { index: 0 },
     )
 }
@@ -498,4 +513,10 @@ pub fn _skills() {
     };
 }
 
-
+pub fn load_flags(gs: &mut State) {
+    let flags = File::open("data/flags.yml").expect("Could not open flags!");
+    let scrape: Flag = serde_yaml::from_reader(flags).expect("Could not read values");
+    println!("{:?}", scrape);
+    gs.sm.notes.push(scrape);
+    println!("SM: {:?}", gs.sm.notes);
+}

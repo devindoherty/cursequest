@@ -205,5 +205,7 @@ fn main() -> BError {
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
 
+    init::load_flags(&mut gs);
+
     main_loop(context, gs)
 }
