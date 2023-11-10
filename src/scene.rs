@@ -11,26 +11,6 @@ pub struct StageManager {
     act: u8,
     pub scenes: Vec<Scene>,
     pub onstage: SceneID,
-    pub notes: Vec<Flag>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Flag {
-    pub name: String,
-    pub flagged: bool,
-    pub stage: u32,
-    pub id: usize,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct Flags {
-    pub flags: Vec<Flag>,
-}
-
-
-#[derive(Debug, Serialize, Deserialize)]
-pub struct FlagID {
-    pub index: usize,
 }
 
 #[derive(Debug)]
@@ -41,7 +21,6 @@ pub struct Scene {
     pub menu: Option<Menu>,
     pub dialogue: Option<Dialogue>,
     pub fullscreen: bool,
-    pub flags: Option<Vec<Flag>>,
     pub id: SceneID,
 }
 
@@ -51,12 +30,11 @@ pub struct SceneID {
 }
 
 impl StageManager {
-    pub fn new(act: u8, scenes: Vec<Scene>, onstage: SceneID, notes: Vec<Flag>) -> Self {
+    pub fn new(act: u8, scenes: Vec<Scene>, onstage: SceneID) -> Self {
         StageManager {
             act,
             scenes,
             onstage,
-            notes,
         }
     }
 
@@ -85,7 +63,6 @@ impl Scene {
         fullscreen: bool,
         menu: Option<Menu>,
         dialogue: Option<Dialogue>,
-        flags: Option<Vec<Flag>>,
         id: SceneID,
     ) -> Self {
         Scene {
@@ -95,7 +72,6 @@ impl Scene {
             fullscreen,
             menu,
             dialogue,
-            flags,
             id,
         }
     }

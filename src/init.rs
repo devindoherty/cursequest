@@ -8,7 +8,8 @@ use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
 use crate::dialogue::DialogueItem;
-use crate::scene::{Flag, Flags, FlagID, Scene, SceneID};
+use crate::Flags;
+use crate::scene::{Scene, SceneID};
 use crate::State;
 use crate::NodeID;
 use crate::Skill;
@@ -131,7 +132,6 @@ pub fn prologue() -> Scene {
         true,
         menu,
         dialogue,
-        None,
         SceneID { index: 0 },
     )
 }
@@ -433,14 +433,6 @@ pub fn shir() -> Scene {
     dialogue.add_child(bye_yes, cc);
     dialogue.add_child(bye_no, cc);
 
-
-    let king_truth = Flag {
-        name: "king_truth".to_string(),
-        flagged: false,
-        stage: 0,
-        id: 0, // FlagID {index: 0},
-    };
-
     Scene::new(
         title,
         text,
@@ -448,7 +440,6 @@ pub fn shir() -> Scene {
         false,
         None,
         Some(dialogue),
-        Some(vec![king_truth]),
         SceneID { index: 0 },
     )
 }

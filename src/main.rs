@@ -21,6 +21,9 @@ use menu::{Menu, MenuItem};
 mod dialogue;
 use dialogue::{Dialogue, NodeID, };
 
+mod flag;
+use flag::*;
+
 mod mode;
 use mode::{RunMode};
 
@@ -28,7 +31,7 @@ mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::{SceneID, StageManager, Flags};
+use scene::{SceneID, StageManager};
 
 mod world;
 
@@ -185,7 +188,7 @@ fn main() -> BError {
         map,
         run_mode: RunMode::Start,
         menu: init::start_menu(),
-        sm: StageManager::new(1, vec![], SceneID { index: 0 }, vec![]),
+        sm: StageManager::new(1, vec![], SceneID { index: 0 }),
         startart: Art::new("assets/title.txt", String::from("Curse Quest")),
         log: Vec::new(),
         redraw: true,
