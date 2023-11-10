@@ -28,7 +28,7 @@ mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::{SceneID, StageManager};
+use scene::{SceneID, StageManager, Flags};
 
 mod world;
 
@@ -44,6 +44,7 @@ pub struct State {
     log: Vec<String>,
     redraw: bool,
     update: bool,
+    flags: Flags,
 }
 
 impl State {
@@ -176,14 +177,6 @@ fn main() -> BError {
         },
     };
 
-    let start_menu = init::start_menu();
-
-    let sm = StageManager::new(1, vec![], SceneID { index: 0 }, vec![]);
-
-    let title = Art::new("assets/title.txt", String::from("Curse Quest"));
-
-    let game_log = Vec::new();
-
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
   
@@ -191,12 +184,13 @@ fn main() -> BError {
         player,
         map,
         run_mode: RunMode::Start,
-        menu: start_menu,
-        sm,
-        startart: title,
-        log: game_log,
+        menu: init::start_menu(),
+        sm: StageManager::new(1, vec![], SceneID { index: 0 }, vec![]),
+        startart: Art::new("assets/title.txt", String::from("Curse Quest")),
+        log: Vec::new(),
         redraw: true,
         update: false,
+        flags: init::load_flags(),
     };
 
     let prologue = init::prologue();
@@ -204,8 +198,6 @@ fn main() -> BError {
 
     gs.sm.register_scene(prologue);
     gs.sm.register_scene(shir);
-
-    init::load_flags(&mut gs);
 
     main_loop(context, gs)
 }

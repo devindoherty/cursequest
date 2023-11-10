@@ -8,7 +8,7 @@ use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
 use crate::dialogue::DialogueItem;
-use crate::scene::{Flag, FlagID, Scene, SceneID};
+use crate::scene::{Flag, Flags, FlagID, Scene, SceneID};
 use crate::State;
 use crate::NodeID;
 use crate::Skill;
@@ -513,10 +513,8 @@ pub fn _skills() {
     };
 }
 
-pub fn load_flags(gs: &mut State) {
+pub fn load_flags() -> Flags {
     let flags = File::open("data/flags.yml").expect("Could not open flags!");
-    let scrape: Flag = serde_yaml::from_reader(flags).expect("Could not read values");
-    println!("{:?}", scrape);
-    gs.sm.notes.push(scrape);
-    println!("SM: {:?}", gs.sm.notes);
+    let scrape: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
+    scrape
 }

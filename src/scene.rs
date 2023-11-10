@@ -22,6 +22,12 @@ pub struct Flag {
     pub id: usize,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Flags {
+    pub flags: Vec<Flag>,
+}
+
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FlagID {
     pub index: usize,
