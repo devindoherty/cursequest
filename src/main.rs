@@ -100,19 +100,23 @@ fn update(gs: &mut State) {
         }
         scene.update_text(updated_text);
 
-        let object = &gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[
+        let object = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[
             gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap()
-            .current.index]; 
+            .current.index].clone(); 
 
         if object.flag_names.is_some() {
             println!("Test: {}", object.flag_names.as_ref().unwrap());
-            for mut flag in gs.flags.flags {
-                if flag.name == object.flag_names.as_ref().unwrap(){
+            for flag in &mut gs.flags.flags {
+                if "king_indentity_told_truth" == object.flag_names.as_ref().unwrap() {
                     flag.flagged = true;
+                    
                 }
             }
         }
+        println!("Flags: {:?}", gs.flags);
+
     }
+
 
 }
 
