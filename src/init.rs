@@ -147,6 +147,7 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: None,
     };
 
     let c0_altered = DialogueItem {
@@ -155,6 +156,7 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: None,
     };
 
     let encounter_item_one = DialogueItem {
@@ -163,6 +165,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_one_alpha = DialogueItem {
@@ -171,6 +175,8 @@ pub fn shir() -> Scene {
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_one_beta = DialogueItem {
@@ -179,6 +185,7 @@ pub fn shir() -> Scene {
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
+        flag_names: None,
     }; 
 
     let c1b_king = DialogueItem {
@@ -187,6 +194,8 @@ pub fn shir() -> Scene {
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     }; 
 
     let encounter_item_one_gamma = DialogueItem {
@@ -195,6 +204,8 @@ pub fn shir() -> Scene {
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     }; 
 
     let encounter_item_two = DialogueItem {
@@ -203,6 +214,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_two_alpha = DialogueItem {
@@ -211,6 +224,7 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: Some("king_indentity_told_truth".to_string()),
     };
 
     let encounter_item_two_beta = DialogueItem {
@@ -219,6 +233,7 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: None,
     };
 
     let encounter_item_three = DialogueItem {
@@ -229,6 +244,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_three_altered = DialogueItem {
@@ -239,6 +256,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
     
     let encounter_item_three_a = DialogueItem {
@@ -249,6 +268,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_three_b = DialogueItem {
@@ -259,6 +280,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_three_c = DialogueItem {
@@ -269,6 +292,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_three_d = DialogueItem {
@@ -279,6 +304,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_three_e = DialogueItem {
@@ -289,6 +316,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_three_f = DialogueItem {
@@ -299,6 +328,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_four = DialogueItem {
@@ -307,6 +338,8 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_five = DialogueItem {
@@ -315,6 +348,8 @@ pub fn shir() -> Scene {
         id: NodeID { index: 0 },
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let bye_no = DialogueItem {
@@ -323,6 +358,8 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,        
+        flag_names: None,
+
     };
 
     let bye_yes = DialogueItem {
@@ -331,6 +368,8 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let encounter_item_cont = DialogueItem {
@@ -339,6 +378,8 @@ pub fn shir() -> Scene {
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let cattack = DialogueItem {
@@ -347,6 +388,8 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
+        flag_names: None,
+
     };
 
     let mut dialogue = Dialogue::new();

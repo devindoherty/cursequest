@@ -21,6 +21,7 @@ pub struct DialogueItem {
     pub choice: String,
     pub children: Vec<NodeID>,
     pub selected: usize,
+    pub flag_names: Option<String>,
 }
 
 impl DialogueItem {
@@ -29,6 +30,10 @@ impl DialogueItem {
     }
 
     pub fn change_response(&self, updated_response: &str) {
+
+    }
+
+    pub fn raise_flag(&self){
 
     }
 

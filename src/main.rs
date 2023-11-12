@@ -99,6 +99,19 @@ fn update(gs: &mut State) {
             // gs.run_mode = RunMode::Combat::PlayerTurn;
         }
         scene.update_text(updated_text);
+
+        let object = &gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[
+            gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap()
+            .current.index]; 
+
+        if object.flag_names.is_some() {
+            println!("Test: {}", object.flag_names.as_ref().unwrap());
+            for mut flag in gs.flags.flags {
+                if flag.name == object.flag_names.as_ref().unwrap(){
+                    flag.flagged = true;
+                }
+            }
+        }
     }
 
 }
