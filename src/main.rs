@@ -116,8 +116,6 @@ fn update(gs: &mut State) {
         println!("Flags: {:?}", gs.flags);
 
     }
-
-
 }
 
 // Updates the visuals of the map, menus, UI, and player icon

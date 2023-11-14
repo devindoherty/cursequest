@@ -126,6 +126,10 @@ impl Dialogue {
 
     }
 
+    pub fn get_current_item(&self) -> &DialogueItem {
+        &self.items[self.current.index]
+    }
+
     pub fn manage(&mut self, key: VirtualKeyCode) {
         let item = &mut self.items[self.current.index];
         match key {

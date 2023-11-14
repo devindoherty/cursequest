@@ -13,7 +13,7 @@ pub struct StageManager {
     pub onstage: SceneID,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct Scene {
     pub title: String,
     pub text: String,
@@ -24,7 +24,7 @@ pub struct Scene {
     pub id: SceneID,
 }
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct SceneID {
     pub index: usize,
 }
@@ -53,6 +53,11 @@ impl StageManager {
     pub fn _stage_scene(&mut self, _gs: &mut State, _onstage_scene: SceneID) {
         ()
     }
+
+    pub fn get_current_scene(&self) -> &Scene {
+        &self.scenes[self.onstage.index]
+    }
+
 }
 
 impl Scene {
