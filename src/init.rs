@@ -352,9 +352,19 @@ pub fn shir() -> Scene {
 
     };
 
-    let bye_no = DialogueItem {
+    let bye_no_1 = DialogueItem {
         choice: String::from("No."),
-        response: String::from("The little woman who nursed you back to health looks taken aback but then nods. \"If you feel you are ready to embark, I will not stop you. But know this: The Shir Valley is relatively safe, yet the realm beyond is dangerous. The Uncrowned King holds court upon the throne. His armies are vast, and his sorceries vile. Evil creatures are drawn to him in these dark times. The elven queen hides in her forest realm and the dwarven king cowers in his mountain hall. The Klathian dukes and lords have all bent the knee. Any who would openly defy him, especially one as weak as you, would be doomed to fail.\""),
+        response: String::from("The small woman who nursed you back to health looks taken aback but then nods. \"If you feel you are ready to embark, I will not stop you. But know this: The Shir Valley is relatively safe, yet the realm beyond is dangerous. The Uncrowned King holds court upon the throne. His armies are vast, and his sorceries vile...\""),
+        id: NodeID::new(),
+        children: vec![],
+        selected: 0,        
+        flag_names: None,
+
+    };
+
+    let bye_no_2 = DialogueItem {
+        choice: String::from("Continue..."),
+        response: String::from("\"The elven queen hides in her forest realm and the dwarven king cowers in his mountain hall. The Klathian dukes and lords have all bent the knee. Any who would openly defy him, especially one as weak as you, would be doomed to fail.\""),
         id: NodeID::new(),
         children: vec![],
         selected: 0,        
@@ -401,7 +411,8 @@ pub fn shir() -> Scene {
     let c4 = dialogue.add_item(encounter_item_four);
     
     let c5 = dialogue.add_item(encounter_item_five);
-    let bye_no = dialogue.add_item(bye_no);
+    let bye_no_1 = dialogue.add_item(bye_no_1);
+    let bye_no_2 = dialogue.add_item(bye_no_2);
     let bye_yes = dialogue.add_item(bye_yes);
 
     let c1a = dialogue.add_item(encounter_item_one_alpha);
@@ -432,7 +443,6 @@ pub fn shir() -> Scene {
     dialogue.add_child(c0, c3);
     dialogue.add_child(c0, c4);
     dialogue.add_child(c0, c5);
-
 
     dialogue.add_child(c1, c1a);
     dialogue.add_child(c1, c1b);
@@ -471,10 +481,11 @@ pub fn shir() -> Scene {
     dialogue.add_child(c4, cattack);
 
     dialogue.add_child(c5, bye_yes);    
-    dialogue.add_child(c5, bye_no);
+    dialogue.add_child(c5, bye_no_1);
     
     dialogue.add_child(bye_yes, cc);
-    dialogue.add_child(bye_no, cc);
+    dialogue.add_child(bye_no_1, bye_no_2);
+    dialogue.add_child(bye_no_2, cc);
 
     Scene::new(
         title,
@@ -549,6 +560,6 @@ pub fn _skills() {
 
 pub fn load_flags() -> Flags {
     let flags = File::open("data/flags.yml").expect("Could not open flags!");
-    let scrape: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
-    scrape
+    let reader: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
+    reader
 }
