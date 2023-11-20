@@ -498,8 +498,6 @@ pub fn shir() -> Scene {
     )
 }
 
-
-
 pub fn _skills() {
     let _sword = Skill {
         name: String::from("Sword"),

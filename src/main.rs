@@ -35,7 +35,6 @@ use scene::{SceneID, StageManager};
 
 mod world;
 
-
 // Gamestate struct, contains all data to update for game
 pub struct State {
     player: Player,
@@ -50,9 +49,7 @@ pub struct State {
     flags: Flags,
 }
 
-impl State {
-
-}
+impl State {}
 
 // Bracket required implementation for the Gamestate
 impl GameState for State {
