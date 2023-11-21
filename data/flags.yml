@@ -1,5 +1,10 @@
 ---
 flags:
+- name: remove_upon_selection
+  flagged: false
+  stage: 0
+  id: 0
+
 - name: king_indentity_told_truth
   flagged: false
   stage: 0
