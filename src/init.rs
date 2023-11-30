@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
-use crate::dialogue::DialogueItem;
+use crate::dialogue::{DialogueItem, Link};
 use crate::Flags;
 use crate::scene::{Scene, SceneID};
 use crate::State;
@@ -148,7 +148,10 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
     };
+
+    // println!("Loaded: {:?}", encounter_item_zero);
 
     let c0_altered = DialogueItem {
         choice: String::from("Let us speak of other things."),
@@ -157,6 +160,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
     };
 
     let encounter_item_one = DialogueItem {
@@ -166,7 +170,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
-
+        ..Default::default()
     };
 
     let encounter_item_one_alpha = DialogueItem {
@@ -176,7 +180,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
-
+        ..Default::default()
     };
 
     let encounter_item_one_beta = DialogueItem {
@@ -186,6 +190,8 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
+
     }; 
 
     let c1b_king = DialogueItem {
@@ -195,6 +201,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     }; 
 
@@ -205,6 +212,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     }; 
 
@@ -215,6 +223,8 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        link: Some(Link::Remove),
+        ..Default::default()
 
     };
 
@@ -225,6 +235,8 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: Some("king_indentity_told_truth".to_string()),
+        ..Default::default()
+
     };
 
     let encounter_item_two_beta = DialogueItem {
@@ -234,6 +246,8 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
+
     };
 
     let encounter_item_three = DialogueItem {
@@ -245,6 +259,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -257,6 +272,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
     
@@ -269,6 +285,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -281,6 +298,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -293,6 +311,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -305,6 +324,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -317,6 +337,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -329,6 +350,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -339,6 +361,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -349,6 +372,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -359,6 +383,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,        
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -369,6 +394,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,        
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -379,6 +405,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -389,6 +416,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 
@@ -399,6 +427,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        ..Default::default()
 
     };
 

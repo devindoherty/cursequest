@@ -17,6 +17,7 @@ pub struct Journal {}
 
 pub struct Inventory {}
 
+#[derive(Clone, Debug)]
 pub struct Statistics {
     pub grace: i32, // Agility and dexterity; change to hit with all attacks
     pub might: i32, // Constitution and strength; damage for all attacks
@@ -24,11 +25,13 @@ pub struct Statistics {
     pub soul: i32,  // Force of personality and ego; interpersonal skills, regen, and divine luck
 }
 
+#[derive(Clone, Debug)]
 pub struct Ability {
     pub name: String,
     pub desc: String,
 }
 
+#[derive(Clone, Debug)]
 pub struct Skill {
     pub name: String,
     pub desc: String,
