@@ -78,15 +78,19 @@ fn update(gs: &mut State) {
         println!("Update: Redraw Not Needed");
     }
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
-        let updated_text = gs.sm.scenes[gs.sm.onstage.index]
-                            .dialogue.as_ref().unwrap()
-                            .items[
-                                gs.sm.scenes[gs.sm.onstage.index]
-                                .dialogue.as_ref().unwrap()
-                                .current.index
-                            ]
-                            .response.clone();
-        let mut scene = &mut gs.sm.scenes[gs.sm.onstage.index];
+        let scene_id = gs.sm.current_scene_id_index();
+        let scene = &gs.sm.scenes[scene_id];
+        let dialogue = scene.dialogue.as_ref().unwrap();
+        let dialogue_items = &dialogue.items;
+
+
+
+        let updated_text = gs.sm.scenes[scene_id].dialogue.as_ref().unwrap().items[
+            gs.sm.scenes[scene_id].dialogue.as_ref().unwrap().current.index
+        ].response.clone();
+
+        let mut _scene = &mut gs.sm.scenes[scene_id];
+        
         if updated_text == "END"{
             gs.menu = gs.menu.switch(init::main_menu());
             gs.run_mode = RunMode::Travelling;
@@ -95,7 +99,7 @@ fn update(gs: &mut State) {
         if updated_text == "START COMBAT" {
             // gs.run_mode = RunMode::Combat::PlayerTurn;
         }
-        scene.update_text(updated_text);
+        _scene.update_text(updated_text);
 
         let object = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[
             gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap()
@@ -168,8 +172,9 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         );
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Storytelling {
-        // ctx.cls();
-        let scene = &mut gs.sm.scenes[gs.sm.onstage.index];
+        let current_scene = gs.sm.current_scene_id_index();
+        let scene = &mut gs.sm.scenes[current_scene];
+        
         if scene.fullscreen == true {
             scene.draw_fullscreen(ctx);
         } else {

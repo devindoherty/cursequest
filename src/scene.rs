@@ -8,7 +8,7 @@ use crate::Menu;
 use crate::Dialogue;
 
 pub struct StageManager {
-    act: u8,
+    act: i32,
     pub scenes: Vec<Scene>,
     pub onstage: SceneID,
 }
@@ -30,7 +30,7 @@ pub struct SceneID {
 }
 
 impl StageManager {
-    pub fn new(act: u8, scenes: Vec<Scene>, onstage: SceneID) -> Self {
+    pub fn new(act: i32, scenes: Vec<Scene>, onstage: SceneID) -> Self {
         StageManager {
             act,
             scenes,
@@ -54,8 +54,12 @@ impl StageManager {
         ()
     }
 
-    pub fn get_current_scene(&self) -> &Scene {
+    pub fn current_scene(&self) -> &Scene {
         &self.scenes[self.onstage.index]
+    }
+
+    pub fn current_scene_id_index(&self) -> usize {
+        self.onstage.index
     }
 
 }
