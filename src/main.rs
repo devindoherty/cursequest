@@ -19,7 +19,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{Dialogue, NodeID, };
+use dialogue::{Dialogue, NodeID, Link};
 
 mod flag;
 use flag::*;
@@ -35,7 +35,6 @@ use scene::{SceneID, StageManager};
 
 mod world;
 
-
 // Gamestate struct, contains all data to update for game
 pub struct State {
     player: Player,
@@ -50,9 +49,7 @@ pub struct State {
     flags: Flags,
 }
 
-impl State {
-
-}
+impl State {}
 
 // Bracket required implementation for the Gamestate
 impl GameState for State {
@@ -93,7 +90,7 @@ fn update(gs: &mut State) {
         if updated_text == "END"{
             gs.menu = gs.menu.switch(init::main_menu());
             gs.run_mode = RunMode::Travelling;
-            println!("Menu: {:?}", gs.menu);
+            // println!("Menu: {:?}", gs.menu);
         }
         if updated_text == "START COMBAT" {
             // gs.run_mode = RunMode::Combat::PlayerTurn;
@@ -110,10 +107,18 @@ fn update(gs: &mut State) {
             for flag in &mut gs.flags.flags {
                 if flag.name.as_str() == object.flag_names.as_ref().unwrap() {
                     flag.flagged = true;
-                    
                 }
             }
         }
+
+        if object.link.is_some() {
+            println!("Link Detected.");
+            match object.link.as_ref().unwrap() {
+                Link::Remove => println!("Linktype: Remove"),
+                _ => todo!(),
+            };
+        }
+
         // println!("Flags: {:?}", gs.flags);
 
     }

@@ -1,9 +1,19 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
-use crate::State;
+use crate::{State, Skill, Statistics};
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Clone, Debug, Default)]
+pub enum Link {
+    #[default]
+    Remove,
+    Move,
+    Change,
+    CheckSkill{skill_name: String, difficulty: i32},
+    CheckStat{stat_name: String, difficulty: i32},
+}
+
+#[derive(Copy, Clone, Debug, Default)]
 pub struct NodeID {
     pub index: usize,
 }
@@ -14,15 +24,18 @@ impl NodeID {
     }
 }
 
-#[derive(Clone, Debug)]
-pub struct DialogueItem {
+#[derive(Clone, Debug, Default)]
+pub struct DialogueItem <> {
     pub id: NodeID,
     pub response: String,
     pub choice: String,
     pub children: Vec<NodeID>,
     pub selected: usize,
     pub flag_names: Option<String>,
+    pub link: Option<Link>, 
 }
+
+
 
 impl DialogueItem {
     pub fn change_choice(&mut self, updated_choice: &str) {
@@ -75,7 +88,7 @@ impl Dialogue {
         let _child = &mut self.items[child_id.index];
         // item.children.remove(child); // TODO! Rework remove
     }
-
+    
     pub fn find_child(&self, item_id: NodeID, child_id: NodeID, _search: &str) {
         let item = &self.items[item_id.index];
         let _child = &self.items[child_id.index];
@@ -110,7 +123,7 @@ impl Dialogue {
         
         println!("Selected: {}", child.choice);
         println!("Item Selected Value: {}", item.selected);
-        self.traverse(child.id); // Work in progress
+        self.traverse(child.id);
     }
 
     pub fn traverse(&mut self, item_id: NodeID) {
@@ -118,7 +131,6 @@ impl Dialogue {
         let item = &self.items[item_id.index];
         // self.change_text();
         println!("Traversed to: {}", item.choice);
-
         self.terminal_draw_children(item_id);
     }
 
