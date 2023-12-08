@@ -194,7 +194,7 @@ pub fn shir() -> Scene {
         id: NodeID {index: 0},
         children: vec![],
         selected: 0,
-        flag_names: None,
+        flag_names: Some("learned_father_death".to_string()),
 
     }; 
 
@@ -497,8 +497,6 @@ pub fn shir() -> Scene {
         SceneID { index: 0 },
     )
 }
-
-
 
 pub fn _skills() {
     let _sword = Skill {
