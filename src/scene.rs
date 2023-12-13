@@ -6,6 +6,9 @@ use crate::Art;
 use crate::State;
 use crate::Menu;
 use crate::Dialogue;
+use crate::RunMode;
+use crate::init;
+
 
 pub struct StageManager {
     act: i32,
@@ -13,7 +16,7 @@ pub struct StageManager {
     pub onstage: SceneID,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Scene {
     pub title: String,
     pub text: String,
@@ -24,7 +27,7 @@ pub struct Scene {
     pub id: SceneID,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct SceneID {
     pub index: usize,
 }
@@ -85,8 +88,19 @@ impl Scene {
         }
     }
 
-    pub fn update_text(&mut self, updated_text: String) {
-        self.text = updated_text.to_string();
+    pub fn update_text(gs: &mut State) {
+        let scene_idx = gs.sm.current_scene_id_index();
+        let scene = &mut gs.sm.scenes[scene_idx];
+        let mut dialogue = scene.dialogue.as_mut().unwrap();
+        let response = &dialogue.items[dialogue.current.index].response;
+        
+        let updated_text = response.to_string();
+        if updated_text == "END"{
+            // TODO: dialogue.end_dialogue();
+            gs.menu = gs.menu.switch(init::main_menu());
+            gs.run_mode = RunMode::Travelling; // TODO: Return to previous run_mode.
+        }
+        scene.text = updated_text;
     }
 
     // Full Screen cinematic style

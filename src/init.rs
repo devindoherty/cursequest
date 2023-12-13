@@ -234,7 +234,7 @@ pub fn shir() -> Scene {
         id: NodeID::new(),
         children: vec![],
         selected: 0,
-        flag_names: Some("king_indentity_told_truth".to_string()),
+        flag_names: Some("king_identity_told_truth".to_string()),
         ..Default::default()
 
     };
@@ -476,15 +476,15 @@ pub fn shir() -> Scene {
     dialogue.add_child(c1, c1a);
     dialogue.add_child(c1, c1b);
     dialogue.add_child(c1, c1c);
-    dialogue.add_child(c1a, c0);
+    dialogue.add_child(c1a, c0_altered);
     dialogue.add_child(c1b, c1b_king);
     dialogue.add_child(c1b_king, c0_altered);
     dialogue.add_child(c1c, c0);
 
     dialogue.add_child(c2, c2a);
     dialogue.add_child(c2, c2b);
-    dialogue.add_child(c2a, c0);
-    dialogue.add_child(c2b, c0);
+    dialogue.add_child(c2a, c0_altered);
+    dialogue.add_child(c2b, c0_altered);
 
     dialogue.add_child(c3, c3a); dialogue.add_child(c3a, c3_altered); 
     dialogue.add_child(c3, c3b); dialogue.add_child(c3b, c3_altered);
@@ -589,4 +589,8 @@ pub fn load_flags() -> Flags {
     let flags = File::open("data/flags.yml").expect("Could not open flags!");
     let reader: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
     reader
+}
+
+pub fn _load_scenes() {
+
 }

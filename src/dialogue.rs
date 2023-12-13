@@ -1,12 +1,13 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
-use crate::{State, Skill, Statistics};
+use crate::{init, State, Skill, Statistics, RunMode};
 
 #[derive(Clone, Debug, Default)]
 pub enum Link {
     #[default]
     Remove,
+    RemoveSiblings,
     Move,
     Change,
     CheckSkill{skill_name: String, difficulty: i32},
@@ -134,8 +135,10 @@ impl Dialogue {
         self.terminal_draw_children(item_id);
     }
 
-    pub fn end_dialogue(&self) {
 
+
+    pub fn end_dialogue(&self, gs: &mut State) {
+       
     }
 
     pub fn get_current_item(&self) -> &DialogueItem {

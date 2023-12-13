@@ -5,7 +5,7 @@ flags:
   stage: 0
   id: 0
 
-- name: king_indentity_told_truth
+- name: king_identity_told_truth
   flagged: false
   stage: 0
   id: 0

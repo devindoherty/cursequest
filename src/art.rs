@@ -4,7 +4,7 @@ use bracket_lib as bracket;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Default)]
 pub struct Art {
     pub ascii: Vec<String>,
     pub caption: String,

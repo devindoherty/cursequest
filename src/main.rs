@@ -2,7 +2,7 @@
 
 use bracket::prelude::*;
 use bracket_lib as bracket;
-// use winit::window::Icon; Trying to set an icon TODO
+// use winit::window::Icon; TODO: Trying to set an icon 
 
 mod art;
 use art::*;
@@ -31,9 +31,9 @@ mod player;
 use player::{Player, Skill, Statistics};
 
 mod scene;
-use scene::{SceneID, StageManager};
+use scene::{Scene, SceneID, StageManager};
 
-mod world;
+// mod world;
 
 // Gamestate struct, contains all data to update for game
 pub struct State {
@@ -54,77 +54,55 @@ impl State {}
 // Bracket required implementation for the Gamestate
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
-        input(self, ctx);
-        update(self);
-        render(self, ctx);
+        if input(self, ctx) == true {
+            update(self);
+            render(self, ctx);
+        }
     }
 }
 
 // Reads input from the terminal construct and handles input via command.execute.
-fn input(gs: &mut State, ctx: &mut BTerm) {
+fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
     match ctx.key {
-        None => {}
+        None => {return false},
         Some(key) => match key {
             VirtualKeyCode::Escape | VirtualKeyCode::Q => ctx.quit(),
             _ => key.execute(gs, ctx),
         },
     }
+    true
 }
 
 // Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
-    if gs.redraw == false {
-        println!("Update: Redraw Not Needed");
-    }
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
-        let scene_id = gs.sm.current_scene_id_index();
-        let scene = &gs.sm.scenes[scene_id];
-        let dialogue = scene.dialogue.as_ref().unwrap();
-        let dialogue_items = &dialogue.items;
+        Scene::update_text(gs);
 
+        let scene_idx = gs.sm.current_scene_id_index();
+        let scene = &mut gs.sm.scenes[scene_idx];
+        let mut dialogue = scene.dialogue.as_mut().unwrap();
+        let dialogue_flags = &mut dialogue.items[dialogue.current.index].flag_names;
 
-
-        let updated_text = gs.sm.scenes[scene_id].dialogue.as_ref().unwrap().items[
-            gs.sm.scenes[scene_id].dialogue.as_ref().unwrap().current.index
-        ].response.clone();
-
-        let mut _scene = &mut gs.sm.scenes[scene_id];
-        
-        if updated_text == "END"{
-            gs.menu = gs.menu.switch(init::main_menu());
-            gs.run_mode = RunMode::Travelling;
-            // println!("Menu: {:?}", gs.menu);
-        }
-        if updated_text == "START COMBAT" {
-            // gs.run_mode = RunMode::Combat::PlayerTurn;
-        }
-        _scene.update_text(updated_text);
-
-        let object = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap().items[
-            gs.sm.scenes[gs.sm.onstage.index].dialogue.as_ref().unwrap()
-            .current.index].clone(); 
-
-        // let object = gs.sm.get_current_scene().dialogue.expect("Error getting current scene").get_current_item();
-
-        if object.flag_names.is_some() {
+        if dialogue_flags.is_some() {
             for flag in &mut gs.flags.flags {
-                if flag.name.as_str() == object.flag_names.as_ref().unwrap() {
-                    flag.flagged = true;
+                if flag.name.as_str() == dialogue_flags.as_mut().unwrap() {
+                    if flag.flagged == false {
+                        println!("New Flag Found: {:?}", flag);                        
+                        flag.flagged = true;
+                    }
                 }
             }
         }
-
-        if object.link.is_some() {
+        
+        if dialogue.items[dialogue.current.index].link.is_some() {
             println!("Link Detected.");
-            match object.link.as_ref().unwrap() {
+            match dialogue.items[dialogue.current.index].link.as_ref().unwrap() {
                 Link::Remove => println!("Linktype: Remove"),
+                Link::RemoveSiblings => println!("Linktype: Remove Siblings"),
                 _ => todo!(),
             };
         }
-
-        // println!("Flags: {:?}", gs.flags);
-
     }
 }
 
@@ -133,7 +111,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
     if gs.redraw == false {
         return (); // Do Nothing
     }
-    
+
     if gs.run_mode == RunMode::Start {
         gs.startart.draw(ctx, 16, 8);
         ctx.print_color(
