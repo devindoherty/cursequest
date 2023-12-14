@@ -1,5 +1,5 @@
 #![allow(warnings)] // turning off comp warnings for now REMEMBER TO REMOVE
-#![windows_subsystem = "windows"]
+// #![windows_subsystem = "windows"]
 
 use bracket::prelude::*;
 use bracket_lib as bracket;
@@ -105,7 +105,7 @@ fn update(gs: &mut State) {
     }
 }
 
-// Updates the visuals of the map, menus, UI, and player icon
+// Renders the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
     if gs.run_mode == RunMode::Start {
         gs.startart.draw(ctx, 16, 8);
