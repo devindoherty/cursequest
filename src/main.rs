@@ -1,4 +1,5 @@
 #![allow(warnings)] // turning off comp warnings for now REMEMBER TO REMOVE
+#![windows_subsystem = "windows"]
 
 use bracket::prelude::*;
 use bracket_lib as bracket;
