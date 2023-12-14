@@ -127,7 +127,7 @@ impl Dialogue {
         self.traverse(child.id);
     }
 
-    pub fn traverse(&mut self, item_id: NodeID) {
+    fn traverse(&mut self, item_id: NodeID) {
         self.current = item_id;
         let item = &self.items[item_id.index];
         // self.change_text();
@@ -160,7 +160,7 @@ impl Dialogue {
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
-                if item.selected >= item.children.len() -1 {
+                if item.selected >= item.children.len() - 1 {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;

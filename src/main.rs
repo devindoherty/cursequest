@@ -44,8 +44,6 @@ pub struct State {
     sm: StageManager,
     startart: Art,
     log: Vec<String>,
-    redraw: bool,
-    update: bool,
     flags: Flags,
 }
 
@@ -54,7 +52,7 @@ impl State {}
 // Bracket required implementation for the Gamestate
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
-        if input(self, ctx) == true {
+        if input(self, ctx) == true || self.run_mode == RunMode::Start {
             update(self);
             render(self, ctx);
         }
@@ -88,8 +86,8 @@ fn update(gs: &mut State) {
             for flag in &mut gs.flags.flags {
                 if flag.name.as_str() == dialogue_flags.as_mut().unwrap() {
                     if flag.flagged == false {
-                        println!("New Flag Found: {:?}", flag);                        
                         flag.flagged = true;
+                        println!("Flagged: {:?}", flag);
                     }
                 }
             }
@@ -108,10 +106,6 @@ fn update(gs: &mut State) {
 
 // Updates the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
-    if gs.redraw == false {
-        return (); // Do Nothing
-    }
-
     if gs.run_mode == RunMode::Start {
         gs.startart.draw(ctx, 16, 8);
         ctx.print_color(
@@ -195,8 +189,6 @@ fn main() -> BError {
         sm: StageManager::new(1, vec![], SceneID { index: 0 }),
         startart: Art::new("assets/title.txt", String::from("Curse Quest")),
         log: Vec::new(),
-        redraw: true,
-        update: false,
         flags: init::load_flags(),
     };
 
