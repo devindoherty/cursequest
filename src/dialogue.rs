@@ -108,8 +108,22 @@ impl Dialogue {
         }
     }
 
-    pub fn remove_siblings(gs: &mut State) {
+    pub fn remove_siblings(&mut self) {
+        let selection = self.current_selection();
+        let child = self.items[selection.index].id;
+        
+        let item = &mut self.items[self.current.index];
+        
+        item.children = Vec::new();
+        item.children.push(child);
+        
 
+    }
+
+    fn current_selection(&self) -> NodeID {
+        let item = &self.items[self.current.index];
+        let selection = &item.children[item.selected];
+        *selection
     }
 
     fn terminal_draw_children(&self, item_id: NodeID) {
@@ -125,20 +139,23 @@ impl Dialogue {
         let item = &self.items[self.current.index];
         let selection = &item.children[item.selected];
         let child = &self.items[selection.index];
-        
-        println!("Selected: {}", child.choice);
-        println!("Item Selected Value: {}", item.selected);
-        self.check_links(child.id);
+                
         self.traverse(child.id);
     }
 
-    fn check_links(&self, item_id: NodeID) {
-        let item = &self.items[item_id.index];
-        let link = &item.link;
-        println!("Links: {:?}", link);
+    fn check_links(&mut self) {
+        let item = &self.items[self.current.index];
+        let selection = &item.children[item.selected];
+        let child = &self.items[selection.index];
+        let link = &child.link;
+
         if link.is_some() {
-            match link.unwrap() {
-                
+            match link.as_ref().unwrap() {
+                Link::RemoveSiblings => {
+                    // item.children = vec![]
+                    self.remove_siblings();
+                },
+                _  => todo!(),
             }
         }
     }
@@ -167,10 +184,6 @@ impl Dialogue {
                     () // Do nothing, top of dialogue choices
                 } else {
                     item.selected -= 1;
-                    println!(
-                        "Selection Number: {}", 
-                        item.selected
-                    );
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
@@ -178,13 +191,12 @@ impl Dialogue {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
                     item.selected += 1;
-                    println!(
-                        "Selection Number: {}", 
-                        item.selected
-                    );
                 }
             }
-            VirtualKeyCode::Return => self.select_child(),
+            VirtualKeyCode::Return => {
+                self.check_links();
+                self.select_child();
+            }
             _ => {}
         }
     }
