@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
-use crate::dialogue::{DialogueItem, Link};
+use crate::dialogue::{DialogueItem, Link::*};
 use crate::Flags;
 use crate::scene::{Scene, SceneID};
 use crate::State;
@@ -223,7 +223,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
-        link: Some(Link::Remove),
+        link: None,
         ..Default::default()
 
     };
@@ -235,6 +235,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: Some("king_identity_told_truth".to_string()),
+        link: Some(RemoveSiblings),
         ..Default::default()
 
     };
@@ -246,6 +247,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        link: Some(RemoveSiblings),
         ..Default::default()
 
     };

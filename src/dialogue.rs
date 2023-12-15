@@ -20,7 +20,7 @@ pub struct NodeID {
 }
 
 impl NodeID {
-    pub fn new() -> NodeID {
+    pub fn new() -> Self {
         NodeID {index: 0}
     }
 }
@@ -108,7 +108,11 @@ impl Dialogue {
         }
     }
 
-    pub fn terminal_draw_children(&self, item_id: NodeID) {
+    pub fn remove_siblings(gs: &mut State) {
+
+    }
+
+    fn terminal_draw_children(&self, item_id: NodeID) {
         let item = &self.items[item_id.index];
         println!("-------------------");
         println!("{}", item.choice);
@@ -117,14 +121,26 @@ impl Dialogue {
         }
     }
 
-    pub fn select_child(&mut self) {
+    fn select_child(&mut self) {
         let item = &self.items[self.current.index];
         let selection = &item.children[item.selected];
         let child = &self.items[selection.index];
         
         println!("Selected: {}", child.choice);
         println!("Item Selected Value: {}", item.selected);
+        self.check_links(child.id);
         self.traverse(child.id);
+    }
+
+    fn check_links(&self, item_id: NodeID) {
+        let item = &self.items[item_id.index];
+        let link = &item.link;
+        println!("Links: {:?}", link);
+        if link.is_some() {
+            match link.unwrap() {
+                
+            }
+        }
     }
 
     fn traverse(&mut self, item_id: NodeID) {
@@ -134,8 +150,6 @@ impl Dialogue {
         println!("Traversed to: {}", item.choice);
         self.terminal_draw_children(item_id);
     }
-
-
 
     pub fn end_dialogue(&self, gs: &mut State) {
        

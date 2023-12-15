@@ -75,6 +75,11 @@ fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
 // Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
+    if gs.run_mode == RunMode::Start {
+
+    }
+    
+    
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
         Scene::update_text(gs);
 
@@ -98,7 +103,10 @@ fn update(gs: &mut State) {
             println!("Link Detected.");
             match dialogue.items[dialogue.current.index].link.as_ref().unwrap() {
                 Link::Remove => println!("Linktype: Remove"),
-                Link::RemoveSiblings => println!("Linktype: Remove Siblings"),
+                Link::RemoveSiblings => {
+                    println!("Linktype: Remove Siblings");
+                    // Dialogue::remove_siblings(gs);
+                }
                 _ => todo!(),
             };
         }
