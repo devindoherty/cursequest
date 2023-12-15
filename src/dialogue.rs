@@ -14,10 +14,11 @@ pub enum Link {
     CheckStat{stat_name: String, difficulty: i32},
 }
 
-#[derive(Copy, Clone, Debug, Default)]
+#[derive(Copy, Clone, Debug, Default, PartialEq)]
 pub struct NodeID {
     pub index: usize,
 }
+
 
 impl NodeID {
     pub fn new() -> Self {
@@ -61,6 +62,7 @@ impl DialogueItem {
 pub struct Dialogue {
     pub items: Vec<DialogueItem>,
     pub current: NodeID,
+    pub previous: NodeID,
 }
 
 impl Dialogue {
@@ -68,6 +70,7 @@ impl Dialogue {
         Dialogue {
             items: Vec::new(),
             current: NodeID { index: 0 },
+            previous: NodeID {index: 0},
         }
     }
 
@@ -114,10 +117,10 @@ impl Dialogue {
         
         let item = &mut self.items[self.current.index];
         
-        item.children = Vec::new();
-        item.children.push(child);
-        
 
+        item.children.retain(|&x| x == child);
+        item.selected = 0;
+        // item.children.push(child);
     }
 
     fn current_selection(&self) -> NodeID {
@@ -161,6 +164,7 @@ impl Dialogue {
     }
 
     fn traverse(&mut self, item_id: NodeID) {
+        self.previous = self.current;
         self.current = item_id;
         let item = &self.items[item_id.index];
         // self.change_text();
