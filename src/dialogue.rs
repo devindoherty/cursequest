@@ -9,7 +9,7 @@ pub enum Link {
     Remove,
     RemoveSiblings,
     Move,
-    Change,
+    Change {change_text: String},
     CheckSkill{skill_name: String, difficulty: i32},
     CheckStat{stat_name: String, difficulty: i32},
 }
@@ -36,26 +36,6 @@ pub struct DialogueItem <> {
     pub link: Option<Link>, 
 }
 
-
-
-impl DialogueItem {
-    pub fn change_choice(&mut self, updated_choice: &str) {
-        self.choice = updated_choice.to_string();
-    }
-
-    pub fn change_response(&self, updated_response: &str) {
-
-    }
-
-    pub fn raise_flag(&self){
-
-    }
-
-    pub fn skill_choice(&mut self) {
-        
-    }
-
-}
 
 #[derive(Clone, Debug)]
 pub struct Dialogue {
@@ -84,10 +64,8 @@ impl Dialogue {
         item.children.push(child_id);
     }
 
-    pub fn remove_child(&mut self, item_id: NodeID, child_id: NodeID) {
-        let _item = &mut self.items[item_id.index];
-        let _child = &mut self.items[child_id.index];
-        // item.children.remove(child); // TODO! Rework remove
+    pub fn remove_child(&mut self) {
+        todo!();
     }
     
     pub fn find_child(&self, item_id: NodeID, child_id: NodeID, _search: &str) {
@@ -116,8 +94,10 @@ impl Dialogue {
         
         item.children = Vec::new();
         item.children.push(child);
-        
+    }
 
+    fn change(&self, change_text: &String) {
+        todo!();
     }
 
     fn current_selection(&self) -> NodeID {
@@ -151,10 +131,10 @@ impl Dialogue {
 
         if link.is_some() {
             match link.as_ref().unwrap() {
-                Link::RemoveSiblings => {
-                    // item.children = vec![]
-                    self.remove_siblings();
-                },
+                Link::Remove => self.remove_child(),
+                Link::RemoveSiblings => self.remove_siblings(),
+                Link::Change {change_text} => self.change(change_text),
+
                 _  => todo!(),
             }
         }
