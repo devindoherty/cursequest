@@ -65,6 +65,10 @@ impl StageManager {
         self.onstage.index
     }
 
+    pub fn current_scene_id(&self) -> &SceneID {
+        &self.onstage
+    }
+
 }
 
 impl Scene {

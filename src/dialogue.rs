@@ -10,8 +10,8 @@ pub enum Link {
     RemoveSiblings,
     Move,
     Change {change_text: String},
-    CheckSkill{skill_name: String, difficulty: i32},
-    CheckStat{stat_name: String, difficulty: i32},
+    SkillCheck{skill_name: String, difficulty: i32},
+    StatCheck{stat_name: String, difficulty: i32},
 }
 
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
@@ -36,7 +36,6 @@ pub struct DialogueItem <> {
     pub flag_names: Option<String>,
     pub link: Option<Link>, 
 }
-
 
 #[derive(Clone, Debug)]
 pub struct Dialogue {
@@ -89,17 +88,16 @@ impl Dialogue {
         }
     }
 
-    pub fn remove_siblings(&mut self) {
-        let selection = self.current_selection();
-        let child = self.items[selection.index].id;
+    fn remove_siblings(&mut self) { // Need to fix for top down usage!
+        let mut parent = &mut self.items[self.previous.index];
+        let mut children = &mut parent.children;
+        let child = self.current;
         
-        let item = &mut self.items[self.current.index];
-        
-        item.children = Vec::new();
-        item.children.push(child);
+        parent.selected = 0;
+        children.retain(|&x| x == child);
     }
 
-    fn change(&self, change_text: &String) {
+    fn change(&self, change_text: String) {
         todo!();
     }
 
@@ -107,6 +105,20 @@ impl Dialogue {
         let item = &self.items[self.current.index];
         let selection = &item.children[item.selected];
         *selection
+    }
+
+    fn previous_selection(&self) -> NodeID {
+        let item = &self.items[self.previous.index];
+        let selection = &item.children[item.selected];
+        *selection
+    }
+
+    fn skill_check(&self, skill_name: String, difficulty: i32, player_skill_level: i32) -> bool {
+        if player_skill_level >= difficulty {
+            return true
+        }
+        false
+        // todo!();
     }
 
     fn terminal_draw_children(&self, item_id: NodeID) {
@@ -126,28 +138,57 @@ impl Dialogue {
         self.traverse(child.id);
     }
 
-    fn check_links(&mut self) {
-        let item = &self.items[self.current.index];
-        let selection = &item.children[item.selected];
-        let child = &self.items[selection.index];
-        let link = &child.link;
+    // fn check_links(&mut self) {
+    //     let item = &self.items[self.current.index];
+    //     let selection = &item.children[item.selected];
+    //     let child = &self.items[selection.index];
+    //     let link = &child.link;
+
+    //     if link.is_some() {
+    //         match link.as_ref().unwrap() {
+    //             Link::Remove => self.remove_child(),
+    //             Link::RemoveSiblings => self.remove_siblings(),
+    //             Link::Change {change_text} => self.change(change_text),
+    //             Link::SkillCheck {
+    //                 skill_name, 
+    //                 difficulty } => self.skill_check(skill_name, difficulty),
+    //             _  => todo!(),
+    //         }
+    //     }
+    // }
+    
+    pub fn update_links(gs: &mut State) {
+        let mut item = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_mut().unwrap(); // TODO: Fix this to be DItem, not Dialogue
+        let mut link = &mut item.items[item.current.index].link;
 
         if link.is_some() {
-            match link.as_ref().unwrap() {
-                Link::Remove => self.remove_child(),
-                Link::RemoveSiblings => self.remove_siblings(),
-                Link::Change {change_text} => self.change(change_text),
-
+            match link.as_mut().unwrap() {
+                Link::Remove => item.remove_child(),
+                Link::RemoveSiblings => item.remove_siblings(),
+                Link::Change {change_text} => { 
+                    let change_text = change_text.clone();
+                    item.change(change_text);
+                },
+                Link::SkillCheck { skill_name, difficulty } => {
+                    let skill_name = skill_name.clone();
+                    let difficulty = difficulty.clone();
+                    let player_skill = gs.player.skills[0].value;
+                    if item.skill_check(skill_name, difficulty, player_skill) {
+                        println!("Skillcheck passed");
+                    } else {
+                        println!("Skillcheck failed");
+                    };
+                },
                 _  => todo!(),
             }
         }
     }
-
+    
     fn traverse(&mut self, item_id: NodeID) {
-        self.previous = self.current;
+        self.previous = self.current; 
+        println!("{:?}", self.items[self.previous.index]);
         self.current = item_id;
         let item = &self.items[item_id.index];
-        // self.change_text();
         println!("Traversed to: {}", item.choice);
         self.terminal_draw_children(item_id);
     }
@@ -178,7 +219,7 @@ impl Dialogue {
                 }
             }
             VirtualKeyCode::Return => {
-                self.check_links();
+                // self.check_links();
                 self.select_child();
             }
             _ => {}

@@ -9,6 +9,8 @@ pub struct Player {
     pub health: i32,
     pub magic: i32,
     pub stats: Statistics,
+    pub skills: Vec<Skill>,
+    
     // pub inv: Inventory,
     // pub journal: Journal,
 }

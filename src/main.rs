@@ -82,6 +82,7 @@ fn update(gs: &mut State) {
     
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
         Scene::update_text(gs);
+        Dialogue::update_links(gs);
 
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
@@ -99,17 +100,17 @@ fn update(gs: &mut State) {
             }
         }
         
-        if dialogue.items[dialogue.current.index].link.is_some() {
-            println!("Link Detected.");
-            match dialogue.items[dialogue.current.index].link.as_ref().unwrap() {
-                Link::Remove => println!("Linktype: Remove"),
-                Link::RemoveSiblings => {
-                    println!("Linktype: Remove Siblings");
-                    // Dialogue::remove_siblings(gs);
-                }
-                _ => todo!(),
-            };
-        }
+        // if dialogue.items[dialogue.current.index].link.is_some() {
+        //     println!("Link Detected.");
+        //     match dialogue.items[dialogue.current.index].link.as_ref().unwrap() {
+        //         Link::Remove => println!("Linktype: Remove"),
+        //         Link::RemoveSiblings => {
+        //             println!("Linktype: Remove Siblings");
+        //             // Dialogue::remove_siblings(gs);
+        //         }
+        //         _ => todo!(),
+        //     };
+        // }
     }
 }
 
@@ -185,6 +186,14 @@ fn main() -> BError {
             mind: 50,
             soul: 50,
         },
+        skills: vec![
+            Skill {
+                name: String::from("Sword"),
+                desc: String::from("Mastery of the Cursed Blade."),
+                value: 10,
+                abilities: vec![],
+            }
+        ]
     };
 
     let raw_world_map = Map::load("assets/worldmap.txt");

@@ -300,6 +300,7 @@ pub fn shir() -> Scene {
         children: vec![],
         selected: 0,
         flag_names: None,
+        link: Some(SkillCheck {skill_name: "Swords".to_string(), difficulty: 1 }),
         ..Default::default()
 
     };
