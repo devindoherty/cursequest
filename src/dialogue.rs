@@ -12,6 +12,7 @@ pub enum Link {
     Change {change_text: String},
     SkillCheck{skill_name: String, difficulty: i32},
     StatCheck{stat_name: String, difficulty: i32},
+    Unselectable,
 }
 
 #[derive(Copy, Clone, Debug, Default, PartialEq)]
@@ -113,7 +114,7 @@ impl Dialogue {
         *selection
     }
 
-    fn skill_check(&self, skill_name: String, difficulty: i32, player_skill_level: i32) -> bool {
+    fn skill_check(&self, difficulty: i32, player_skill_level: i32) -> bool {
         if player_skill_level >= difficulty {
             return true
         }
@@ -172,12 +173,19 @@ impl Dialogue {
                 Link::SkillCheck { skill_name, difficulty } => {
                     let skill_name = skill_name.clone();
                     let difficulty = difficulty.clone();
-                    let player_skill = gs.player.skills[0].value;
-                    if item.skill_check(skill_name, difficulty, player_skill) {
-                        println!("Skillcheck passed");
-                    } else {
-                        println!("Skillcheck failed");
-                    };
+                    for skill in &gs.player.skills {
+                        if skill.name == skill_name {
+                            let player_skill_level = skill.value;
+                            if item.skill_check(difficulty, player_skill_level) {
+                                println!("Skillcheck passed");
+                            } else {
+                                println!("Skillcheck failed");
+                                item.items[item.current.index].link = Some(Link::Unselectable);
+                            };
+                        }
+                    }
+                    
+
                 },
                 _  => todo!(),
             }
@@ -241,7 +249,9 @@ impl Dialogue {
                     self.items[child.index].choice.to_string(),
                 );
                 y += 1;
-            } else {
+            } 
+            // if self.items[child.index].link.is_some() && self.items[child.index].link.unwrap() = Link::Unselectable {}w
+            else {
                 ctx.print_color(
                     3,
                     y,

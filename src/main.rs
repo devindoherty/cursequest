@@ -192,6 +192,12 @@ fn main() -> BError {
                 desc: String::from("Mastery of the Cursed Blade."),
                 value: 10,
                 abilities: vec![],
+            },
+            Skill {
+                name: String::from("Sorcery"),
+                desc: String::from("Knowledge of the secrets of magic."),
+                value: 0,
+                abilities: vec![],
             }
         ]
     };
