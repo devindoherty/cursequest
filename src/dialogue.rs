@@ -3,7 +3,7 @@ use bracket_lib as bracket;
 
 use crate::{init, State, Skill, Statistics, RunMode};
 
-#[derive(Clone, Debug, Default)]
+#[derive(Clone, Debug, Default, PartialEq)]
 pub enum Link {
     #[default]
     Remove,
@@ -19,7 +19,6 @@ pub enum Link {
 pub struct NodeID {
     pub index: usize,
 }
-
 
 impl NodeID {
     pub fn new() -> Self {
@@ -114,6 +113,10 @@ impl Dialogue {
         *selection
     }
 
+    fn current_dialogue_item(&mut self) -> &mut DialogueItem {
+        &mut self.items[self.current.index]
+    }
+
     fn skill_check(&self, difficulty: i32, player_skill_level: i32) -> bool {
         if player_skill_level >= difficulty {
             return true
@@ -139,24 +142,20 @@ impl Dialogue {
         self.traverse(child.id);
     }
 
-    // fn check_links(&mut self) {
-    //     let item = &self.items[self.current.index];
-    //     let selection = &item.children[item.selected];
-    //     let child = &self.items[selection.index];
-    //     let link = &child.link;
+    fn check_links(&mut self) {
+        let item = &mut self.items[self.current.index];
+        let children = &mut self.items;
 
-    //     if link.is_some() {
-    //         match link.as_ref().unwrap() {
-    //             Link::Remove => self.remove_child(),
-    //             Link::RemoveSiblings => self.remove_siblings(),
-    //             Link::Change {change_text} => self.change(change_text),
-    //             Link::SkillCheck {
-    //                 skill_name, 
-    //                 difficulty } => self.skill_check(skill_name, difficulty),
-    //             _  => todo!(),
-    //         }
-    //     }
-    // }
+        for child in children {
+            if child.link.is_some() {
+                match child.link.as_mut().unwrap() {
+                    Link::SkillCheck {skill_name, difficulty} => todo!(),
+                    _ => todo!(),
+                }
+            }
+        }
+
+    }
     
     pub fn update_links(gs: &mut State) {
         let mut item = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_mut().unwrap(); // TODO: Fix this to be DItem, not Dialogue
@@ -184,14 +183,24 @@ impl Dialogue {
                             };
                         }
                     }
-                    
-
                 },
+                Link::Unselectable => (),
                 _  => todo!(),
             }
+            
+      
         }
     }
     
+    pub fn update_children(gs: &mut State) {
+        let mut item = gs.sm.current_scene().dialogue.as_mut().unwrap();
+
+        for child_id in &mut item.items[item.current.index].children {
+            let item = item.items[child_id.index];
+        }
+
+    }
+
     fn traverse(&mut self, item_id: NodeID) {
         self.previous = self.current; 
         println!("{:?}", self.items[self.previous.index]);
@@ -240,6 +249,7 @@ impl Dialogue {
         let item = &self.items[self.current.index];
         let display = &item.response;
         for (pos, child) in item.children.iter().enumerate() {
+            // Currently selected
             if pos == item.selected {
                 ctx.print_color(
                     3,
@@ -250,7 +260,18 @@ impl Dialogue {
                 );
                 y += 1;
             } 
-            // if self.items[child.index].link.is_some() && self.items[child.index].link.unwrap() = Link::Unselectable {}w
+            // Skill fail red
+            else if self.items[child.index].link.is_some() && self.items[child.index].link.clone().unwrap() == Link::Unselectable {
+                ctx.print_color(
+                    3,
+                    y,
+                    RGB::named(RED),
+                    RGB::named(BLACK),
+                    self.items[child.index].choice.to_string(),
+                );
+                y += 1;
+            } 
+            // Normal render
             else {
                 ctx.print_color(
                     3,

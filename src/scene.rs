@@ -7,6 +7,7 @@ use crate::State;
 use crate::Menu;
 use crate::Dialogue;
 use crate::RunMode;
+use crate::dialogue::DialogueItem;
 use crate::init;
 
 
@@ -57,8 +58,8 @@ impl StageManager {
         ()
     }
 
-    pub fn current_scene(&self) -> &Scene {
-        &self.scenes[self.onstage.index]
+    pub fn current_scene(&mut self) -> &mut Scene {
+        &mut self.scenes[self.onstage.index]
     }
 
     pub fn current_scene_id_index(&self) -> usize {
