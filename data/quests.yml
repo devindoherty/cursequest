@@ -1,0 +1,28 @@
+---
+quests:
+  - name: Among the Halflings
+    journal_entry: >
+      I find myself in the care of a small village of halflings. 
+      When I am strong enough, they have asked me to help search
+      for a lost shepherd boy, ere the wolves grow hungry. Is this
+      the work of a king?
+    journal_updates:
+      - update: Helping Roseberry
+        id: 0
+      - update: Forget Roseberry
+        id: 1
+      - update: Found shepherd boy alive
+        id: 2
+      - update: Found shepherd boy dead
+        id: 3
+  - name: The Viscount and the Cobbler's Daughter
+    journal_entry: >
+      Viscount Galan has fallen in love with a commoner. He
+      will support my claim to the throne if I find a way to
+      convince the girl to marry him.
+    journal_updates:
+      - update: Love is in the Air
+        id: 0
+      - update: No Love
+        id: 1
+        

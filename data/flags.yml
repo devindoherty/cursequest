@@ -5,7 +5,7 @@ flags:
   stage: 0
   id: 0
 
-- name: king_identity_told_truth
+- name: told_rose_identity
   flagged: false
   stage: 0
   id: 0
@@ -20,3 +20,7 @@ flags:
   stage: 0
   id: 0
 
+- name: killed_rose
+  flagged: false
+  stage: 0
+  id: 0

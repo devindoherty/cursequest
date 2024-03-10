@@ -196,7 +196,7 @@ impl Dialogue {
         let mut item = gs.sm.current_scene().dialogue.as_mut().unwrap();
 
         for child_id in &mut item.items[item.current.index].children {
-            let item = item.items[child_id.index];
+            
         }
 
     }

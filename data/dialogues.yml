@@ -1,4 +1,6 @@
 ---
-dialogue:
-item
+dialogues:
+- name: awakenings
+  call: 
+
 
