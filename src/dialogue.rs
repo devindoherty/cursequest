@@ -142,20 +142,18 @@ impl Dialogue {
         self.traverse(child.id);
     }
 
-    fn check_links(&mut self) {
-        let item = &mut self.items[self.current.index];
-        let children = &mut self.items;
+    // fn update_child_links(gs: &mut State) {
+    //     let mut item = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_mut().unwrap(); // TODO: Fix this to be DItem, not Dialogue
+    //     let children = &mut item.items[item.current.index].children;
 
-        for child in children {
-            if child.link.is_some() {
-                match child.link.as_mut().unwrap() {
-                    Link::SkillCheck {skill_name, difficulty} => todo!(),
-                    _ => todo!(),
-                }
-            }
-        }
-
-    }
+    //     for child_id in children {
+    //         let child = &mut item.items[child_id.index];
+    //         match child.link.as_mut().unwrap() {
+    //             Link::SkillCheck {skill_name, difficulty} => todo!(),
+    //             _ => todo!(),
+    //         }
+    //     }
+    // }
     
     pub fn update_links(gs: &mut State) {
         let mut item = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_mut().unwrap(); // TODO: Fix this to be DItem, not Dialogue

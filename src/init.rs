@@ -16,8 +16,6 @@ use crate::Skill;
 
 use crate::{Menu, MenuItem};
 
-
-
 pub fn start_menu() -> Menu {
     // Start Menu
     let start_item_one = MenuItem {
