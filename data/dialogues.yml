@@ -9,18 +9,20 @@ dialogues:
     You awaken in a small, rustic home. The woman seated beside you is perhaps three 
     feet tall at most. She looks relieved when you open your eyes. "You have stirred. 
     Good. You were half dead when we found you. Rest now. You are safe."
-  children: awakened_where
+  children: 
+    - awakened_where
+    - awakened_identity
 
 - dialogue: awakened_alt_root
   choice: Let us speak of other things.
   response: Roseberry tends to your wounds quietly.
   children: 
     - awakened_where
-    - 
+    - awakened_identity
 
 - dialogue: awakened_where 
-  choice: String::from("Where am I?"),
-  response: You are in the Shir Valley, in the village of Finn's Glenn.
+  choice: Where am I?
+  response: "You are in the Shir Valley, in the village of Finn's Glenn."
   children: 
     - awakened_village
     - awakened_village_lore
@@ -29,9 +31,9 @@ dialogues:
 - dialogue: awakened_village
   choice: This is a halfling village?
   response: > 
-    It is. We are a humble folk, the Hobs of the Shir Valley. What 
+    "It is. We are a humble folk, the Hobs of the Shir Valley. What 
     some might say we lack in stature, we make up for in a myriad 
-    of other ways. I hope you remember our hospitality in the days ahead.
+    of other ways. I hope you remember our hospitality in the days ahead."
   children: 
     - awakened_alt_root
 
@@ -41,14 +43,15 @@ dialogues:
     - skill: Lore
     - check: 1
   response: >
-    The halflings, or Hobs, of Shir Valley are an ancient people, said to be 
-    related to faeries, known to be brave and loyal. Roseberry seems surprised.
+    The hobs of Shir Valley are an ancient people, said to be related to faeries, 
+    known to be brave and loyal. Roseberry seems surprised.
     "You know the stories of my people? I am glad. Few men or dwarves, nor even 
     elves venture here. Fewer still since the death of the last king."
   children: 
+    - awakened_old_king
     - awakened_alt_root
         
-- dialogue:
+- dialogue: awakened_old_king
   choice: King Kull is dead, then?
   response: >
     The little woman sighs and pats your shoulder. "It is said he died within 
@@ -58,74 +61,51 @@ dialogues:
   children:
     - awakened_alt_root
 
+- dialogue: awakened_hospitality
+  choice: As you have offered your home to me, mine is open to you. [CUSTOMS 1]
+  response: >
+    "That is kind of you, but I fear we may find your halls less than hospitable, 
+    at the moment."
+  children:
+    - awakened_alt_root
 
-    let encounter_item_one_gamma = DialogueItem {
-        choice: String::from("As you have offered your home to me, mine is open to you. [CUSTOMS 1]"),
-        response: String::from("\"That is kind of you, but I fear we may find your halls less than hospitable, at the moment.\""),
-        id: NodeID {index: 0},
-        children: vec![],
-        selected: 0,
-        flag_names: None,
-        ..Default::default()
+- dialogue: awakened_identity
+  choice: Who are you?
+  response: >
+   "Why, I'm Roseberry, the village's apothecary. This is my humble home."
+   She smiles at you. "Be welcome."
+  children:
+    - awakened_king_identity_truth
+    - awakened_king_identity_lie
+  
+- dialogue: awakened_king_identity_truth
+  choice: Well met, Roseberry. I am Kryll, the rightful king of Klathia.
+  response: >
+    Roseberry smiles, although her face is beset with sadness. She bows her head. 
+    "I know. I recognize your face, my king. Were that these less grim times, the 
+    people of Finn's Glenn would honor your return with celebration."  
+  flags: king_identity_told_truth
+  link: RemoveSiblings
+  children:
+    - awakened_alt_root
+  
+- dialogue: awakened_king_identity_lie
+  choice: String::from("Greetings, Roseberry. I am merely a passerby of little renown."),
+  response: String::from("Roseberry smiles strangely but nods, \"But of course. You are welcome all the same.\""),
+  link: RemoveSiblings
+  children:
+    - awakened_alt_root
 
-    }; 
-
-    let encounter_item_two = DialogueItem {
-        choice: String::from("Who are you?"),
-        response: String::from("\"Why, I'm Roseberry, the village's apothecary. This is my humble home.\" She smiles at you. \"Be welcome.\""),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-        flag_names: None,
-        link: None,
-        ..Default::default()
-
-    };
-
-    let encounter_item_two_alpha = DialogueItem {
-        choice: String::from("Well met, Roseberry. I am Kryll, the rightful king of Klathia."),
-        response: String::from("Roseberry smiles, although her face is beset with sadness. She bows her head. \"I know. I recognize your face, my king. Were that these less grim times, the people of Finn's Glenn would honor your return with celebration.\""),
-        id: NodeID::new(),
-        children: vec![],
-        selected: 0,
-        flag_names: Some("king_identity_told_truth".to_string()),
-        link: Some(RemoveSiblings),
-        ..Default::default()
-
-    };
-
-    let encounter_item_two_beta = DialogueItem {
-        choice: String::from("Greetings, Roseberry. I am merely a passerby of little renown."),
-        response: String::from("Roseberry smiles strangely but nods, \"But of course. You are welcome all the same.\""),
-        id: NodeID::new(),
-        children: vec![],
-        selected: 0,
-        flag_names: None,
-        link: Some(RemoveSiblings),
-        ..Default::default()
-
-    };
-
-    let encounter_item_three = DialogueItem {
-        choice: String::from("What happened?"),
-        response: String::from(
-            "\"A group of hunters from my village found you collapsed in the wilderness. You were holding that.\" She points to an ancient blade among your belongings. \"I had you brought here and have nursed you back to health.\" You hear a faint whispering from the blade, as if it... calls to you."
-        ),
-        id: NodeID { index: 0 },
-        children: vec![],
-        selected: 0,
-        flag_names: None,
-        ..Default::default()
-
-    };
-
-    let encounter_item_three_altered = DialogueItem {
-        choice: String::from("Investigate the blade further."),
-        response: String::from(
-            "Whispers fill the air. The blade calls to you. Roseberry shivers."
-        ),
-        id: NodeID { index: 0 },
-        children: vec![],
+- dialogue: awakened_happened
+  choice: String::from("What happened?"),
+  response: "A group of hunters from my village found you collapsed in the wilderness. You were holding that.\" She points to an ancient blade among your belongings. \"I had you brought here and have nursed you back to health.\" You hear a faint whispering from the blade, as if it... calls to you."
+  children: vec![],
+  flag_names: None,
+  
+- dialogue:
+  choice: Investigate the blade further.
+  response: Whispers fill the air. The blade calls to you. Roseberry shivers.
+  children: vec![],
         selected: 0,
         flag_names: None,
         ..Default::default()
