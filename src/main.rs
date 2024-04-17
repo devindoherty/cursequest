@@ -20,7 +20,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{Dialogue, NodeID, Link};
+use dialogue::{Dialogue, Dialogues, NodeID, Link};
 
 mod flag;
 use flag::*;
@@ -46,6 +46,8 @@ pub struct State {
     startart: Art,
     log: Vec<String>,
     flags: Flags,
+    scenes: Vec<Scene>,
+    dialogues: Vec<Dialogues>,
 }
 
 impl State {}
@@ -117,7 +119,7 @@ fn update(gs: &mut State) {
 // Renders the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
     if gs.run_mode == RunMode::Start {
-        gs.startart.draw(ctx, 16, 0);
+        gs.startart.draw(ctx, 16, 8);
         ctx.print_color(
             1,
             41,
@@ -211,9 +213,11 @@ fn main() -> BError {
         run_mode: RunMode::Start,
         menu: init::start_menu(),
         sm: StageManager::new(1, vec![], SceneID { index: 0 }),
-        startart: Art::new("assets/title_alt2.txt", String::from("Curse Quest")),
+        startart: Art::new("assets/title.txt", String::from("Curse Quest")),
         log: Vec::new(),
         flags: init::load_flags(),
+        dialogues: Vec::new(),
+        scenes: Vec::new(),
     };
 
     let prologue = init::prologue();

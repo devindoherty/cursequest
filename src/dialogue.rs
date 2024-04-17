@@ -1,9 +1,11 @@
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
+use serde::{Deserialize, Serialize};
+
 use crate::{init, State, Skill, Statistics, RunMode};
 
-#[derive(Clone, Debug, Default, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
 pub enum Link {
     #[default]
     Remove,
@@ -15,7 +17,7 @@ pub enum Link {
     Unselectable,
 }
 
-#[derive(Copy, Clone, Debug, Default, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Default, PartialEq)]
 pub struct NodeID {
     pub index: usize,
 }
@@ -26,7 +28,7 @@ impl NodeID {
     }
 }
 
-#[derive(Clone, Debug, Default)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct DialogueItem <> {
     pub id: NodeID,
     pub response: String,
@@ -35,6 +37,11 @@ pub struct DialogueItem <> {
     pub selected: usize,
     pub flag_names: Option<String>,
     pub link: Option<Link>, 
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Dialogues {
+    items: Vec<DialogueItem>
 }
 
 #[derive(Clone, Debug)]

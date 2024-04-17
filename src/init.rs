@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use crate::Art;
 // use crate::Map;
 use crate::Dialogue;
-use crate::dialogue::{DialogueItem, Link::*};
+use crate::dialogue::{Dialogues, DialogueItem, Link::*};
 use crate::Flags;
 use crate::scene::{Scene, SceneID};
 use crate::State;
@@ -117,9 +117,9 @@ pub fn travel_menu() -> Vec<MenuItem> {
 pub fn prologue() -> Scene {
     let title = String::from("Prologue");
     let text = String::from(
-        "A decade ago, the Uncrowned King usurped the kingdom from you and banished you to a life of exile. In your wandering you have come across a mysterious crown fit for a king. Placing the crown upon your head, you feel your strength falter and you lose consciousness in the wilderness...                                                                                      Press any key to continue..."
+        "A decade ago, the Uncrowned King usurped the throne from you and banished you to a life of exile. In your wandering, you come across the tomb of a ancient king. Hewn into the stone there is a magical sword. Grasping the blade and pulling it from the stone, you fade into darkness..."
     );
-    let art = Art::new("assets/king.txt", String::from("king"));
+    let art = Art::new("assets/title_alt2.txt", String::from("king"));
     let menu: Option<Menu> = None;
     let dialogue: Option<Dialogue> = None;
 
@@ -585,6 +585,14 @@ pub fn _skills() {
         value: 10,
         abilities: vec![],
     };
+}
+
+
+
+pub fn load_dialogues() -> Dialogues {
+    let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
+    let reader: Dialogues = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
+    reader
 }
 
 pub fn load_flags() -> Flags {

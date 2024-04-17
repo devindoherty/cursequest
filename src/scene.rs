@@ -129,7 +129,7 @@ impl Scene {
         block.render_to_draw_batch(&mut draw_batch);
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
-        self.art.draw(ctx, 30, 25);
+        self.art.draw(ctx, 25, 10);
     }
 
     // Half screen within
