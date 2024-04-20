@@ -71,7 +71,7 @@ dialogues:
     A cold silence pierces the darkness. "The powers I offer you are immense. But they 
     come at the price you have told me you are willing to pay. I shall remain magnanimous. 
     Your debts are deferred, for the moment." The voice pauses. Light creeps into 
-    your vision. "Remember, princeling, the $pc_price." Blinding light.
+    your vision. "Remember, princeling, the $pc_price." Then nothing but blinding light.
   children:
     - blade_intro_end
 

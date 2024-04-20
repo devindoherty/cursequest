@@ -41,7 +41,15 @@ pub struct DialogueItem <> {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Dialogues {
-    items: Vec<DialogueItem>
+    items: Vec<NewDialogue>
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+struct NewDialogue {
+    choice: String,
+    response: String,
+    skillcheck: (String, i32),
+    children: Vec<String>,
 }
 
 #[derive(Clone, Debug)]
