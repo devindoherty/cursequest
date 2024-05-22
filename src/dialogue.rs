@@ -3,89 +3,72 @@ use bracket_lib as bracket;
 
 use serde::{Deserialize, Serialize};
 
-use crate::{init, State, Skill, Statistics, RunMode};
+use crate::{init, FlagID, RunMode, Skill, State, Statistics};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Default, PartialEq)]
-pub enum Link {
-    #[default]
-    Remove,
-    RemoveSiblings,
-    Move,
-    Change {change_text: String},
-    SkillCheck{skill_name: String, difficulty: i32},
-    StatCheck{stat_name: String, difficulty: i32},
-    Unselectable,
+pub struct Status {
+    visible: bool,
+    selectable: bool,
 }
 
 #[derive(Serialize, Deserialize, Copy, Clone, Debug, Default, PartialEq)]
-pub struct NodeID {
+pub struct DialogueID {
     pub index: usize,
 }
 
-impl NodeID {
+impl DialogueID {
     pub fn new() -> Self {
-        NodeID {index: 0}
+        DialogueID {index: 0}
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, Default)]
-pub struct DialogueItem <> {
-    pub id: NodeID,
-    pub response: String,
-    pub choice: String,
-    pub children: Vec<NodeID>,
-    pub selected: usize,
-    pub flag_names: Option<String>,
-    pub link: Option<Link>, 
+#[derive(Serialize, Deserialize, Debug)]
+struct Dialogue {
+    id: DialogueID,
+    choice: String,
+    response: String,
+    status: Option<Status>,
+    skillcheck: Option<(String, i32)>,
+    flags: Option<Vec<FlagID>>,
+    children: Vec<DialogueID>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Dialogues {
-    items: Vec<NewDialogue>
+    items: Vec<Dialogue>,
+    current: DialogueID,
+    previous: DialogueID,
+    selected: usize,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-struct NewDialogue {
-    choice: String,
-    response: String,
-    skillcheck: (String, i32),
-    children: Vec<String>,
-}
-
-#[derive(Clone, Debug)]
-pub struct Dialogue {
-    pub items: Vec<DialogueItem>,
-    pub current: NodeID,
-    pub previous: NodeID,
-}
-
-impl Dialogue {
-    pub fn new() -> Dialogue {
-        Dialogue {
+impl Dialogues {
+    pub fn new() -> Dialogues {
+        Dialogues {
             items: Vec::new(),
-            current: NodeID { index: 0 },
-            previous: NodeID {index: 0},
+            current: DialogueID {index: 0},
+            previous: DialogueID {index: 0},
+            selected: 0,
         }
     }
 
-    pub fn add_item(&mut self, mut item: DialogueItem) -> NodeID {
+    pub fn register_dialogue(&mut self, mut dialogue: Dialogue) -> DialogueID {
         let next_index = self.items.len();
-        item.id.index = next_index;
+        dialogue.id.index = next_index;
         // println!("Diaglogue: The index of {} is now: {}", item.choice, next_index);
-        self.items.push(item);
-        NodeID { index: next_index }
+        self.items.push(dialogue);
+        DialogueID { index: next_index }
     }
 
-    pub fn add_child(&mut self, item_id: NodeID, child_id: NodeID) {
+    pub fn add_child(&mut self, item_id: DialogueID, child_id: DialogueID) {
         let item = &mut self.items[item_id.index];
         item.children.push(child_id);
     }
 
-    pub fn remove_child(&mut self) {
-        todo!();
+    pub fn remove_child(&mut self, item_id: DialogueID, child_id: DialogueID) {
+        self.items.retain(|item| item.id != child_id);
     }
     
-    pub fn find_child(&self, item_id: NodeID, child_id: NodeID, _search: &str) {
+    pub fn find_child(&self, item_id: DialogueID, child_id: DialogueID, _search: &str) {
         let item = &self.items[item_id.index];
         let _child = &self.items[child_id.index];
         for child in &item.children {
@@ -93,7 +76,7 @@ impl Dialogue {
         }
     }
 
-    pub fn list_children(&self, item_id: NodeID) {
+    pub fn list_children(&self, item_id: DialogueID) {
         let item = &self.items[item_id.index];
         for child in &item.children {
             println!(
@@ -107,8 +90,7 @@ impl Dialogue {
         let mut parent = &mut self.items[self.previous.index];
         let mut children = &mut parent.children;
         let child = self.current;
-        
-        parent.selected = 0;
+        self.selected = 0;
         children.retain(|&x| x == child);
     }
 
@@ -116,31 +98,23 @@ impl Dialogue {
         todo!();
     }
 
-    fn current_selection(&self) -> NodeID {
+    fn current_selection(&self) -> DialogueID {
         let item = &self.items[self.current.index];
-        let selection = &item.children[item.selected];
+        let selection = &item.children[self.selected];
         *selection
     }
 
-    fn previous_selection(&self) -> NodeID {
+    fn previous_selection(&self) -> DialogueID {
         let item = &self.items[self.previous.index];
-        let selection = &item.children[item.selected];
+        let selection = &item.children[self.selected];
         *selection
     }
 
-    fn current_dialogue_item(&mut self) -> &mut DialogueItem {
-        &mut self.items[self.current.index]
+    fn get_current_dialogue(&mut self) -> DialogueID {
+        self.current
     }
 
-    fn skill_check(&self, difficulty: i32, player_skill_level: i32) -> bool {
-        if player_skill_level >= difficulty {
-            return true
-        }
-        false
-        // todo!();
-    }
-
-    fn terminal_draw_children(&self, item_id: NodeID) {
+    fn terminal_draw_children(&self, item_id: DialogueID) {
         let item = &self.items[item_id.index];
         println!("-------------------");
         println!("{}", item.choice);
@@ -151,70 +125,13 @@ impl Dialogue {
 
     fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        let selection = &item.children[item.selected];
+        let selection = &item.children[self.selected];
         let child = &self.items[selection.index];
                 
         self.traverse(child.id);
     }
 
-    // fn update_child_links(gs: &mut State) {
-    //     let mut item = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_mut().unwrap(); // TODO: Fix this to be DItem, not Dialogue
-    //     let children = &mut item.items[item.current.index].children;
-
-    //     for child_id in children {
-    //         let child = &mut item.items[child_id.index];
-    //         match child.link.as_mut().unwrap() {
-    //             Link::SkillCheck {skill_name, difficulty} => todo!(),
-    //             _ => todo!(),
-    //         }
-    //     }
-    // }
-    
-    pub fn update_links(gs: &mut State) {
-        let mut item = gs.sm.scenes[gs.sm.onstage.index].dialogue.as_mut().unwrap(); // TODO: Fix this to be DItem, not Dialogue
-        let mut link = &mut item.items[item.current.index].link;
-
-        if link.is_some() {
-            match link.as_mut().unwrap() {
-                Link::Remove => item.remove_child(),
-                Link::RemoveSiblings => item.remove_siblings(),
-                Link::Change {change_text} => { 
-                    let change_text = change_text.clone();
-                    item.change(change_text);
-                },
-                Link::SkillCheck { skill_name, difficulty } => {
-                    let skill_name = skill_name.clone();
-                    let difficulty = difficulty.clone();
-                    for skill in &gs.player.skills {
-                        if skill.name == skill_name {
-                            let player_skill_level = skill.value;
-                            if item.skill_check(difficulty, player_skill_level) {
-                                println!("Skillcheck passed");
-                            } else {
-                                println!("Skillcheck failed");
-                                item.items[item.current.index].link = Some(Link::Unselectable);
-                            };
-                        }
-                    }
-                },
-                Link::Unselectable => (),
-                _  => todo!(),
-            }
-            
-      
-        }
-    }
-    
-    pub fn update_children(gs: &mut State) {
-        let mut item = gs.sm.current_scene().dialogue.as_mut().unwrap();
-
-        for child_id in &mut item.items[item.current.index].children {
-            
-        }
-
-    }
-
-    fn traverse(&mut self, item_id: NodeID) {
+    fn traverse(&mut self, item_id: DialogueID) {
         self.previous = self.current; 
         println!("{:?}", self.items[self.previous.index]);
         self.current = item_id;
@@ -227,25 +144,21 @@ impl Dialogue {
        
     }
 
-    pub fn get_current_item(&self) -> &DialogueItem {
-        &self.items[self.current.index]
-    }
-
     pub fn manage(&mut self, key: VirtualKeyCode) {
         let item = &mut self.items[self.current.index];
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
-                if item.selected == 0 {
+                if self.selected == 0 {
                     () // Do nothing, top of dialogue choices
                 } else {
-                    item.selected -= 1;
+                    self.selected -= 1;
                 }
             }
             VirtualKeyCode::Down | VirtualKeyCode::Numpad2 => {
-                if item.selected >= item.children.len() - 1 {
+                if self.selected >= item.children.len() - 1 {
                     (); // Do Nothing, bottom of dialogue choices
                 } else {
-                    item.selected += 1;
+                    self.selected += 1;
                 }
             }
             VirtualKeyCode::Return => {
@@ -254,6 +167,7 @@ impl Dialogue {
             }
             _ => {}
         }
+        self.selected = 0;
     }
 
     // Rendering dialogue options to choice selection
@@ -263,7 +177,7 @@ impl Dialogue {
         let display = &item.response;
         for (pos, child) in item.children.iter().enumerate() {
             // Currently selected
-            if pos == item.selected {
+            if pos == self.selected {
                 ctx.print_color(
                     3,
                     y,
@@ -273,18 +187,6 @@ impl Dialogue {
                 );
                 y += 1;
             } 
-            // Skill fail red
-            else if self.items[child.index].link.is_some() && self.items[child.index].link.clone().unwrap() == Link::Unselectable {
-                ctx.print_color(
-                    3,
-                    y,
-                    RGB::named(RED),
-                    RGB::named(BLACK),
-                    self.items[child.index].choice.to_string(),
-                );
-                y += 1;
-            } 
-            // Normal render
             else {
                 ctx.print_color(
                     3,

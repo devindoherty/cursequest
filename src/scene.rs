@@ -5,9 +5,8 @@ use serde::{Deserialize, Serialize};
 use crate::Art;
 use crate::State;
 use crate::Menu;
-use crate::Dialogue;
 use crate::RunMode;
-use crate::dialogue::DialogueItem;
+use crate::dialogue::DialogueID;
 use crate::init;
 
 
@@ -23,7 +22,7 @@ pub struct Scene {
     pub text: String,
     pub art: Art,
     pub menu: Option<Menu>,
-    pub dialogue: Option<Dialogue>,
+    pub dialogue: Option<DialogueID>,
     pub fullscreen: bool,
     pub id: SceneID,
 }
@@ -79,7 +78,7 @@ impl Scene {
         art: Art,
         fullscreen: bool,
         menu: Option<Menu>,
-        dialogue: Option<Dialogue>,
+        dialogue: Option<DialogueID>,
         id: SceneID,
     ) -> Self {
         Scene {
@@ -153,7 +152,7 @@ impl Scene {
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
         self.art.draw(ctx, 32, 1);
-        self.dialogue.as_mut().expect("Scene Dialogue Missing Error").draw(ctx);
+        // self.dialogue.as_mut().expect("Scene Dialogue Missing Error").draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
 }

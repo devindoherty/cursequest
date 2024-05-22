@@ -20,7 +20,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{Dialogue, Dialogues, NodeID, Link};
+use dialogue::{Dialogues};
 
 mod flag;
 use flag::*;
@@ -38,16 +38,16 @@ use scene::{Scene, SceneID, StageManager};
 
 // Gamestate struct, contains all data to update for game
 pub struct State {
+    run_mode: RunMode,
     player: Player,
     map: Map,
-    run_mode: RunMode,
     menu: Menu,
     sm: StageManager,
     startart: Art,
     log: Vec<String>,
     flags: Flags,
     scenes: Vec<Scene>,
-    dialogues: Vec<Dialogues>,
+    dialogues: Dialogues,
 }
 
 impl State {}
@@ -84,37 +84,13 @@ fn update(gs: &mut State) {
     
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
         Scene::update_text(gs);
-        Dialogue::update_links(gs);
 
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
         let mut dialogue = scene.dialogue.as_mut().unwrap();
-        let dialogue_flags = &mut dialogue.items[dialogue.current.index].flag_names;
-
-        if dialogue_flags.is_some() {
-            for flag in &mut gs.flags.flags {
-                if flag.name.as_str() == dialogue_flags.as_mut().unwrap() {
-                    if flag.flagged == false {
-                        flag.flagged = true;
-                        println!("Flagged: {:?}", flag);
-                    }
-                }
-            }
-        }
-        
-        // if dialogue.items[dialogue.current.index].link.is_some() {
-        //     println!("Link Detected.");
-        //     match dialogue.items[dialogue.current.index].link.as_ref().unwrap() {
-        //         Link::Remove => println!("Linktype: Remove"),
-        //         Link::RemoveSiblings => {
-        //             println!("Linktype: Remove Siblings");
-        //             // Dialogue::remove_siblings(gs);
-        //         }
-        //         _ => todo!(),
-        //     };
-        // }
     }
 }
+
 
 // Renders the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
@@ -216,7 +192,7 @@ fn main() -> BError {
         startart: Art::new("assets/title.txt", String::from("Curse Quest")),
         log: Vec::new(),
         flags: init::load_flags(),
-        dialogues: Vec::new(),
+        dialogues: init::load_dialogues(),
         scenes: Vec::new(),
     };
 
