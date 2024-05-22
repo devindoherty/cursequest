@@ -119,7 +119,7 @@ pub fn prologue() -> Scene {
     );
     let art = Art::new("assets/title_alt2.txt", String::from("king"));
     let menu: Option<Menu> = None;
-    let dialogue: Option<Dialogue> = None;
+    let dialogue = None;
 
     Scene::new(
         title,
@@ -136,16 +136,19 @@ pub fn shir() -> Scene {
     let title = String::from("Roseberry, Wisewoman Apothecary");
     let text = String::new();
     let art = Art::new("assets/rose.txt", String::from("Roseberry"));
-
+    let menu: Option<Menu> = None;
+    let dialogue = None;
+    
     Scene::new(
         title,
         text,
         art,
-        fullscreen: false,
-        menu: None,
-        dialogue: DialogueID {index: 0},
-        SceneID {index: 1},
+        false,
+        menu,
+        dialogue,
+        SceneID {index: 0},
     )
+
 }
 
 
@@ -163,4 +166,12 @@ pub fn load_flags() -> Flags {
 
 pub fn _load_scenes() {
 
+}
+
+pub fn _load_skills() {
+
+}
+
+pub fn _load_abilities() {
+    
 }
