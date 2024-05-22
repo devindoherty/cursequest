@@ -95,10 +95,10 @@ impl Scene {
     pub fn update_text(gs: &mut State) {
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
-        let mut dialogue = scene.dialogue.as_mut().unwrap();
-        let response = &dialogue.items[dialogue.current.index].response;
+        let mut dialogue = gs.dialogues.items[gs.dialogues.current.index];
+        let response = dialogue.response;
         
-        let updated_text = response.to_string();
+        let updated_text = response;
         if updated_text == "END"{
             // TODO: dialogue.end_dialogue();
             gs.menu = gs.menu.switch(init::main_menu());

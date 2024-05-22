@@ -58,7 +58,7 @@ impl Command for VirtualKeyCode {
                     Self::Down    |
                     Self::Numpad2 |
                     Self::Return  => {
-                        scene.dialogue.as_mut().unwrap().manage(*self);
+                        gs.dialogues.manage(*self);
                     },
                     Self::D => {
                         println!("{:?}", scene);

@@ -28,8 +28,11 @@ use flag::*;
 mod mode;
 use mode::{RunMode};
 
+mod characteristic;
+use characteristic::{Skill, Statistics};
+
 mod player;
-use player::{Player, Skill, Statistics};
+use player::{Player};
 
 mod scene;
 use scene::{Scene, SceneID, StageManager};
@@ -169,13 +172,11 @@ fn main() -> BError {
                 name: String::from("Sword"),
                 desc: String::from("Mastery of the Cursed Blade."),
                 value: 10,
-                abilities: vec![],
             },
             Skill {
                 name: String::from("Sorcery"),
                 desc: String::from("Knowledge of the secrets of magic."),
                 value: 0,
-                abilities: vec![],
             }
         ]
     };

@@ -23,10 +23,10 @@ impl DialogueID {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Dialogue {
+pub struct Dialogue {
     id: DialogueID,
     choice: String,
-    response: String,
+    pub response: String,
     status: Option<Status>,
     skillcheck: Option<(String, i32)>,
     flags: Option<Vec<FlagID>>,
@@ -35,9 +35,9 @@ struct Dialogue {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Dialogues {
-    items: Vec<Dialogue>,
-    current: DialogueID,
-    previous: DialogueID,
+    pub items: Vec<Dialogue>,
+    pub current: DialogueID,
+    pub previous: DialogueID,
     selected: usize,
 }
 

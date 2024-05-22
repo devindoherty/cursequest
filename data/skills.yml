@@ -1,0 +1,35 @@
+--- 
+skills:
+- name: Sword
+  desc: Mastery of the Cursed Blade.
+  value: 10,
+
+- name: Sorcery
+  desc: Knowledge of the secrets of magic.
+  value: 10
+
+- name: Martial
+  desc: Propensity for physical violence and related tactics.
+  value: 0
+
+- name: Regality
+  desc: Measure of kingly authority and right-to-rule.
+  value: 10
+
+- name: Customs
+  desc: Ability to socialize with different classes of society.
+  value: 0
+
+- name: Intrigue
+  desc: Familiarity with the shadows, subterfuge, and trickery.
+  value: 10
+
+- name: Survival
+  desc: Capacity to endure the harsh wildnerness
+  value: 10
+  
+- name: Lore
+  desc: Knowledge of history, sciences, and other esoterica
+  value: 10 
+  
+

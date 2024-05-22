@@ -6,12 +6,10 @@ use serde::{Deserialize, Serialize};
 // use crate::Encounter;
 use crate::Art;
 // use crate::Map;
-use crate::Dialogue;
-use crate::dialogue::{Dialogues, DialogueItem, Link::*};
+use crate::dialogue::{Dialogues, DialogueID};
 use crate::Flags;
 use crate::scene::{Scene, SceneID};
 use crate::State;
-use crate::NodeID;
 use crate::Skill;
 
 use crate::{Menu, MenuItem};
@@ -149,65 +147,6 @@ pub fn shir() -> Scene {
         SceneID {index: 1},
     )
 }
-
-pub fn _skills() {
-    let _sword = Skill {
-        name: String::from("Sword"),
-        desc: String::from("Mastery of the Cursed Blade."),
-        value: 10,
-        abilities: vec![],
-    };
-
-    let _sorcery = Skill {
-        name: String::from("Sorcery"),
-        desc: String::from("Knowledge of the secrets of magic."),
-        value: 10,
-        abilities: vec![],
-    };
-
-    let _martial = Skill {
-        name: String::from("Martial"),
-        desc: String::from("Propensity for physical violence and related tactics."),
-        value: 0,
-        abilities: vec![],
-    };
-
-    let _sovereignty = Skill {
-        name: String::from("Regality"),
-        desc: String::from("Measure of kingly authority and right-to-rule."),
-        value: 10,
-        abilities: vec![],
-    };
-
-    let _customs = Skill {
-        name: String::from("Customs"),
-        desc: String::from("Ability to socialize with different classes of society."),
-        value: 0,
-        abilities: vec![],
-    };
-
-    let _intrigue = Skill {
-        name: String::from("Intrigue"),
-        desc: String::from("Familiarity with the shadows, subterfuge, and trickery."),
-        value: 10,
-        abilities: vec![],
-    };
-
-    let _survival = Skill {
-        name: String::from("Survival"),
-        desc: String::from("Capacity to endure the harsh wildnerness."),
-        value: 10,
-        abilities: vec![],
-    };
-
-    let _lore = Skill {
-        name: String::from("Lore"),
-        desc: String::from("Knowledge of history, sciences, and other esoterica."),
-        value: 10,
-        abilities: vec![],
-    };
-}
-
 
 
 pub fn load_dialogues() -> Dialogues {

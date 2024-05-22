@@ -3,7 +3,7 @@ use bracket_lib as bracket;
 
 use crate::State;
 
-use crate::{Statistics, Skill, Talent};
+use crate::{Statistics, Skill};
 
 pub struct Player {
     pub x: i32,
