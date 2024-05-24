@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 // use crate::Encounter;
 use crate::Art;
 // use crate::Map;
-use crate::dialogue::{Dialogues, DialogueID};
+use crate::dialogue::{Dialogues, Dialogue, DialogueID};
 use crate::Flags;
 use crate::scene::{Scene, SceneID};
 use crate::State;
@@ -154,17 +154,27 @@ pub fn shir() -> Scene {
 
 pub fn load_dialogues() -> Dialogues {
     let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
-    let reader: Dialogues = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
-    reader
+    let reader: Vec<Dialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
+    
+    let yaml_serde_mapping = dialogues.as_mapping().unwrap();
+
+    
+    
+    
+    Dialogues::new(reader)
+
+
+
 }
 
 pub fn load_flags() -> Flags {
     let flags = File::open("data/flags.yml").expect("Could not open flags!");
     let reader: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
+    println!("{:?}", reader);
     reader
 }
 
-pub fn _load_scenes() {
+pub fn load_scenes() {
 
 }
 

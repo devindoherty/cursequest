@@ -42,9 +42,9 @@ pub struct Dialogues {
 }
 
 impl Dialogues {
-    pub fn new() -> Dialogues {
+    pub fn new(items: Vec<Dialogue>) -> Self {
         Dialogues {
-            items: Vec::new(),
+            items,
             current: DialogueID {index: 0},
             previous: DialogueID {index: 0},
             selected: 0,

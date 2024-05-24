@@ -20,7 +20,7 @@ mod menu;
 use menu::{Menu, MenuItem};
 
 mod dialogue;
-use dialogue::{Dialogues};
+use dialogue::{DialogueID, Dialogues};
 
 mod flag;
 use flag::*;
@@ -49,7 +49,6 @@ pub struct State {
     startart: Art,
     log: Vec<String>,
     flags: Flags,
-    scenes: Vec<Scene>,
     dialogues: Dialogues,
 }
 
@@ -189,19 +188,15 @@ fn main() -> BError {
         map,
         run_mode: RunMode::Start,
         menu: init::start_menu(),
-        sm: StageManager::new(1, vec![], SceneID { index: 0 }),
+        sm: StageManager::new(1, Vec::new(), SceneID { index: 0 }),
         startart: Art::new("assets/title.txt", String::from("Curse Quest")),
         log: Vec::new(),
         flags: init::load_flags(),
-        dialogues: init::load_dialogues(),
-        scenes: Vec::new(),
+        dialogues: init::load_dialogues()
     };
 
     let prologue = init::prologue();
     let shir = init::shir();
-
-    gs.sm.register_scene(prologue);
-    gs.sm.register_scene(shir);
 
     main_loop(context, gs)
 }

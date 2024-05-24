@@ -1,5 +1,5 @@
 ---
-dialogues:
+# items:
 ################
 # Cursed Blade #
 ################
@@ -45,7 +45,7 @@ dialogues:
   choice: My own soul, if I must.
   response: >
     A low growl fills the dark. The voice sounds positively ravenous. "Indeed? For what 
-    is a king who has a retained a soul but lost a kingdom?"
+    is a king who has a retained a soul, but lost a kingdom?"
   children:
     - blade_intro_deal
 
