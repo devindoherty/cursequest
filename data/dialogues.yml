@@ -6,7 +6,7 @@
 - dialogue: blade_intro_root
   choice: ROOT
   response: >
-    Only dark. And then a voice: "Oh, lost princeling. You could not resist a sword 
+    Only dark. And then a voice: "Oh, lost princeling. You could not resist a sword
     from the stone, could you? There is no more surefire a way to prove your royal
     stripes."
   children:

@@ -26,11 +26,30 @@ impl DialogueID {
 pub struct Dialogue {
     id: DialogueID,
     choice: String,
-    pub response: String,
+    response: String,
     status: Option<Status>,
     skillcheck: Option<(String, i32)>,
     flags: Option<Vec<FlagID>>,
     children: Vec<DialogueID>,
+}
+
+impl Dialogue {
+    pub fn new(choice: String, response: String) -> Dialogue {
+        Dialogue {
+            id: DialogueID::new(),
+            choice,
+            response,
+            status: None,
+            skillcheck: None,
+            flags: None,
+            children: Vec::new(),
+        }
+    }
+
+    pub fn get_response(&self) -> &String {
+        &self.response
+    }
+
 }
 
 #[derive(Serialize, Deserialize, Debug)]

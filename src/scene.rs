@@ -96,7 +96,7 @@ impl Scene {
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
         let mut dialogue = &gs.dialogues.items[gs.dialogues.current.index];
-        let response = &dialogue.response;
+        let response = &dialogue.get_response();
         
         let updated_text = response.to_string();
         if updated_text == "END"{
