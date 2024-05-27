@@ -153,18 +153,28 @@ pub fn shir() -> Scene {
 
 
 pub fn load_dialogues() -> Dialogues {
+    
+    #[derive(Serialize, Deserialize)]
+    struct YamlDialogue {
+        dialogue: String,
+        choice: String,
+        response: String,
+        children: Vec<String>
+    };
+    
     let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
-    let reader: Vec<Dialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
-    
-    let yaml_serde_mapping = dialogues.as_mapping().unwrap();
+    let reader: Vec<YamlDialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
 
-    
-    
-    
-    Dialogues::new(reader)
+    // Read yml dialouges
+    // For each dialogue:
+        // Assign a DialogueID
+    // For each dialogue:
+        // For each child
+            // For each dialogue: 
+                // Find the matching string 
+                // link the child to the parent via DialogueID
 
-
-
+    Dialogues::new(Vec::new())
 }
 
 pub fn load_flags() -> Flags {

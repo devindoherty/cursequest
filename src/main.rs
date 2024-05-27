@@ -182,7 +182,7 @@ fn main() -> BError {
 
     let raw_world_map = Map::load("assets/worldmap.txt");
     let map = Map::new(raw_world_map);
-  
+
     let mut gs: State = State {
         player,
         map,

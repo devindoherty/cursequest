@@ -78,17 +78,18 @@
 - dialogue: blade_intro_end
   choice: Continue...
   response: END
-
+  children:
+    - END
 #############
 # Roseberry #
 #############
-- dialogue: awakened_root 
+- dialogue: awakened_root
   choice: ROOT
   response: >
     You awaken in a small, rustic home. The woman seated beside you is perhaps three 
     feet tall at most. She looks relieved when you open your eyes. "You have stirred. 
     Good. You were half dead when we found you. Rest now. You are safe."
-  children: 
+  children:
     - awakened_where
     - awakened_identity
 
@@ -118,9 +119,9 @@
 
 - dialogue: awakened_village_lore
   choice: I know of this place, and your people. [LORE 1]
-  skillcheck:
-    - skill: Lore
-    - check: 1
+  # skillcheck:
+  #   - skill: Lore
+  #   - check: 1
   response: >
     The hobs of Shir Valley are an ancient people, said to be related to faeries, 
     known to be brave and loyal. Roseberry seems surprised.
@@ -136,7 +137,7 @@
     The little woman sighs and pats your shoulder. "It is said he died within 
     the dungeons of the Uncrowned King." You let the truth sink in: Your father 
     is dead. [JOURNAL UPDATED]
-  flag_names: learned_father_death
+  # flag_names: learned_father_death
   children:
     - awakened_alt_root
 
@@ -145,9 +146,9 @@
   response: >
     "That is kind of you, but I fear we may find your halls less than hospitable, 
     at the moment."
-  skillcheck:
-    - skill: Customs
-    - check: 1
+  # skillcheck:
+  #   - skill: Customs
+  #   - check: 1
   children:
     - awakened_alt_root
 
@@ -166,8 +167,7 @@
     Roseberry smiles, although her face is beset with sadness. She bows her head. 
     "I know. I recognize your face, my king. Were that these less grim times, the 
     people of Finn's Glenn would honor your return with celebration."  
-  flags: king_identity_told_truth
-  link: RemoveSiblings
+  # flags: king_identity_told_truth
   children:
     - awakened_alt_root
 
@@ -176,14 +176,14 @@
   response: >
     Roseberry smiles strangely but nods, "But of course. You are welcome all 
     the same."
-  link: RemoveSiblings
+  # link: RemoveSiblings
   children:
     - awakened_alt_root
 
 - dialogue: awakened_happened
   choice: What happened?
   response: "A group of hunters from my village found you collapsed in the wilderness. You were holding that.\" She points to an ancient blade among your belongings. \"I had you brought here and have nursed you back to health.\" You hear a faint whispering from the blade, as if it... calls to you."
-  flag_names: None,
+  # flag_names: None,
   children: 
     - awakened_blade_whispers
     - awakened_blade_sword
@@ -206,7 +206,8 @@
 
 - dialogue: awakened_blade_whispers
   choice: I can... hear the blade.
-  response: "It is cursed," Roseberry says plainly. "And now, as its wielder, so are you."
+  response: >
+    "It is cursed," Roseberry says plainly. "And now, as its wielder, so are you."
   children: 
     - awakened_blade_investigate
 
@@ -216,9 +217,9 @@
     The blade seems to almost slice the air itself. Roseberry purses her 
     lips thoughtfully. "You could cut through a dozen armed and armored 
     men with such a weapon as easily as I carve a cake."
-  skillcheck:
-    - skill: Sword
-    - check: 1
+  # skillcheck:
+  #   - skill: Sword
+  #   - check: 1
   children:
     - awakened_blade_investigate
 
@@ -227,9 +228,9 @@
   response: >
     The blade radiates waves of vile black magic. Roseberry frowns, "You sense 
     it too. It is as I feared. This sword is cursed."
-  skillcheck:
-    - skill: Sorcery
-    - check: 1
+  # skillcheck:
+  #   - skill: Sorcery
+  #   - check: 1
   children:
     - awakened_blade_investigate 
 
@@ -240,9 +241,9 @@
     Of men marching into glorious battle. "Those who wield me are all but invincible..." 
     it whispers to you. Roseberry looks from the blade to you and mutters, "It is a 
     cursed blade. Listen to it at your own peril."
-  skillcheck:
-    - skill: Martial
-    - check: 1
+  # skillcheck:
+  #   - skill: Martial
+  #   - check: 1
   children:
     - awakened_blade_investigate
 
@@ -251,9 +252,9 @@
   response: >
     "The cost of thy kingdom can be tolled in blood..." the sword whispers to you. 
     Roseberry shakes her head. "Be weary of such a price to pay," she warns.
-  skillcheck:
-    - skill: Regality
-    - check: 1
+  # skillcheck:
+  #   - skill: Regality
+  #   - check: 1
   children: 
     - awakened_blade_investigate
 
@@ -263,9 +264,9 @@
     You have read of such swords. They are forged or enchanted with malevolent 
     spirits. The tales often do not end kindly for the wielders of such weapons. 
     Roseberry says, "And for good reason. The blade is evil."
-  skillcheck:
-    - skill: Lore
-    - check: 1      
+  # skillcheck:
+  #   - skill: Lore
+  #   - check: 1      
   children:
     - awakened_blade_lore
 
@@ -318,6 +319,8 @@
 - dialogue: awakened_end
   choice: Continue...
   response: END
+  children:
+    - END
 
 ##################
 # Uncrowned King #
@@ -336,18 +339,23 @@
 - dialogue: uncrowned_might
   choice: I have come to claim what is mine, by right.
   response: PLACEHOLDER
+  children:
+    - PLACEHOLDER 
         
 - dialogue: uncrowned_dogooder
   choice: I have come to rid the kingdom of your evil.
   response: PLACEHOLDER
   children: 
+    - PLACEHOLDER
 
 - dialogue: uncrowned_reject      
   choice: You can keep the throne.
   response: PLACEHOLDER
   children: 
+    - PLACEHOLDER
   
 - dialogue: uncrowned_return
   choice: I've come to return your blade.
   response: PLACEHOLDER
   children: 
+    - PLACEHOLDER
