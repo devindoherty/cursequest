@@ -1,10 +1,11 @@
+use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 use serde::{Deserialize, Serialize};
 
 // use crate::Encounter;
-use crate::Art;
+use crate::{dialogue, Art};
 // use crate::Map;
 use crate::dialogue::{Dialogues, Dialogue, DialogueID};
 use crate::Flags;
@@ -165,28 +166,33 @@ pub fn load_dialogues() -> Dialogues {
     let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
     let reader: Vec<YamlDialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
     let mut dialogues = Dialogues::new(Vec::new());
+    let mut children_map: HashMap<DialogueID, Vec<String>> = HashMap::new();
 
-    for yaml_dialogue in reader {
-        let dialogue = Dialogue::new(yaml_dialogue.choice, yaml_dialogue.response);
-        dialogues.register_dialogue(dialogue);
-        for child in yaml_dialogue.children {
-            
-        }
+    for (idx, yaml_dialogue) in reader.into_iter().enumerate() {
+        let dialogue_id = DialogueID {index: idx};
+        children_map.insert(dialogue_id, yaml_dialogue.children);
+
+        let mut dialogue = Dialogue::new(yaml_dialogue.dialogue, yaml_dialogue.choice, yaml_dialogue.response);
+        
+        dialogue.set_id(dialogue_id);
+        dialogues.add_dialogue(dialogue);
     }
 
+    for dialogue in &mut dialogues.items {
+        let dialogue_children = children_map.get(&dialogue.get_id());
+        for child in dialogue_children.unwrap() {
+            for i in dialogues.items {
+                if child == i.get_name() {
+                    dialogues.add_child(dialogue.get_id(), i.get_id());            
+                } 
+            }
+        }
+        
 
-
-    println!("{:#?}", dialogues);
-
-    // Read yml dialouges
-    // For each dialogue:
-        // Assign a DialogueID
-    // For each dialogue:
-        // For each child
-            // For each dialogue: 
-                // Find the matching string 
-                // link the child to the parent via DialogueID
-
+    }
+    
+    // println!("{:#?}", children_map);
+    // println!("{:#?}", dialogues);
     dialogues
 }
 

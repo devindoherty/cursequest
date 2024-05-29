@@ -11,7 +11,7 @@ pub struct Status {
     selectable: bool,
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Default, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Default, PartialEq, Eq, Hash)]
 pub struct DialogueID {
     pub index: usize,
 }
@@ -24,6 +24,7 @@ impl DialogueID {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Dialogue {
+    name: String,
     id: DialogueID,
     choice: String,
     response: String,
@@ -34,8 +35,9 @@ pub struct Dialogue {
 }
 
 impl Dialogue {
-    pub fn new(choice: String, response: String) -> Dialogue {
+    pub fn new(name: String, choice: String, response: String) -> Dialogue {
         Dialogue {
+            name,
             id: DialogueID::new(),
             choice,
             response,
@@ -48,6 +50,18 @@ impl Dialogue {
 
     pub fn get_response(&self) -> &String {
         &self.response
+    }
+
+    pub fn set_id(&mut self, id: DialogueID) {
+        self.id = id;
+    }
+
+    pub fn get_id(&self) -> DialogueID {
+        self.id
+    }
+
+    pub fn get_name(&self) -> &String {
+        &self.name
     }
 
 }
@@ -68,6 +82,10 @@ impl Dialogues {
             previous: DialogueID {index: 0},
             selected: 0,
         }
+    }
+
+    pub fn add_dialogue(&mut self, dialogue: Dialogue) {
+        self.items.push(dialogue);
     }
 
     pub fn register_dialogue(&mut self, mut dialogue: Dialogue) -> DialogueID {

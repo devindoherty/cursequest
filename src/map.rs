@@ -15,7 +15,7 @@ pub struct MapTile {
     pub x: i32,
     pub y: i32,
     pub biome: Biome,
-    _id: i32,
+    _id: usize,
 }
 
 #[derive(Eq, Hash, PartialEq)]
