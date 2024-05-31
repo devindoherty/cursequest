@@ -89,7 +89,7 @@ fn update(gs: &mut State) {
 
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
-        let mut dialogue = scene.dialogue.as_mut().unwrap();
+        let mut dialogue = scene.dialogue.unwrap();
     }
 }
 
@@ -196,7 +196,13 @@ fn main() -> BError {
     };
 
     let prologue = init::prologue();
+    let blade = init::blade();
     let shir = init::shir();
+
+    gs.sm.register_scene(prologue);
+    gs.sm.register_scene(shir);
+    gs.sm.register_scene(blade);
+
 
     main_loop(context, gs)
 }

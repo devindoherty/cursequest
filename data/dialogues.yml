@@ -3,6 +3,12 @@
 ################
 # Cursed Blade #
 ################
+- dialogue: ROOT
+  choice: ROOT
+  response: ROOT
+  children: 
+    - ROOT
+
 - dialogue: blade_intro_root
   choice: ROOT
   response: >

@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use std::ops::RangeFull;
 
 use serde::{Deserialize, Serialize};
 
@@ -138,7 +139,7 @@ pub fn shir() -> Scene {
     let text = String::new();
     let art = Art::new("assets/rose.txt", String::from("Roseberry"));
     let menu: Option<Menu> = None;
-    let dialogue = None;
+    let dialogue = Some(DialogueID {index: 10});
     
     Scene::new(
         title,
@@ -150,6 +151,24 @@ pub fn shir() -> Scene {
         SceneID {index: 0},
     )
 
+}
+
+pub fn blade() -> Scene {
+    let title = String::from("The Blade");
+    let text = String::new();
+    let art = Art::new("assets/death.txt", String::from("Blade"));
+    let menu = None;
+    let dialogue = Some(DialogueID {index: 1});
+
+    Scene::new(
+        title,
+        text,
+        art,
+        false,
+        menu,
+        dialogue,
+        SceneID {index: 0}
+    )
 }
 
 
@@ -165,34 +184,27 @@ pub fn load_dialogues() -> Dialogues {
     
     let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
     let reader: Vec<YamlDialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
-    let mut dialogues = Dialogues::new(Vec::new());
+    let mut dialogues = Dialogues::new(Vec::new(), DialogueID {index: 10});
     let mut children_map: HashMap<DialogueID, Vec<String>> = HashMap::new();
-
+    
     for (idx, yaml_dialogue) in reader.into_iter().enumerate() {
         let dialogue_id = DialogueID {index: idx};
-        children_map.insert(dialogue_id, yaml_dialogue.children);
-
         let mut dialogue = Dialogue::new(yaml_dialogue.dialogue, yaml_dialogue.choice, yaml_dialogue.response);
         
+        children_map.insert(dialogue_id, yaml_dialogue.children);
         dialogue.set_id(dialogue_id);
         dialogues.add_dialogue(dialogue);
     }
 
-    for dialogue in &mut dialogues.items {
-        let dialogue_children = children_map.get(&dialogue.get_id());
-        for child in dialogue_children.unwrap() {
-            for i in dialogues.items {
-                if child == i.get_name() {
-                    dialogues.add_child(dialogue.get_id(), i.get_id());            
-                } 
-            }
+    for entry in children_map {
+        for child in entry.1 {
+            let new_child = dialogues.get_dialogue_id_with_name(&child);
+            dialogues.link_child(entry.0, new_child);
         }
-        
-
     }
-    
+
     // println!("{:#?}", children_map);
-    // println!("{:#?}", dialogues);
+    println!("{:#?}", dialogues.items);
     dialogues
 }
 

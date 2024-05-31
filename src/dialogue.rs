@@ -75,10 +75,10 @@ pub struct Dialogues {
 }
 
 impl Dialogues {
-    pub fn new(items: Vec<Dialogue>) -> Self {
+    pub fn new(items: Vec<Dialogue>, current: DialogueID) -> Self {
         Dialogues {
             items,
-            current: DialogueID {index: 0},
+            current,
             previous: DialogueID {index: 0},
             selected: 0,
         }
@@ -96,21 +96,22 @@ impl Dialogues {
         DialogueID { index: next_index }
     }
 
-    pub fn add_child(&mut self, item_id: DialogueID, child_id: DialogueID) {
-        let item = &mut self.items[item_id.index];
-        item.children.push(child_id);
+    pub fn link_child(&mut self, parent_id: DialogueID, child_id: DialogueID) {
+        let parent = &mut self.items[parent_id.index];
+        parent.children.push(child_id);
     }
 
     pub fn remove_child(&mut self, item_id: DialogueID, child_id: DialogueID) {
         self.items.retain(|item| item.id != child_id);
     }
     
-    pub fn find_child(&self, item_id: DialogueID, child_id: DialogueID, _search: &str) {
-        let item = &self.items[item_id.index];
-        let _child = &self.items[child_id.index];
-        for child in &item.children {
-            println!("{} is a child of {}", child.index, item.choice);
+    pub fn get_dialogue_id_with_name(&self, name: &str) -> DialogueID {
+        for dialogue in &self.items {
+            if dialogue.name == name {
+                return dialogue.id;
+            }
         }
+        DialogueID {index: 0}
     }
 
     pub fn list_children(&self, item_id: DialogueID) {
