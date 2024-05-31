@@ -156,7 +156,7 @@ pub fn shir() -> Scene {
 pub fn blade() -> Scene {
     let title = String::from("The Blade");
     let text = String::new();
-    let art = Art::new("assets/death.txt", String::from("Blade"));
+    let art = Art::new("assets/blade.txt", String::from("Blade"));
     let menu = None;
     let dialogue = Some(DialogueID {index: 1});
 
@@ -184,7 +184,7 @@ pub fn load_dialogues() -> Dialogues {
     
     let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
     let reader: Vec<YamlDialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
-    let mut dialogues = Dialogues::new(Vec::new(), DialogueID {index: 10});
+    let mut dialogues = Dialogues::new(Vec::new(), DialogueID {index: 1});
     let mut children_map: HashMap<DialogueID, Vec<String>> = HashMap::new();
     
     for (idx, yaml_dialogue) in reader.into_iter().enumerate() {

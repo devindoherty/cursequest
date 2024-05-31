@@ -200,8 +200,8 @@ fn main() -> BError {
     let shir = init::shir();
 
     gs.sm.register_scene(prologue);
-    gs.sm.register_scene(shir);
     gs.sm.register_scene(blade);
+    gs.sm.register_scene(shir);
 
 
     main_loop(context, gs)
