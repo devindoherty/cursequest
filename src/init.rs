@@ -119,7 +119,7 @@ pub fn prologue() -> Scene {
     let text = String::from(
         "A decade ago, the Uncrowned King usurped the throne from you and banished you to a life of exile. In your wandering, you come across the tomb of a ancient king. Hewn into the stone there is a magical sword. Grasping the blade and pulling it from the stone, you fade into darkness..."
     );
-    let art = Art::new("assets/title_alt2.txt", String::from("king"));
+    let art = Art::new("assets/title_alt.txt", String::from("king"));
     let menu: Option<Menu> = None;
     let dialogue = None;
 
@@ -203,15 +203,12 @@ pub fn load_dialogues() -> Dialogues {
         }
     }
 
-    // println!("{:#?}", children_map);
-    println!("{:#?}", dialogues.items);
     dialogues
 }
 
 pub fn load_flags() -> Flags {
     let flags = File::open("data/flags.yml").expect("Could not open flags!");
     let reader: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
-    println!("{:?}", reader);
     reader
 }
 

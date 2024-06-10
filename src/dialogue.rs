@@ -91,7 +91,6 @@ impl Dialogues {
     pub fn register_dialogue(&mut self, mut dialogue: Dialogue) -> DialogueID {
         let next_index = self.items.len();
         dialogue.id.index = next_index;
-        // println!("Diaglogue: The index of {} is now: {}", item.choice, next_index);
         self.items.push(dialogue);
         DialogueID { index: next_index }
     }
@@ -114,6 +113,10 @@ impl Dialogues {
         DialogueID {index: 0}
     }
 
+    pub fn get_dialogue(&mut self, id: DialogueID) -> &mut Dialogue {
+        &mut self.items[id.index]
+    }
+
     pub fn list_children(&self, item_id: DialogueID) {
         let item = &self.items[item_id.index];
         for child in &item.children {
@@ -130,10 +133,6 @@ impl Dialogues {
         let child = self.current;
         self.selected = 0;
         children.retain(|&x| x == child);
-    }
-
-    fn change(&self, change_text: String) {
-        todo!();
     }
 
     fn current_selection(&self) -> DialogueID {
@@ -163,19 +162,23 @@ impl Dialogues {
 
     fn select_child(&mut self) {
         let item = &self.items[self.current.index];
-        let selection = &item.children[self.selected];
-        let child = &self.items[selection.index];
-                
-        self.traverse(child.id);
+        let selection = item.children[self.selected];
+
+        self.change_dialogue(selection);
+
+        self.traverse(selection);
+    }
+
+    fn change_dialogue(&mut self, id: DialogueID) {
+        let dialogue = self.get_dialogue(id);
+        if dialogue.response.contains("$") {
+            dialogue.response = dialogue.response.replace("$pc_price", "blood price");
+        }
     }
 
     fn traverse(&mut self, item_id: DialogueID) {
         self.previous = self.current; 
-        println!("{:?}", self.items[self.previous.index]);
         self.current = item_id;
-        let item = &self.items[item_id.index];
-        println!("Traversed to: {}", item.choice);
-        self.terminal_draw_children(item_id);
     }
 
     pub fn end_dialogue(&self, gs: &mut State) {
@@ -183,7 +186,7 @@ impl Dialogues {
     }
 
     pub fn manage(&mut self, key: VirtualKeyCode) {
-        let item = &mut self.items[self.current.index];
+        let item = &self.items[self.current.index];
         match key {
             VirtualKeyCode::Up | VirtualKeyCode::Numpad8 => {
                 if self.selected == 0 {
@@ -200,12 +203,11 @@ impl Dialogues {
                 }
             }
             VirtualKeyCode::Return => {
-                // self.check_links();
                 self.select_child();
+                self.selected = 0;
             }
             _ => {}
         }
-        self.selected = 0;
     }
 
     // Rendering dialogue options to choice selection
@@ -214,7 +216,6 @@ impl Dialogues {
         let item = &self.items[self.current.index];
         let display = &item.response;
         for (pos, child) in item.children.iter().enumerate() {
-            // Currently selected
             if pos == self.selected {
                 ctx.print_color(
                     3,

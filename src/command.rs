@@ -90,7 +90,6 @@ impl Command for VirtualKeyCode {
                 // ARROW AND NUMPAD DIRECTIONAL KEYS
                 Self::Up | Self::Numpad8 => {
                     gs.player.map_move(0, -1);
-                    println!("Test");
                 }
                 Self::Down | Self::Numpad2 => {
                     gs.player.map_move(0, 1);

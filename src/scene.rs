@@ -96,7 +96,7 @@ impl Scene {
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
         let mut dialogue = &gs.dialogues.items[gs.dialogues.current.index];
-        let response = &dialogue.get_response();
+        let response = dialogue.get_response();
         
         let updated_text = response.to_string();
         if updated_text == "END"{
@@ -152,7 +152,6 @@ impl Scene {
         draw_batch.submit(0).expect("Batch Error");
         render_draw_buffer(ctx).expect("Render Error");
         self.art.draw(ctx, 32, 1);
-        // self.dialogue.as_mut().expect("Scene Dialogue Missing Error").draw(ctx);
         ctx.draw_hollow_box(0, 40, 127, 22, RGB::named(WHITE), RGB::named(BLACK));
     }
 }

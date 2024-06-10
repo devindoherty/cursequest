@@ -14,7 +14,7 @@
   response: >
     Only dark. And then a voice: "Oh, lost princeling. You could not resist a sword
     from the stone, could you? There is no more surefire a way to prove your royal
-    stripes."
+    pedigree."
   children:
     - blade_intro_root_cont
 
@@ -22,7 +22,7 @@
   choice: Continue...
   response: >
     The voice chuckles, a sharp, malicious noise. "Princeling mine, are you aware of
-    the price to pay for your kingdom? And are you willing?"
+    the price for your kingdom? And are you willing to pay it?"
   children:
     - blade_intro_price_blood
     - blade_intro_price_coin
@@ -58,8 +58,7 @@
 - dialogue: blade_intro_price_kinship
   choice: Friends and family, forsaking all kinship.
   response: >
-    The voice is giddy. "You would sacrifice them all, truly? Wonderful. 
-    Simply wonderful."
+    The voice is giddy. "You would sacrifice them all, truly? Wonderful. Simply wonderful."
   children:
     - blade_intro_deal
 

@@ -141,6 +141,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
             scene.draw_fullscreen(ctx);
         } else {
             scene.draw_halfscreen(ctx);
+            gs.dialogues.draw(ctx);
         }
     }
 }
@@ -152,6 +153,7 @@ fn main() -> BError {
         .with_automatic_console_resize(false)
         .with_fullscreen(false)
         .with_fitscreen(true)
+        // .with_tile_dimensions(8, 16)
         .with_fps_cap(30.0)
         .build()?;
 
