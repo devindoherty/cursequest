@@ -14,6 +14,7 @@ pub struct Flag {
     pub flagged: bool,
     pub stage: u32,
     pub id: usize,
+    var: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

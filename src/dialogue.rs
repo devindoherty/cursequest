@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use bracket::prelude::*;
 use bracket_lib as bracket;
 
@@ -69,8 +71,8 @@ impl Dialogue {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Dialogues {
     pub items: Vec<Dialogue>,
-    pub current: DialogueID,
-    pub previous: DialogueID,
+    current: DialogueID,
+    previous: DialogueID,
     selected: usize,
 }
 
@@ -117,6 +119,10 @@ impl Dialogues {
         &mut self.items[id.index]
     }
 
+    pub fn get_current_dialogue(&self) -> &Dialogue {
+        &self.items[self.current.index]
+    }
+
     pub fn list_children(&self, item_id: DialogueID) {
         let item = &self.items[item_id.index];
         for child in &item.children {
@@ -147,7 +153,7 @@ impl Dialogues {
         *selection
     }
 
-    fn get_current_dialogue(&mut self) -> DialogueID {
+    fn get_current_dialogue_id(&mut self) -> DialogueID {
         self.current
     }
 
@@ -180,6 +186,11 @@ impl Dialogues {
         self.previous = self.current; 
         self.current = item_id;
     }
+
+    pub fn set_dialogue_var() {
+        
+    }
+
 
     pub fn end_dialogue(&self, gs: &mut State) {
        

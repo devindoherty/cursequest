@@ -95,7 +95,7 @@ impl Scene {
     pub fn update_text(gs: &mut State) {
         let scene_idx = gs.sm.current_scene_id_index();
         let scene = &mut gs.sm.scenes[scene_idx];
-        let mut dialogue = &gs.dialogues.items[gs.dialogues.current.index];
+        let dialogue = gs.dialogues.get_current_dialogue();
         let response = dialogue.get_response();
         
         let updated_text = response.to_string();

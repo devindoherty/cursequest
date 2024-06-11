@@ -37,6 +37,7 @@
     Take it liberally and with wanton violence!"
   children:
     - blade_intro_deal
+  
 
 - dialogue: blade_intro_price_coin
   choice: I will find the coin to pay.
@@ -76,9 +77,11 @@
     A cold silence pierces the darkness. "The powers I offer you are immense. But they 
     come at the price you have told me you are willing to pay. I shall remain magnanimous. 
     Your debts are deferred, for the moment." The voice pauses. Light creeps into 
-    your vision. "Remember, princeling, the $pc_price." Then nothing but blinding light.
+    your vision. "Remember, princeling, the $sword_price." Then nothing but blinding light.
   children:
     - blade_intro_end
+  flags:
+    - 
 
 - dialogue: blade_intro_end
   choice: Continue...

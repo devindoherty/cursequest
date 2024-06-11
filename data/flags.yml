@@ -24,3 +24,9 @@ flags:
   flagged: false
   stage: 0
   id: 0
+
+- name: $sword_price
+  flagged: false
+  stage: 0
+  id: 0
+  var:
