@@ -8,11 +8,13 @@
   response: ROOT
   children: 
     - ROOT
+  flags:
+    
 
 - dialogue: blade_intro_root
   choice: ROOT
   response: >
-    Only dark. And then a voice: "Oh, lost princeling. You could not resist a sword
+    There is only the darkness. And then a voice: "Oh, lost princeling. You could not resist a sword
     from the stone, could you? There is no more surefire a way to prove your royal
     pedigree."
   children:
@@ -33,7 +35,7 @@
 - dialogue: blade_intro_price_blood
   choice: There will be a blood price.
   response: >
-    "Yes, yes!" the eager voice shouts. "The road to your throne is drenched in lifeblood.
+    "Yes, yes!" the eager voice shouts. "The road to your throne will be drenched in lifeblood.
     Take it liberally and with wanton violence!"
   children:
     - blade_intro_deal
@@ -57,7 +59,7 @@
     - blade_intro_deal
 
 - dialogue: blade_intro_price_kinship
-  choice: Friends and family, forsaking all kinship.
+  choice: Friends and family, forsaking all bonds of kinship.
   response: >
     The voice is giddy. "You would sacrifice them all, truly? Wonderful. Simply wonderful."
   children:
@@ -81,7 +83,7 @@
   children:
     - blade_intro_end
   flags:
-    - 
+    - $sword_price
 
 - dialogue: blade_intro_end
   choice: Continue...

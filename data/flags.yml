@@ -15,11 +15,6 @@ flags:
   stage: 0
   id: 0
 
-- name: spoke_to_cursed_blade
-  flagged: false
-  stage: 0
-  id: 0
-
 - name: killed_rose
   flagged: false
   stage: 0

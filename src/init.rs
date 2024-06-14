@@ -209,11 +209,10 @@ pub fn load_dialogues() -> Dialogues {
 pub fn load_flags() -> Flags {
     let flags = File::open("data/flags.yml").expect("Could not open flags!");
     let reader: Flags = serde_yaml::from_reader(flags).expect("Could not read values!");
-    println!("{:?}", reader);
     reader
 }
 
-pub fn load_scenes() {
+pub fn _load_scenes() {
 
 }
 
