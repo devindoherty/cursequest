@@ -66,6 +66,10 @@ impl Dialogue {
         &self.name
     }
 
+    pub fn set_flag_on_select(&self, gs: State) {
+
+    }
+
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -170,12 +174,10 @@ impl Dialogues {
         let item = &self.items[self.current.index];
         let selection = item.children[self.selected];
 
-        self.change_dialogue(selection);
-
         self.traverse(selection);
     }
 
-    fn change_dialogue(&mut self, id: DialogueID) {
+    fn update_dialogue(&mut self, id: DialogueID, gs: &mut State) {
         let dialogue = self.get_dialogue(id);
         if dialogue.response.contains("$") {
             dialogue.response = dialogue.response.replace("$pc_price", "blood price");

@@ -85,6 +85,7 @@ fn update(gs: &mut State) {
     
     
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
+        Dialogues::update_dialogue();
         Scene::update_text(gs);
 
         let scene_idx = gs.sm.current_scene_id_index();

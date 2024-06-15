@@ -1,10 +1,5 @@
 ---
 flags:
-- name: remove_upon_selection
-  flagged: false
-  stage: 0
-  id: 0
-
 - name: told_rose_identity
   flagged: false
   stage: 0
@@ -20,7 +15,7 @@ flags:
   stage: 0
   id: 0
 
-- name: $sword_price
+- name: sword_price
   flagged: false
   stage: 0
   id: 0
