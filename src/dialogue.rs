@@ -177,10 +177,11 @@ impl Dialogues {
         self.traverse(selection);
     }
 
-    fn update_dialogue(&mut self, id: DialogueID, gs: &mut State) {
-        let dialogue = self.get_dialogue(id);
+    pub fn update_text(gs: &mut State) {
+        let dialogue_id = gs.dialogues.get_current_dialogue_id();
+        let mut dialogue = &mut gs.dialogues.items[dialogue_id.index];
         if dialogue.response.contains("$") {
-            dialogue.response = dialogue.response.replace("$pc_price", "blood price");
+            dialogue.response = dialogue.response.replace("$sword_price", "blood price");
         }
     }
 
