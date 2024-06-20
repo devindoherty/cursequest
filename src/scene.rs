@@ -48,8 +48,9 @@ impl StageManager {
         self.scenes.push(scene);
     }
 
-    pub fn next_scene(&mut self) {
+    pub fn next_scene(&mut self) -> &mut Scene {
         self.onstage.index += 1;
+        self.current_scene()
     }
     
     
@@ -93,17 +94,21 @@ impl Scene {
     }
 
     pub fn update_text(gs: &mut State) {
-        let scene_idx = gs.sm.current_scene_id_index();
-        let scene = &mut gs.sm.scenes[scene_idx];
-        let dialogue = gs.dialogues.get_current_dialogue();
-        let response = dialogue.get_response();
-        
+        let mut scene = gs.sm.current_scene();
+        let mut dialogue = gs.dialogues.get_current_dialogue();
+        let mut response = dialogue.get_response();
         let updated_text = response.to_string();
+        
         if updated_text == "END"{
             // TODO: dialogue.end_dialogue();
             gs.menu = gs.menu.switch(init::main_menu());
             gs.run_mode = RunMode::Travelling; // TODO: Return to previous run_mode.
         }
+        if updated_text.contains("NEXT_SCENE") {
+            scene = gs.sm.next_scene();
+            gs.dialogues.set_current_dialogue(scene.dialogue.unwrap());
+        }
+
         scene.text = updated_text;
     }
 

@@ -87,9 +87,9 @@
 
 - dialogue: blade_intro_end
   choice: Continue...
-  response: END
+  response: NEXT_SCENE
   children:
-    - END
+    - NEXT_SCENE
 #############
 # Roseberry #
 #############

@@ -119,6 +119,10 @@ impl Dialogues {
         DialogueID {index: 0}
     }
 
+    pub fn set_current_dialogue(&mut self, id: DialogueID) {
+        self.current = id;
+    }
+
     pub fn get_dialogue(&mut self, id: DialogueID) -> &mut Dialogue {
         &mut self.items[id.index]
     }

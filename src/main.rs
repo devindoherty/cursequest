@@ -79,18 +79,9 @@ fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
 // Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
-    if gs.run_mode == RunMode::Start {
-
-    }
-    
-    
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
         Dialogues::update_text(gs);
         Scene::update_text(gs);
-
-        let scene_idx = gs.sm.current_scene_id_index();
-        let scene = &mut gs.sm.scenes[scene_idx];
-        let mut dialogue = scene.dialogue.unwrap();
     }
 }
 
