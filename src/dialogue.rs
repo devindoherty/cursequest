@@ -50,8 +50,8 @@ impl Dialogue {
         }
     }
 
-    pub fn get_response(&self) -> &String {
-        &self.response
+    pub fn get_response(&mut self) -> &mut String {
+        &mut self.response
     }
 
     pub fn set_id(&mut self, id: DialogueID) {
@@ -127,8 +127,12 @@ impl Dialogues {
         &mut self.items[id.index]
     }
 
-    pub fn get_current_dialogue(&self) -> &Dialogue {
-        &self.items[self.current.index]
+    pub fn get_current_dialogue(&mut self) -> &mut Dialogue {
+        &mut self.items[self.current.index]
+    }
+
+    pub fn get_current_dialogue_id(&mut self) -> DialogueID {
+        self.current
     }
 
     pub fn list_children(&self, item_id: DialogueID) {
@@ -161,9 +165,7 @@ impl Dialogues {
         *selection
     }
 
-    fn get_current_dialogue_id(&mut self) -> DialogueID {
-        self.current
-    }
+
 
     fn terminal_draw_children(&self, item_id: DialogueID) {
         let item = &self.items[item_id.index];

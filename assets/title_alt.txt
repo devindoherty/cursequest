@@ -50,5 +50,5 @@
                 .I:. . ..:"BBSSSSSSSSSSSSBBBMMMB:AHHI::.HM
                 .::.  . ..::":BBBBBSSBBBMMMB:MMMMHHII::IH
                 .I:... ....:.........................::I
-                  :. ..:...:.IHHHMMMMMMMMMMMMMMMMHHHMHH
+                  :. ..:...:.........................:.
                

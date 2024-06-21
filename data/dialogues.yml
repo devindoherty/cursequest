@@ -40,7 +40,6 @@
   children:
     - blade_intro_deal
   
-
 - dialogue: blade_intro_price_coin
   choice: I will find the coin to pay.
   response: >
@@ -109,6 +108,9 @@
   children: 
     - awakened_where
     - awakened_identity
+    - awakened_happened
+    - awakened_attack
+    - awakened_farewell
 
 - dialogue: awakened_where 
   choice: Where am I?
@@ -139,6 +141,13 @@
     elves venture here. Fewer still since the death of the last king."
   children: 
     - awakened_old_king
+    - awakened_alt_root
+
+- dialogue: awakened_village_customs
+  choice: As you have offered your home to me, mine is open to you. [CUSTOMS 1]
+  response: >
+    "That is kind of you, but I fear we may find your halls less than hospitable, at the moment."
+  children:
     - awakened_alt_root
 
 - dialogue: awakened_old_king
@@ -177,7 +186,7 @@
     Roseberry smiles, although her face is beset with sadness. She bows her head. 
     "I know. I recognize your face, my king. Were that these less grim times, the 
     people of Finn's Glenn would honor your return with celebration."  
-  # flags: king_identity_told_truth
+  flags: king_identity_told_truth
   children:
     - awakened_alt_root
 
@@ -278,7 +287,7 @@
   #   - skill: Lore
   #   - check: 1      
   children:
-    - awakened_blade_lore
+    - awakened_blade_investigate
 
 - dialogue: awakened_attack
   choice: Die, witch! [ATTACK]

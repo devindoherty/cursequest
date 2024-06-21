@@ -48,9 +48,34 @@ impl StageManager {
         self.scenes.push(scene);
     }
 
-    pub fn next_scene(&mut self) -> &mut Scene {
+    pub fn next_scene(&mut self) {
         self.onstage.index += 1;
-        self.current_scene()
+        if self.current_scene().dialogue.is_some() {
+            let new_dialogue = self.current_scene().dialogue.unwrap();
+        }
+    }
+
+    pub fn update_text(gs: &mut State) {
+        let mut scene_id = gs.sm.current_scene_id();
+        let mut dialogue_id = gs.dialogues.get_current_dialogue_id();
+        let response = gs.dialogues.get_dialogue(dialogue_id).get_response();
+        let mut scene = gs.sm.current_scene();
+
+        if response == "END"{
+            // TODO: dialogue.end_dialogue();
+            gs.menu = gs.menu.switch(init::main_menu());
+            gs.run_mode = RunMode::Travelling; // TODO: Return to previous run_mode.
+        }
+        if response == "NEXT_SCENE" {
+            gs.sm.next_scene();
+            scene = gs.sm.current_scene();
+            gs.dialogues.set_current_dialogue(scene.dialogue.unwrap());
+            scene.text = gs.dialogues.get_current_dialogue().get_response().to_string();
+        }
+        else {
+            scene.text = response.to_string();
+        }
+
     }
     
     
@@ -62,12 +87,12 @@ impl StageManager {
         &mut self.scenes[self.onstage.index]
     }
 
-    pub fn current_scene_id_index(&self) -> usize {
-        self.onstage.index
-    }
-
     pub fn current_scene_id(&self) -> &SceneID {
         &self.onstage
+    }
+
+    pub fn update_scene(&mut self) {
+
     }
 
 }
@@ -91,25 +116,6 @@ impl Scene {
             dialogue,
             id,
         }
-    }
-
-    pub fn update_text(gs: &mut State) {
-        let mut scene = gs.sm.current_scene();
-        let mut dialogue = gs.dialogues.get_current_dialogue();
-        let mut response = dialogue.get_response();
-        let updated_text = response.to_string();
-        
-        if updated_text == "END"{
-            // TODO: dialogue.end_dialogue();
-            gs.menu = gs.menu.switch(init::main_menu());
-            gs.run_mode = RunMode::Travelling; // TODO: Return to previous run_mode.
-        }
-        if updated_text.contains("NEXT_SCENE") {
-            scene = gs.sm.next_scene();
-            gs.dialogues.set_current_dialogue(scene.dialogue.unwrap());
-        }
-
-        scene.text = updated_text;
     }
 
     // Full Screen cinematic style

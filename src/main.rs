@@ -80,8 +80,8 @@ fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
+        StageManager::update_text(gs);
         Dialogues::update_text(gs);
-        Scene::update_text(gs);
     }
 }
 
@@ -126,8 +126,7 @@ fn render(gs: &mut State, ctx: &mut BTerm) {
         );
         gs.menu.draw(ctx);
     } else if gs.run_mode == RunMode::Storytelling {
-        let current_scene = gs.sm.current_scene_id_index();
-        let scene = &mut gs.sm.scenes[current_scene];
+        let scene = gs.sm.current_scene();
         
         if scene.fullscreen == true {
             scene.draw_fullscreen(ctx);
