@@ -347,7 +347,7 @@
 - dialogue: uncrowned_root
   choice: ROOT
   response: >
-    "I know your face. You're Kryll, they call you the trueborn King of Klathia." The
+    "I know your face. You are Kryll, they call you the trueborn King of Klathia." The
     Uncrowned King's smile falters. "So, have you finally come to claim your throne?"
   children:
     - uncrowned_might

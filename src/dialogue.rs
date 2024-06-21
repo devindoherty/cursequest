@@ -165,8 +165,6 @@ impl Dialogues {
         *selection
     }
 
-
-
     fn terminal_draw_children(&self, item_id: DialogueID) {
         let item = &self.items[item_id.index];
         println!("-------------------");
