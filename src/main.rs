@@ -79,7 +79,7 @@ fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
 // Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
-    if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 {
+    if gs.run_mode == RunMode::Storytelling {
         StageManager::update_text(gs);
         Dialogues::update_text(gs);
     }
