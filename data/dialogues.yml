@@ -201,7 +201,10 @@
 
 - dialogue: awakened_happened
   choice: What happened?
-  response: "A group of hunters from my village found you collapsed in the wilderness. You were holding that.\" She points to an ancient blade among your belongings. \"I had you brought here and have nursed you back to health.\" You hear a faint whispering from the blade, as if it... calls to you."
+  response: >
+    "A group of hunters from my village found you collapsed in the wilderness. You were holding that." 
+    She points to an ancient blade among your belongings. "I had you brought here and have nursed you 
+    back to health." You hear a faint whispering from the blade, as if it... calls to you."
   # flag_names: None,
   children: 
     - awakened_blade_whispers
