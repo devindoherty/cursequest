@@ -24,7 +24,7 @@
   choice: Continue...
   response: >
     The voice chuckles, a sharp, malicious noise. "Princeling mine, are you aware of
-    the price for your kingdom? And are you willing to pay it?"
+    the price for your kingdom? Moreover, are you willing to pay it?"
   children:
     - blade_intro_price_blood
     - blade_intro_price_coin
@@ -44,8 +44,7 @@
   choice: I will find the coin to pay.
   response: >
     "How trivial. Men and their money. Yet again, I have seen the debasements of merchants."
-    The voice considers for a moment, "Incentivize darkness with coin and the blade will
-    beckon."
+    The voice considers for a moment, "Purchase darkness with coin and the blade will beckon."
   children:
     - blade_intro_deal
 
@@ -75,10 +74,11 @@
 - dialogue: blade_intro_deal
   choice: And what do you offer in return?
   response: >
-    A cold silence pierces the darkness. "The powers I offer you are immense. But they 
-    come at the price you have told me you are willing to pay. I shall remain magnanimous. 
-    Your debts are deferred, for the moment." The voice pauses. Light creeps into 
-    your vision. "Remember, princeling, the $sword_price." Then nothing but blinding light.
+    A cold silence lingers in the darkness before the blade speaks. "The powers I offer you 
+    are immense. But they come at the price you have told me you are willing to pay. I shall 
+    remain magnanimous. Your debts are deferred, for the moment." The voice pauses. Light
+    creeps into your vision. "Remember, princeling, the $sword_price." Then, there is nothing
+    but blinding white light.
   children:
     - blade_intro_end
   flags:
@@ -95,8 +95,8 @@
 - dialogue: awakened_root
   choice: ROOT
   response: >
-    You awaken in a small, rustic home. The woman seated beside you is perhaps three 
-    feet tall at most. She looks relieved when you open your eyes. "You have stirred. 
+    You awaken in a small, rustic home. The woman seated beside you is perhaps three
+    feet tall at most. She looks relieved when you open your eyes. "You have stirred.
     Good. You were half dead when we found you. Rest now. You are safe."
   children:
     - awakened_where
@@ -123,8 +123,8 @@
 - dialogue: awakened_village
   choice: This is a halfling village?
   response: > 
-    "It is. We are a humble folk, the Hobs of the Shir Valley. What 
-    some might say we lack in stature, we make up for in a myriad 
+    "It is. We are a humble folk, the Hobs of the Shir Valley. What
+    some might say we lack in stature, we make up for in a myriad
     of other ways. I hope you remember our hospitality in the days ahead."
   children: 
     - awakened_alt_root
@@ -343,6 +343,44 @@
   response: END
   children:
     - END
+
+- dialogue: hob_farewell
+  choice: ROOT
+  response: >
+    "The Shir valley and her people owe you much," Roseberry says. "The road
+    ahead is treacherous- much evil has sunk into the bones of the land."
+  children:
+    - hob_farewell_continued
+
+- dialogue: hob_farewell_continued
+  choice: Indeed.
+  response: >
+    "The temptation to visit evil upon such evil will be great. A good king must
+    refuse such vile acts, lest his reign becomes poisoned."
+  children:
+    - hob_farewell_good
+    - hob_farewell_pragmatic
+    - hob_farewell_evil
+
+- dialogue: hob_farewell_good
+  choice: I will act nobly.
+  response: I would have it no other way.
+  children:
+    - hob_farewell_end
+
+- dialogue: hob_farewell_pragmatic
+  choice: I will do what I must.
+  response: If duty compels you, of course.
+  children:
+    - hob_farewell_end
+
+- dialogue: hob_farewell_evil
+  choice: I will crush those who oppose me under my boot.
+  response: Then we shall have replaced one darkness with another.
+  children:
+    - hob_farewell_end
+    - hob_farewell_attack
+
 
 ##################
 # Uncrowned King #
