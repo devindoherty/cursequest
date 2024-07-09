@@ -76,15 +76,13 @@ fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
     true
 }
 
-// Plan on reading the command stream from input
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
-    if gs.run_mode == RunMode::Storytelling {
+    if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 { // > 0 here to allow prologue text, TODO: fix
         StageManager::update_text(gs);
         Dialogues::update_text(gs);
     }
 }
-
 
 // Renders the visuals of the map, menus, UI, and player icon
 fn render(gs: &mut State, ctx: &mut BTerm) {
