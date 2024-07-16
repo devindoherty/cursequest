@@ -79,8 +79,8 @@ fn input(gs: &mut State, ctx: &mut BTerm) -> bool {
 // Mob actions, updating quests and scenes
 fn update(gs: &mut State) {
     if gs.run_mode == RunMode::Storytelling && gs.sm.onstage.index > 0 { // > 0 here to allow prologue text, TODO: fix
-        StageManager::update_text(gs);
         Dialogues::update_text(gs);
+        StageManager::update_text(gs);
     }
 }
 
@@ -183,7 +183,7 @@ fn main() -> BError {
         startart: Art::new("assets/title.txt", String::from("Curse Quest")),
         log: Vec::new(),
         flags: init::load_flags(),
-        dialogues: init::load_dialogues()
+        dialogues: init::load_dialogues(init::load_flags())
     };
 
     let prologue = init::prologue();

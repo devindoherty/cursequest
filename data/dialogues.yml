@@ -21,10 +21,12 @@
     - blade_intro_root_cont
 
 - dialogue: blade_intro_root_cont
-  choice: Continue...
+  choice: What are you?
   response: >
-    The voice chuckles, a sharp, malicious noise. "Princeling mine, are you aware of
-    the price for your kingdom? Moreover, are you willing to pay it?"
+    The voice chuckles, a sharp, malicious noise. "Princeling mine,  I am the power
+    of which you dare not dream. I am your deliverance to the throne that is
+    rightfully yours. But tell me, are you aware of the price for your kingdom? 
+    Moreover, are you willing to pay it?"
   children:
     - blade_intro_price_blood
     - blade_intro_price_coin
@@ -39,6 +41,7 @@
     Take it liberally and with wanton violence!"
   children:
     - blade_intro_deal
+  flags: $sword_price
   
 - dialogue: blade_intro_price_coin
   choice: I will find the coin to pay.
@@ -47,6 +50,7 @@
     The voice considers for a moment, "Purchase darkness with coin and the blade will beckon."
   children:
     - blade_intro_deal
+  flags: $sword_price.set_var("coin")
 
 - dialogue: blade_intro_price_soul
   choice: My own soul, if I must.
@@ -55,6 +59,7 @@
     is a king who has a retained a soul, but lost a kingdom?"
   children:
     - blade_intro_deal
+  flags: $sword_price.set_var("soul")
 
 - dialogue: blade_intro_price_kinship
   choice: Friends and family, forsaking all bonds of kinship.
@@ -62,6 +67,7 @@
     The voice is giddy. "You would sacrifice them all, truly? Wonderful. Simply wonderful."
   children:
     - blade_intro_deal
+  flags: $sword_price.set_var("kin and kith")
 
 - dialogue: blade_intro_price_refuse
   choice: There will be no bargaining for dark power.
@@ -70,6 +76,7 @@
     around, in time."
   children:
     - blade_intro_deal
+  flags: $sword_price.set_var("price to be paid")
 
 - dialogue: blade_intro_deal
   choice: And what do you offer in return?
@@ -81,8 +88,6 @@
     but blinding white light.
   children:
     - blade_intro_end
-  flags:
-    - $sword_price
 
 - dialogue: blade_intro_end
   choice: Continue...
@@ -316,7 +321,7 @@
    Shir Valley is relatively safe, yet the realm beyond is dangerous. The Uncrowned 
    King holds court upon the throne. His armies are vast, and his sorceries vile..."
   children: 
-    - awakened_no_continued
+    - awakened_quest_no_continued
 
 - dialogue: awakened_quest_no_continued
   choice: Continue...

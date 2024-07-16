@@ -3,7 +3,7 @@ use bracket::prelude::*;
 use serde::{Deserialize, Serialize};
 
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Copy, Clone, Debug, Serialize, Deserialize)]
 pub struct FlagID {
     pub index: usize,
 }
@@ -12,12 +12,22 @@ pub struct FlagID {
 pub struct Flag {
     pub name: String,
     pub flagged: bool,
-    pub stage: u32,
-    pub id: usize,
-    var: Option<String>,
+    stage: u32,
+    id: FlagID,
+    pub var: Option<String>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Flags {
     pub flags: Vec<Flag>,
+}
+
+impl Flag {
+    pub fn set_var(&mut self, var: String) {
+        self.var = Some(var);
+    }
+
+    pub fn get_id(&self) -> FlagID {
+        self.id
+    }
 }

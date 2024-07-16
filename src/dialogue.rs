@@ -66,8 +66,8 @@ impl Dialogue {
         &self.name
     }
 
-    pub fn set_flag_on_select(&self, gs: State) {
-
+    pub fn add_flag(&mut self, flag_id: FlagID) {
+        self.flags.as_mut().unwrap().push(flag_id);
     }
 
 }
@@ -185,6 +185,7 @@ impl Dialogues {
         let dialogue_id = gs.dialogues.get_current_dialogue_id();
         let mut dialogue = &mut gs.dialogues.items[dialogue_id.index];
         if dialogue.response.contains("$") {
+
             dialogue.response = dialogue.response.replace("$sword_price", "blood price");
         }
     }

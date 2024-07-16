@@ -172,25 +172,34 @@ pub fn blade() -> Scene {
 }
 
 
-pub fn load_dialogues() -> Dialogues {
+pub fn load_dialogues(flags: Flags) -> Dialogues {
     
     #[derive(Serialize, Deserialize, Debug)]
     struct YamlDialogue {
         dialogue: String,
         choice: String,
         response: String,
-        children: Vec<String>
+        children: Vec<String>,
+        flags: Option<String>,
     }
     
-    let dialogues = File::open("data/dialogues.yml").expect("Could not open dialogues!");
-    let reader: Vec<YamlDialogue> = serde_yaml::from_reader(dialogues).expect("Could not read dialogue values!");
+    let dialogues_yml = File::open("data/dialogues.yml").expect("Could not open dialogues!");
+    let reader: Vec<YamlDialogue> = serde_yaml::from_reader(dialogues_yml).expect("Could not read dialogue values!");
     let mut dialogues = Dialogues::new(Vec::new(), DialogueID {index: 1});
     let mut children_map: HashMap<DialogueID, Vec<String>> = HashMap::new();
     
     for (idx, yaml_dialogue) in reader.into_iter().enumerate() {
         let dialogue_id = DialogueID {index: idx};
         let mut dialogue = Dialogue::new(yaml_dialogue.dialogue, yaml_dialogue.choice, yaml_dialogue.response);
-        
+        if yaml_dialogue.flags.is_some() {
+            for flag in &flags.flags {
+                if yaml_dialogue.flags.as_ref().unwrap() == &flag.name {
+                    dialogue.add_flag(flag.get_id());
+                    println!("{:?}", dialogue);
+                }
+            }
+        }
+
         children_map.insert(dialogue_id, yaml_dialogue.children);
         dialogue.set_id(dialogue_id);
         dialogues.add_dialogue(dialogue);

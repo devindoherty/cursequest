@@ -3,20 +3,20 @@ flags:
 - name: told_rose_identity
   flagged: false
   stage: 0
-  id: 0
+  id: !FlagID {index: 0}
 
 - name: learned_father_death
   flagged: false
   stage: 0
-  id: 0
+  id: !FlagID {index: 1}
 
 - name: killed_rose
   flagged: false
   stage: 0
-  id: 0
+  id: !FlagID {index: 2}
 
-- name: sword_price
+- name: $sword_price
   flagged: false
   stage: 0
-  id: 0
+  id: !FlagID {index: 3}
   var:
