@@ -15,7 +15,7 @@ flags:
   stage: 0
   id: !FlagID {index: 2}
 
-- name: $sword_price
+- name: sword_price
   flagged: false
   stage: 0
   id: !FlagID {index: 3}

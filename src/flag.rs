@@ -23,6 +23,9 @@ pub struct Flags {
 }
 
 impl Flag {
+    pub fn parse_var(&self) {
+        
+    }
     pub fn set_var(&mut self, var: String) {
         self.var = Some(var);
     }

@@ -39,9 +39,9 @@
   response: >
     "Yes, yes!" the eager voice shouts. "The road to your throne will be drenched in lifeblood.
     Take it liberally and with wanton violence!"
+  flags: sword_price flagged=True var="blood" stage=0 
   children:
     - blade_intro_deal
-  flags: $sword_price
   
 - dialogue: blade_intro_price_coin
   choice: I will find the coin to pay.
@@ -50,7 +50,7 @@
     The voice considers for a moment, "Purchase darkness with coin and the blade will beckon."
   children:
     - blade_intro_deal
-  flags: $sword_price.set_var("coin")
+  flags: sword_price var="coin"
 
 - dialogue: blade_intro_price_soul
   choice: My own soul, if I must.
@@ -59,7 +59,7 @@
     is a king who has a retained a soul, but lost a kingdom?"
   children:
     - blade_intro_deal
-  flags: $sword_price.set_var("soul")
+  flags: sword_price var="soul"
 
 - dialogue: blade_intro_price_kinship
   choice: Friends and family, forsaking all bonds of kinship.
@@ -67,7 +67,7 @@
     The voice is giddy. "You would sacrifice them all, truly? Wonderful. Simply wonderful."
   children:
     - blade_intro_deal
-  flags: $sword_price.set_var("kin and kith")
+  flags: sword_price var="kin and kith"
 
 - dialogue: blade_intro_price_refuse
   choice: There will be no bargaining for dark power.
@@ -76,7 +76,7 @@
     around, in time."
   children:
     - blade_intro_deal
-  flags: $sword_price.set_var("price to be paid")
+  flags: sword_price var="price to be paid"
 
 - dialogue: blade_intro_deal
   choice: And what do you offer in return?

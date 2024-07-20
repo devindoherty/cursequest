@@ -193,7 +193,7 @@ pub fn load_dialogues(flags: Flags) -> Dialogues {
         let mut dialogue = Dialogue::new(yaml_dialogue.dialogue, yaml_dialogue.choice, yaml_dialogue.response);
         if yaml_dialogue.flags.is_some() {
             for flag in &flags.flags {
-                if yaml_dialogue.flags.as_ref().unwrap() == &flag.name {
+                if yaml_dialogue.flags.as_ref().unwrap().contains(&flag.name) {
                     dialogue.add_flag(flag.get_id());
                     println!("{:?}", dialogue);
                 }

@@ -45,7 +45,7 @@ impl Dialogue {
             response,
             status: None,
             skillcheck: None,
-            flags: None,
+            flags: Some(Vec::new()),
             children: Vec::new(),
         }
     }
